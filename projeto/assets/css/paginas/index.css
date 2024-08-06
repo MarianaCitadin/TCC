@@ -1,73 +1,60 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #ffffff;
+* {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: flex-end; /* Alinha à direita */
-  align-items: center;
-  height: 100vh;
-}
-
-.login-wrapper {
-  display: flex;
-  justify-content: center;
-  width: 50%; /* Ajusta a largura do wrapper */
-}
-
-.login-container {
-  background-color: #f0f8f2;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 60%; /* Ajusta a largura do container */
-}
-
-.login-container h2 {
-  color: #0d7c0d;
-}
-
-.login-container input[type="text"],
-.login-container input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #cccccc;
-  border-radius: 5px;
   box-sizing: border-box;
 }
 
-.login-container input[type="submit"] {
+body {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+.left-side img {
+  max-width: 50%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.left-side h1 {
+  color: #0d7c0d;
+  font-size: 24px;
+  text-align: center;
+}
+
+.right-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-color: #0d7c0d;
+  padding: 20px;
+}
+
+.menu-btn {
+  background-color: transparent;
+  border: 1px solid #ffffff;
   color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 0;
+  font-size: 18px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Adicionando estilo para o fundo verde */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 50%; /* Posiciona o fundo verde na metade direita da tela */
-  background-color: #0d7c0d; /* Cor verde */
-  z-index: -1; /* Coloca o elemento atrás de todo o conteúdo */
-}
-
-.signup-text {
-  margin-top: 10px;
-}
-
-.signup-text a {
-  color: #008000;
-  text-decoration: none;
-}
-
-.signup-text a:hover {
-  text-decoration: underline;
+.menu-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Cadastro</title>
+    <link rel="stylesheet" href="css/paginas/cadastro.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro De:</h2>
+        <form action="/submit_form" method="POST">
+            <div class="form-grid">
+                <div class="left-side">
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="nome" name="nome" required>
+
+                    <label for="data_nascimento">Data de Nascimento:</label>
+                    <input type="date" id="data_nascimento" name="data_nascimento" required>
+
+                    <label for="documento">Documento:</label>
+                    <input type="text" id="documento" name="documento" required>
+
+                    <label for="genero">Gênero:</label>
+                    <select id="genero" name="genero" required>
+                        <option value="">Selecione</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                        <option value="outro">Outro</option>
+                    </select>
+
+                    <label for="fone">Telefone:</label>
+                    <input type="tel" id="fone" name="fone" required>
+                </div>
+
+                <div class="right-side">
+                    <label for="endereco">Endereço:</label>
+                    <input type="text" id="endereco" name="endereco" required>
+
+                    <label for="categoria">Categoria:</label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="">Selecione</option>
+                        <option value="categoria1">Idoso</option>
+                        <option value="categoria2">Professor</option>
+                    </select>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" required>
+
+                    <label for="confirmar_senha">Confirmar Senha:</label>
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" required>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="btn cadastrar">Cadastrar</button>
+                <button type="reset" class="btn deletar">Deletar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
