@@ -40,6 +40,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   background-color: #0d7c0d;
   padding: 20px;
 }
@@ -48,11 +49,14 @@ body {
   background-color: transparent;
   border: 1px solid #ffffff;
   color: #ffffff;
-  padding: 15px;
+  padding: 15px 30px; /* Aumenta o padding horizontal */
   margin: 10px 0;
   font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: auto; /* Define a largura como automática para permitir o aumento com padding */
+  min-width: 500px; /* Define uma largura mínima */
+  text-align: center;
 }
 
 .menu-btn:hover {
