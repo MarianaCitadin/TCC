@@ -1,74 +1,107 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: flex-end; 
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .login-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 50%; 
-  }
-  
-  .login-container {
-    background-color: #f0f8f2;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 60%;
-  }
-  
-  .login-container h2 {
-    color: #0d7c0d;
-  }
-  
-  .login-container input[type="text"],
-  .login-container input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  
-  .login-container input[type="submit"] {
-    background-color: #0d7c0d;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 50%; 
-    background-color: #0d7c0d; 
-    z-index: -1;
-  }
-  
-  .signup-text {
-    margin-top: 10px;
-  }
-  
-  .signup-text a {
-    color: #008000;
-    text-decoration: none;
-  }
-  
-  .signup-text a:hover {
-    text-decoration: underline;
-  }
-  
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+}
+
+/* Contêiner principal */
+.login-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Área da imagem e título à esquerda */
+.left-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f8f2; /* Cor de fundo clara */
+  padding: 20px;
+}
+
+.left-side img {
+  max-width: 60%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.left-side h1 {
+  color: #0d7c0d;
+  font-size: 24px;
+  text-align: center;
+}
+
+/* Área do login à direita */
+.login-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0d7c0d; /* Cor verde */
+  padding: 30px;
+  color: #ffffff;
+}
+
+/* Centraliza o conteúdo do login em uma coluna */
+.login-content {
+  width: 80%; /* Define a largura máxima do conteúdo */
+  max-width: 400px; /* Limita a largura máxima */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.login-content h2 {
+  margin-bottom: 20px;
+}
+
+.login-content input[type="text"],
+.login-content input[type="password"] {
+  width: 100%; /* Mantém a largura total das caixas de texto */
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.login-content input[type="submit"] {
+  background-color: #ffffff;
+  color: #0d7c0d;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 60%; /* Largura do botão igual às caixas */
+}
+
+.login-content input[type="submit"]:hover {
+  background-color: #e0e0e0;
+}
+
+/* Texto de cadastro */
+.signup-text {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.signup-text a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #2e7d32; /* Verde escuro */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #d0e9d0; /* Tom mais claro para hover */
+}
+
+main {
+    padding: 20px;
+}
+
+h1 {
+    color: #2e7d32; /* Verde escuro */
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px; /* Espaço abaixo da tabela */
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.edit-btn, .delete-btn {
+    background-color: #2196f3; /* Azul */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 4px; /* Cantos arredondados */
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+.edit-btn:hover {
+    background-color: #1976d2; /* Tom mais escuro ao passar o mouse */
+}
+
+.delete-btn {
+    background-color: #f44336; /* Vermelho */
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f; /* Tom mais escuro ao passar o mouse */
+}
+
+.add-event {
+    background-color: #4caf50; /* Verde */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 20px; /* Espaço acima do botão */
+    border-radius: 4px; /* Cantos arredondados */
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+.add-event:hover {
+    background-color: #388e3c; /* Tom mais escuro ao passar o mouse */
+}
