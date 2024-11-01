@@ -1,4 +1,3 @@
-/* Estilos gerais */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
@@ -16,7 +15,7 @@ body {
 }
 
 header {
-    background-color: #0d7c0d; /* Verde mais suave */
+    background-color: #0d7c0d; 
     color: white;
     text-align: center;
     padding: 40px 0;

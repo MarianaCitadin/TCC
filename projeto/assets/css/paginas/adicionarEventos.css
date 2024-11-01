@@ -6,7 +6,7 @@ body {
 }
 
 header {
-    background-color: #2e7d32; /* Verde escuro */
+    background-color: #2e7d32;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -37,7 +37,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #d0e9d0; /* Tom mais claro para hover */
+    color: #d0e9d0;
 }
 
 main {
@@ -45,7 +45,7 @@ main {
 }
 
 h1 {
-    color: #2e7d32; /* Verde escuro */
+    color: #2e7d32;
     font-size: 28px;
     margin-bottom: 20px;
 }
@@ -53,7 +53,7 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px; /* Espaço abaixo da tabela */
+    margin-bottom: 20px;
 }
 
 table th, table td {
@@ -68,39 +68,39 @@ table th {
 }
 
 .edit-btn, .delete-btn {
-    background-color: #2196f3; /* Azul */
+    background-color: #2196f3;
     color: white;
     border: none;
     padding: 6px 12px;
     cursor: pointer;
     margin-right: 5px;
-    border-radius: 4px; /* Cantos arredondados */
-    transition: background-color 0.3s; /* Transição suave */
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
 .edit-btn:hover {
-    background-color: #1976d2; /* Tom mais escuro ao passar o mouse */
+    background-color: #1976d2;
 }
 
 .delete-btn {
-    background-color: #f44336; /* Vermelho */
+    background-color: #f44336;
 }
 
 .delete-btn:hover {
-    background-color: #d32f2f; /* Tom mais escuro ao passar o mouse */
+    background-color: #d32f2f;
 }
 
 .add-event {
-    background-color: #4caf50; /* Verde */
+    background-color: #4caf50;
     color: white;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
-    margin-top: 20px; /* Espaço acima do botão */
-    border-radius: 4px; /* Cantos arredondados */
-    transition: background-color 0.3s; /* Transição suave */
+    margin-top: 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
 .add-event:hover {
-    background-color: #388e3c; /* Tom mais escuro ao passar o mouse */
+    background-color: #388e3c;
 }
