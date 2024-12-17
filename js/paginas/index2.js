@@ -1,11 +1,11 @@
 // Aguarda o carregamento completo da página
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Animação de fade-in para a página
+    // Animação de boas-vindas com a imagem e o título
     const leftSide = document.querySelector('.left-side');
     const rightSide = document.querySelector('.right-side');
 
-    // Função para aplicar fade-in
+    // Função para adicionar a animação de fade-in nos elementos
     function fadeIn() {
         leftSide.style.opacity = '0';
         rightSide.style.opacity = '0';
@@ -32,10 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener('mouseleave', function () {
             button.style.transform = 'scale(1)';
         });
-
-        // Função para alertar quando o botão é clicado (caso necessário)
-        button.addEventListener('click', function () {
-            alert(`Você está indo para a página: ${button.innerText}`);
-        });
     });
+
 });
