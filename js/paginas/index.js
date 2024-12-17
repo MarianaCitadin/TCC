@@ -17,6 +17,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 200);
     }
 
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        const userName = "João"; // Pode vir de um backend ou banco de dados
+        const userGreeting = document.querySelector(".user-greeting");
+        userGreeting.textContent = `Olá, ${userName}!`;
+    });
+    
+
     // Chama a animação de fade-in assim que a página for carregada
     fadeIn();
 
