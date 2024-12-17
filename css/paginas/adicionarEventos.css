@@ -1,0 +1,120 @@
+
+/* Cabeçalho */
+header {
+    background-color: #2e7d32; /* Verde escuro */
+    color: white;
+    display: flex;
+    justify-content: center; /* Centraliza os itens dentro do cabeçalho */
+    padding: 15px 0; /* Ajusta a altura do cabeçalho */
+    width: 100%;
+    position: fixed; /* Fixa o cabeçalho no topo */
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+/* Centraliza a logo */
+header .logo {
+    font-size: 24px;
+    margin-right: auto;
+    padding-left: 20px;
+}
+
+/* Estiliza a barra de navegação */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centraliza os itens */
+    gap: 15px;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px; /* Espaçamento nos links */
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+/* Efeito ao passar o mouse */
+nav ul li a:hover {
+    background-color: #1b5e20; /* Tom mais escuro de verde */
+}
+
+/* Para garantir que o conteúdo principal não fique sobre o cabeçalho */
+body {
+    font-family: Arial, sans-serif;
+    padding-top: 80px; /* Espaço para o cabeçalho fixo */
+}
+
+
+main {
+    padding: 20px;
+}
+
+h1 {
+    color: #2e7d32;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.edit-btn, .delete-btn {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.edit-btn:hover {
+    background-color: #1976d2;
+}
+
+.delete-btn {
+    background-color: #f44336;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+.add-event {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.add-event:hover {
+    background-color: #388e3c;
+}

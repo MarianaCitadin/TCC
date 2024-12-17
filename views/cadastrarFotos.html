@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/paginas/cadastrarFotos.css">
+    <title>Adicionar Fotos - Clicando na Terceira Idade</title>
+    <script src="/js/paginas/cadastrarFotos.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Clicando na Terceira Idade</div>
+        <nav>
+            <ul>
+                <li><a href="index2.html">Início</a></li>
+                <li><a href="adicionarEventos.html">Eventos</a></li>
+                <li><a href="cadastrarTurmas.html">Turmas</a></li>
+                <li><a href="cadastrarAtividades">Atividades</a></li>
+                <li><a href="listagemUsuarios.html">Usuários</a></li>
+                <li><a href="login.html">Sair</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Adicionar Nova Foto</h1>
+        
+        <form class="foto-form" action="#" method="post" enctype="multipart/form-data">
+            <label for="titulo">Título do Evento:</label>
+            <input type="text" id="titulo" name="titulo" placeholder="Digite o título do evento" required>
+
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao" placeholder="Adicione uma breve descrição" rows="4" required></textarea>
+
+            <label for="foto">Selecionar Foto:</label>
+            <input type="file" id="foto" name="foto" accept="image/*" required>
+
+            <button type="submit" class="submit-btn">Adicionar Foto</button>
+        </form>
+    </main>
+</body>
+</html>

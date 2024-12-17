@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/paginas/cadastrarTurmas.css">
+    <title>Cadastro de Turma - Clicando na Terceira Idade</title>
+    <script src="/js/paginas/cadastrarTurmas.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Clicando na Terceira Idade</div>
+        <nav>
+            <ul>
+                <li><a href="index2.html">Início</a></li>
+                <li><a href="adicionarEventos.html">Eventos</a></li>
+                <li><a href="cadastroAtividades.html">Atividades</a></li>
+                <li><a href="listagemUsuarios.html">Usuários</a></li>
+                <li><a href="cadastrarFotos.html">Fotos</a></li>
+                <li><a href="login.html">Sair</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Cadastrar Turma:</h1>
+        
+        <form class="turma-form" action="#" method="post">
+            <label for="nomeTurma">Nome da Turma:</label>
+            <input type="text" id="nomeTurma" name="nomeTurma" placeholder="Digite o nome da turma" required>
+
+            <label for="professor">Professor Responsável:</label>
+            <input type="text" id="professor" name="professor" placeholder="Digite o nome do professor" required>
+
+            <label for="horario">Horário:</label>
+            <input type="text" id="horario" name="horario" placeholder="Ex: Segundas e Quartas, 14h-16h" required>
+
+            <label for="dataInicio">Data de Início:</label>
+            <input type="date" id="dataInicio" name="dataInicio" required>
+
+            <label for="dataFim">Data de Término:</label>
+            <input type="date" id="dataFim" name="dataFim" required>
+
+            <button type="submit" class="submit-btn">Cadastrar Turma</button>
+        </form>
+    </main>
+</body>
+</html>

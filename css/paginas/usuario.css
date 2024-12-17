@@ -1,0 +1,118 @@
+/* Para garantir que o conteúdo principal fique centralizado */
+body {
+    font-family: Arial, sans-serif;
+    display: flex; /* Usando Flexbox para centralizar */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: flex-start; /* Alinha ao topo */
+    height: 100vh; /* Garante que o body ocupe toda a altura da tela */
+    margin: 0; /* Remove qualquer margem padrão */
+    padding-top: 80px; /* Espaço para o cabeçalho fixo */
+}
+
+/* Cabeçalho */
+header {
+    background-color: #2e7d32; /* Verde escuro */
+    color: white;
+    display: flex;
+    justify-content: center; /* Centraliza os itens dentro do cabeçalho */
+    padding: 15px 0; /* Ajusta a altura do cabeçalho */
+    width: 100%;
+    position: fixed; /* Fixa o cabeçalho no topo */
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+/* Centraliza a logo */
+header .logo {
+    font-size: 24px;
+    margin-right: auto;
+    padding-left: 20px;
+}
+
+/* Estiliza a barra de navegação */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centraliza os itens */
+    gap: 15px;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px; /* Espaçamento nos links */
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+/* Efeito ao passar o mouse */
+nav ul li a:hover {
+    background-color: #1b5e20; /* Tom mais escuro de verde */
+}
+
+/* Conteúdo principal */
+.container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 700px;
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px; /* Espaço para o cabeçalho fixo */
+}
+
+/* Título */
+h1 {
+    text-align: center;
+    color: #4caf50;
+    margin-bottom: 20px;
+}
+
+/* Informações do usuário */
+.user-info {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.user-info p {
+    font-size: 16px;
+    color: #555;
+    margin: 10px 0;
+}
+
+.user-info strong {
+    color: #0d7c0d;
+}
+
+/* Botões */
+.buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #388e3c;
+}

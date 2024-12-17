@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/paginas/cadastroAtividades.css">
+    <title>Cadastro de Atividades - Clicando na Terceira Idade</title>
+    <script src="/js/paginas/cadastroAtividades.js"></script>
+
+</head>
+<body>
+    <header>
+        <div class="logo">Clicando na Terceira Idade</div>
+        <nav>
+            <ul>
+                <li><a href="index2.html">Início</a></li>
+                <li><a href="adicionarEventos.html">Eventos</a></li>
+                <li><a href="cadastrarTurmas.html">Turmas</a></li>
+                <li><a href="listagemUsuarios.html">Usuários</a></li>
+                <li><a href="cadastrarFotos.html">Fotos</a></li>
+                <li><a href="login.html">Sair</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Cadastrar Atividades:</h1>
+        <form class="activity-form">
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" required>
+    
+            <label for="description">Descrição:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+    
+            <label for="date">Data:</label>
+            <input type="date" id="date" name="date" required>
+    
+            <label for="pdf-upload">Upload de PDF:</label>
+            <input type="file" id="pdf-upload" name="pdf-upload" accept="application/pdf" required>
+    
+            <button type="submit" class="submit-btn">Cadastrar Atividade</button>
+        </form>
+    </main>
+</body>
+</html>

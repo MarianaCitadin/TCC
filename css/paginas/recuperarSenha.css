@@ -1,0 +1,142 @@
+/* Reset geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    flex-direction: column;
+}
+
+/* Barra de navegação no topo */
+.header {
+    width: 100%;
+    background-color: #2e7d32; /* Cor verde para a barra */
+    color: white;
+    padding: 10px 20px; /* Reduzi o padding para deixar a barra mais próxima do topo */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* A barra fica fixa no topo */
+    top: 0; /* Fica no topo da página */
+    z-index: 1000; /* Garante que a barra fique acima de outros elementos */
+}
+
+.header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header .back-btn {
+    background-color: transparent;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+
+}
+
+.header .back-btn:hover {
+    text-decoration: underline;
+}
+
+.header .back-btn::before {
+    content: '←'; /* Adiciona uma flecha antes do texto */
+    margin-right: 8px; /* Espaço entre a flecha e o texto */
+}
+
+/* Formulário */
+.form-container {
+    background-color: #0d7c0d; /* Cor de fundo verde */
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    margin-top: 70px; /* Dá espaço para a barra fixa */
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+}
+
+.form-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    align-self: flex-start;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: #ffffff;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #ffffff; /* Deixa os campos brancos */
+    color: #333; /* Cor do texto nos campos */
+}
+
+/* Estilo do campo de senha */
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background: url('eye-icon.png') no-repeat center;
+    background-size: contain;
+}
+
+button {
+    background-color: #ffffff;
+    color: #0d7c0d;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 60%;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

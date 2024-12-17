@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/paginas/materiais.css">
+    <title>Atividades - Clicando na Terceira Idade</title>
+    <script src="/js/paginas/materiais.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Clicando na Terceira Idade</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="fotos.html">Fotos</a></li>
+                <li><a href="turma.html">Turmas</a></li>
+                <li><a href="usuario.html">Usuários</a></li>
+                <li><a href="eventos.html">Eventos</a></li>
+                <li><a href="sobre.html">Sobre Nós</a></li>
+                <li><a href="login.html">Sair</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Atividades Disponíveis</h1>
+    
+        <!-- Filtro de pesquisa -->
+        <div class="filter-container">
+            <input type="text" id="filter-input" placeholder="Pesquisar por título..." />
+        </div>
+    
+        <!-- Tabela de atividades -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descrição</th>
+                        <th>Data</th>
+                        <th>PDF</th>
+                        <th>Slides</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Aula de Informática Básica</td>
+                        <td>Introdução ao uso do computador e internet.</td>
+                        <td>10/11/2024</td>
+                        <td><a href="aula-informatica.pdf" download>Baixar PDF</a></td>
+                        <td><a href="aula-informatica.pptx" download>Baixar Slides</a></td>
+                    </tr>
+                    <tr>
+                        <td>Oficina de Redes Sociais</td>
+                        <td>Como utilizar redes sociais para se conectar com amigos e familiares.</td>
+                        <td>12/11/2024</td>
+                        <td><a href="oficina-redes.pdf" download>Baixar PDF</a></td>
+                        <td><a href="oficina-redes.pptx" download>Baixar Slides</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
