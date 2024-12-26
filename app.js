@@ -1,56 +1,74 @@
 const express = require('express');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const methodOverride = require('method-override');
+const mysql = require('mysql2');
 const path = require('path');
-const loginRoutes = require('./routes/loginRoutes');
 const app = express();
 
-// Serve arquivos estáticos das pastas 'css', 'js' e 'imagens'
-app.use(express.static(path.join(__dirname, 'css')));
-app.use(express.static(path.join(__dirname, 'js')));
-app.use(express.static(path.join(__dirname, 'imagens')));
+// Configurar o banco de dados
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',  // Substitua conforme necessário
+    password: 'M@riC2804',  // Substitua conforme necessário
+    database: 'clicandonaterceiraidade'
+});
 
-// Configurações básicas
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(methodOverride('_method'));
-app.use(
-    session({
-        secret: 'sua_chave_secreta',
-        resave: false,
-        saveUninitialized: true,
-    })
-);
-
-// Middleware de autenticação
-function ensureAuthenticated(req, res, next) {
-    if (req.session.user) {
-        return next();
+db.connect((err) => {
+    if (err) {
+        console.error('Erro ao conectar ao banco de dados:', err.stack);
+    } else {
+        console.log('Conectado ao banco de dados');
     }
-    res.redirect('/login');
-}
-
-// Rotas
-app.use('/login', loginRoutes);
-
-// Rota para o login (corrigido para servir o arquivo index.html corretamente)
-app.get('/', (req, res) => {
-    res.redirect('/login'); // Redireciona para o login
 });
 
-// Rota protegida
-app.get('/dashboard', ensureAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'dashboard.html')); // Envia o arquivo HTML da dashboard
+// Rota para processar o cadastro de usuários
+app.post('/submit_form', (req, res) => {
+    const { nome, dataNascimento, documento, genero, fone, estado, cidade, bairro, rua, numero, categoria, email, senha } = req.body;
+
+    // Verificar se a categoria é válida (Aluno ou Professor)
+    const categoriasValidas = ['Aluno', 'Professor'];
+    if (!categoriasValidas.includes(categoria)) {
+        return res.status(400).send('Categoria inválida. Escolha entre "Aluno" ou "Professor".');
+    }
+
+    // Obter o ID da categoria (Aluno = 1, Professor = 2)
+    const categoriaID = categoria === 'Aluno' ? 1 : 2;
+
+    const query = `
+        INSERT INTO tbusuario
+        (nome, dataNascimento, documento, genero, telefone, estado, cidade, bairro, logradouro, numero, categoriaID, email, senha)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    const values = [nome, dataNascimento, documento, genero, fone, estado, cidade, bairro, rua, numero, categoriaID, email, senha];
+
+    db.execute(query, values, (err, results) => {
+        if (err) {
+            console.error('Erro ao salvar no banco de dados:', err);
+            res.status(500).send('Erro ao salvar no banco de dados.');
+        } else {
+            console.log('Usuário cadastrado:', results);
+            res.send('Cadastro realizado com sucesso!');
+        }
+    });
 });
 
-// Erro 404
-app.use((req, res) => {
-    res.status(404).send('Página não encontrada!');
+app.listen(3000, () => {
+    console.log('Servidor rodando na porta 3000');
+});
+app.use(express(path.join(__dirname,'views')));
+
+app.use(express(path.join(__dirname,'public')));
+app.get('/', (req,res)=>{
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
+});
+app.post('/seu-endpoint', (req, res) => {
+    console.log(req.body); // Registrar o corpo da requisição para inspecioná-lo
+    const { nome } = req.body;
+    // Sua lógica aqui
 });
 
-// Inicializando o servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+// Middleware para fazer o parsing de corpos JSON
+app.use(express.json()); // para payloads JSON
+
+// Middleware para fazer o parsing de corpos URL-encoded
+app.use(express.urlencoded({ extended: true })); // para dados de formulário
+

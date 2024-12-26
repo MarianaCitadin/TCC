@@ -1,103 +1,87 @@
-CREATE DATABASE clicando;
-use clicando;
+-- Criação do banco de dados
+CREATE DATABASE ClicandoNaTerceiraIdade;
+USE ClicandoNaTerceiraIdade;
 
-
--- Tabela Endereço
-CREATE TABLE `endereco` (
-  `cod` INT NOT NULL AUTO_INCREMENT,
-  `cidade` VARCHAR(30) NOT NULL,
-  `rua` VARCHAR(35) NOT NULL,
-  `bairro` VARCHAR(35) NOT NULL,
-  `uf` CHAR(2) NOT NULL,
-  `numero` INT NOT NULL,
-  `cep` CHAR(8) NOT NULL,
-  PRIMARY KEY (`cod`)
+-- Tabela de Categorias
+CREATE TABLE TbCategoria (
+    CategoriaID INT AUTO_INCREMENT PRIMARY KEY,
+    NomeCategoria VARCHAR(255) NOT NULL
 );
 
--- Tabela Categoria
-CREATE TABLE `categoria` (
-  `cod` INT NOT NULL AUTO_INCREMENT,
-  `descricao` VARCHAR(15) DEFAULT NULL,
-  PRIMARY KEY (`cod`)
+-- Tabela de Usuários com os campos de endereço
+CREATE TABLE TbUsuario (
+    UsuarioID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(255) NOT NULL,
+    DataNascimento DATE NOT NULL,
+    Documento VARCHAR(50) NOT NULL UNIQUE,
+    Genero ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
+    Telefone VARCHAR(20),
+    Email VARCHAR(255) NOT NULL UNIQUE,
+    Senha VARCHAR(255) NOT NULL,
+    CategoriaID INT,
+    Logradouro VARCHAR(255),
+    Numero VARCHAR(20),
+    Bairro VARCHAR(255),
+    Cidade VARCHAR(255),
+    Estado VARCHAR(2),
+    CEP VARCHAR(15),
+    FOREIGN KEY (CategoriaID) REFERENCES TbCategoria(CategoriaID)
 );
 
--- Tabela Cadastro
-CREATE TABLE `cadastro` (
-  `cod` INT NOT NULL AUTO_INCREMENT,
-  `datanascimento` DATE NOT NULL,
-  `senha` VARCHAR(10) NOT NULL,
-  `login` VARCHAR(25) NOT NULL UNIQUE,
-  `categoria` INT NOT NULL,
-  `fone` CHAR(15) NOT NULL,
-  `documento` CHAR(11) NOT NULL UNIQUE,
-  `genero` CHAR(14) NOT NULL,
-  `nome` VARCHAR(50) NOT NULL,
-  `endereco` INT NOT NULL,
-  PRIMARY KEY (`cod`),
-  FOREIGN KEY (`categoria`) REFERENCES `categoria` (`cod`),
-  FOREIGN KEY (`endereco`) REFERENCES `endereco` (`cod`)
+-- Tabela de Projetos
+CREATE TABLE TbProjeto (
+    ProjetoID INT AUTO_INCREMENT PRIMARY KEY,
+    NomeProjeto VARCHAR(255) NOT NULL,
+    DataInicio DATE NOT NULL,
+    DataFim DATE NOT NULL,
+    Descricao TEXT NOT NULL,
+    Local VARCHAR(255) NOT NULL
 );
 
--- Tabela Turma
-CREATE TABLE `turma` (
-  `cod` INT NOT NULL AUTO_INCREMENT,
-  `descricao` VARCHAR(50) DEFAULT NULL,
-  PRIMARY KEY (`cod`)
+-- Tabela de Participantes
+CREATE TABLE TbParticipantes (
+    ParticipanteID INT AUTO_INCREMENT PRIMARY KEY,
+    UsuarioID INT,
+    ProjetoID INT,
+    FOREIGN KEY (UsuarioID) REFERENCES TbUsuario(UsuarioID),
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
--- Tabela Audiovisuais
-CREATE TABLE `audiovisuais` (
-  `cod` INT NOT NULL AUTO_INCREMENT,
-  `descricao` VARCHAR(50) DEFAULT NULL,
-  PRIMARY KEY (`cod`)
+-- Tabela de Turmas
+CREATE TABLE TbTurma (
+    TurmaID INT AUTO_INCREMENT PRIMARY KEY,
+    NomeTurma VARCHAR(255) NOT NULL,
+    ProjetoID INT,
+    LimiteAlunos INT DEFAULT 20,
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
--- Tabela Eventos
-CREATE TABLE `eventos` (
-  `cod` INT NOT NULL AUTO_INCREMENT,
-  `descricao` VARCHAR(250) DEFAULT NULL,
-  PRIMARY KEY (`cod`)
+-- Tabela de Eventos
+CREATE TABLE TbEventos (
+    EventoID INT AUTO_INCREMENT PRIMARY KEY,
+    NomeEvento VARCHAR(255) NOT NULL,
+    DataEvento DATE NOT NULL,
+    LocalEvento VARCHAR(255),
+    ProjetoID INT,
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
--- Tabela Participantes
-CREATE TABLE `participantes` (
-  `cod` INT NOT NULL AUTO_INCREMENT,
-  `descricao` VARCHAR(15) DEFAULT NULL,
-  PRIMARY KEY (`cod`)
+-- Tabela de Audiovisuais
+CREATE TABLE TbAudiovisuais (
+    AudiovisualID INT AUTO_INCREMENT PRIMARY KEY,
+    NomeArquivo VARCHAR(255) NOT NULL,
+    TipoArquivo VARCHAR(50),
+    ProjetoID INT,
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
--- Tabela Projeto
-CREATE TABLE `projeto` (
-  `cod` INT NOT NULL AUTO_INCREMENT,
-  `turma` INT NOT NULL,
-  `eventos` INT NOT NULL,
-  `audiovisuais` INT NOT NULL,
-  `titulo` VARCHAR(50) NOT NULL DEFAULT 'Projeto Clicando na Terceira Idade',
-  `descricao` VARCHAR(50) DEFAULT NULL,
-  `anoedicao` YEAR NOT NULL,
-  `datalancamento` DATE NOT NULL,
-  `materiais` BLOB NOT NULL,
-  `observacoes` VARCHAR(150) DEFAULT NULL,
-  `participantes` INT NOT NULL,
-  `coordenador` VARCHAR(50) NOT NULL,
-  `num_vagas` INT NOT NULL,
-  `cargahoraria` TIME NOT NULL,
-  `datafinalizacao` DATE NOT NULL,
-  PRIMARY KEY (`cod`),
-  FOREIGN KEY (`turma`) REFERENCES `turma` (`cod`),
-  FOREIGN KEY (`eventos`) REFERENCES `eventos` (`cod`),
-  FOREIGN KEY (`audiovisuais`) REFERENCES `audiovisuais` (`cod`),
-  FOREIGN KEY (`participantes`) REFERENCES `participantes` (`cod`)
-);
-
--- Tabela Acesso
-CREATE TABLE `acesse` (
-  `cod` INT NOT NULL AUTO_INCREMENT,
-  `hora` TIME DEFAULT NULL,
-  `dataacesso` DATE DEFAULT NULL,
-  `codusuario` INT,
-  `codprojeto` INT NOT NULL,
-  PRIMARY KEY (`cod`),
-  FOREIGN KEY (`codusuario`) REFERENCES `cadastro` (`cod`),
-  FOREIGN KEY (`codprojeto`) REFERENCES `projeto` (`cod`)
+-- Tabela de Registros
+CREATE TABLE TbRegistros (
+    RegistroID INT AUTO_INCREMENT PRIMARY KEY,
+    UsuarioID INT,
+    ProjetoID INT,
+    Descricao TEXT,
+    DataRegistro DATE NOT NULL,
+    FOREIGN KEY (UsuarioID) REFERENCES TbUsuario(UsuarioID),
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
