@@ -85,3 +85,7 @@ CREATE TABLE TbRegistros (
     FOREIGN KEY (UsuarioID) REFERENCES TbUsuario(UsuarioID),
     FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
+
+insert into tbcategoria(CategoriaID, NomeCategoria) values (1, 'Aluno');
+
+insert into tbcategoria(CategoriaID, NomeCategoria) values (2, 'Professor');

@@ -5,8 +5,7 @@
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela de Login</title>
-    <script src="/js/paginas/login.js" defer></script>
-
+    
 </head>
 <body>
 
@@ -19,13 +18,13 @@
   <div class="login-container">
     <div class="login-content">
       <h2>Acesse sua Conta</h2>
-      <form action="#" method="post">
-        <input type="text" name="username" placeholder="Usuário" required><br>
-        <input type="password" name="password" placeholder="Senha" required><br>
-        <input type="submit" value="Entrar">
-      </form>
+      <form action="/login" method="POST">
+        <input type="email" name="email" id="email" placeholder="Email" required><br>
+        <input type="password" name="senha" id="senha" placeholder="Senha" required><br>
+        <button type="submit">Entrar</button>
+    </form>
       <div class="signup-text">
-        <p>Não possui conta? <a href="cadastro.html">Cadastrar</a></p>
+        <p>Não possui conta? <a href="cadastro">Cadastrar</a></p>
       </div>
     </div>
   </div>

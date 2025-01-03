@@ -7,11 +7,30 @@
     <link rel="stylesheet" href="/css/paginas/index2.css">
     <script src="/js/paginas/index2.js" defer></script>
 </head>
+<script>
+    // Atualiza o nome do usuário logado
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/usuario/dados')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar dados do usuário.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Dados recebidos:', data); // Para depuração no console do navegador
+                const userNameElement = document.getElementById('user-name');
+                userNameElement.textContent = data.nomeUsuario || 'Usuário';
+            })
+            .catch(error => console.error('Erro ao buscar nome do usuário:', error));
+    });
+</script>
 <body>
-    <!-- Botão de Identificação do Usuário -->
-    <div class="user-identification">
+     <!-- Botão de Identificação do Usuário -->
+     <div class="user-identification">
         <span class="user-greeting">Olá, João!</span>
-        <a href="usuario.html" class="user-data-btn">Ver Seus Dados</a>
+        <a href="usuario" class="user-data-btn">Ver Seus Dados</a>
     </div>
 
     <!-- Container Principal -->

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/paginas/adicionarEventos.css">
     <title>Eventos - Clicando na Terceira Idade</title>
-    <script src="/js/paginas/adicionarEventos.js"></script>
+    <script src="/js/paginas/adicionarEventos.js" defer></script>
 </head>
 <body>
     <header>
@@ -23,50 +23,37 @@
     </header>
 
     <main>
-        <h1>Adicionar Eventos:</h1>
+        <h1>Adicionar Eventos</h1>
+        <h2>Lista de Eventos</h2>
         <table>
             <thead>
                 <tr>
                     <th>Título</th>
                     <th>Data/Hora</th>
                     <th>Local</th>
-                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Evento 1</td>
-                    <td>01/11/2024 10:00</td>
-                    <td>Sala 1</td>
-                    <td>
-                        <button class="edit-btn">Editar</button>
-                        <button class="delete-btn">Excluir</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Evento 2</td>
-                    <td>05/11/2024 14:00</td>
-                    <td>Sala 2</td>
-                    <td>
-                        <button class="edit-btn">Editar</button>
-                        <button class="delete-btn">Excluir</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Evento 3</td>
-                    <td>10/11/2024 09:00</td>
-                    <td>Sala 3</td>
-                    <td>
-                        <button class="edit-btn">Editar</button>
-                        <button class="delete-btn">Excluir</button>
-                    </td>
-                </tr>
+                <!-- Linhas dinâmicas de eventos serão inseridas aqui -->
             </tbody>
         </table>
 
+        <button class="add-event" title="Adicionar novo evento">Adicionar Evento</button>
 
-            <button class="add-event">Adicionar Evento</button>
-        </a>
+        <!-- Formulário de Adicionar Evento -->
+        <form id="eventForm">
+            <label for="title">Título:</label>
+            <input type="text" id="title" required>
+            
+            <label for="date">Data/Hora:</label>
+            <input type="datetime-local" id="date" required>
+            
+            <label for="location">Local:</label>
+            <input type="text" id="location" required>
+            
+            <button type="submit">Salvar</button>
+            <button type="button" id="cancelForm">Cancelar</button>
+        </form>
     </main>
 </body>
 </html>

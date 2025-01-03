@@ -1,16 +1,18 @@
-// Script para confirmação de saída
-document.addEventListener('DOMContentLoaded', function() {
-    const sairButton = document.querySelector('nav ul li a[href="#"]'); // Seleciona o botão "Sair"
-
-    if (sairButton) {
-        sairButton.addEventListener('click', function(event) {
-            event.preventDefault(); // Impede a navegação para a URL "#"
-            const confirmacao = confirm("Você tem certeza que deseja sair?");
-            
-            if (confirmacao) {
-                // Lógica para sair da sessão (por exemplo, redirecionamento para página de login)
-                window.location.href = "login.html"; // Redireciona para a página de login (ajuste conforme necessário)
-            }
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/usuario/dados')
+        .then(response => {
+            if (!response.ok) throw new Error('Erro ao buscar dados do usuário.');
+            return response.json();
+        })
+        .then(data => {
+            // Atualiza os elementos da página com os dados do usuário
+            document.getElementById('user-name').textContent = data.nome;
+            document.getElementById('user-email').textContent = data.email;
+            document.getElementById('user-birthdate').textContent = data.dataNascimento;
+            document.getElementById('user-phone').textContent = data.telefone;
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao carregar dados do usuário.');
         });
-    }
 });

@@ -5,20 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/paginas/usuario.css">
     <title>Meus Dados - Clicando na Terceira Idade</title>
-    <script src="/js/paginas/usuario.js" defer></script>
 </head>
 <body>
     <header>
         <div class="logo">Clicando na Terceira Idade</div>
         <nav>
             <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="fotos.html">Fotos</a></li>
-                <li><a href="turma.html">Turmas</a></li>
-                <li><a href="eventos.html">Eventos</a></li>
-                <li><a href="materiais.html">materiais</a></li>
-                <li><a href="sobre.html">Sobre Nós</a></li>
-                <li><a href="login.html">Sair</a></li>
+                <li><a href="index2">Início</a></li>
+                <li><a href="fotos">Fotos</a></li>
+                <li><a href="turma">Turmas</a></li>
+                <li><a href="eventos">Eventos</a></li>
+                <li><a href="materiais">Materiais</a></li>
+                <li><a href="sobre">Sobre Nós</a></li>
+                <li><a href="/">Sair</a></li>
             </ul>
         </nav>
     </header>
@@ -26,14 +25,16 @@
     <div class="container">
         <h1>Meus Dados</h1>
         <div class="user-info">
-            <p><strong>Nome:</strong> João Silva</p>
-            <p><strong>Email:</strong> joao.silva@email.com</p>
-            <p><strong>Data de Nascimento:</strong> 10/10/1950</p>
-            <p><strong>Telefone:</strong> (11) 98765-4321</p>
+            <p><strong>Nome:</strong> <span id="user-name">Carregando...</span></p>
+            <p><strong>Email:</strong> <span id="user-email">Carregando...</span></p>
+            <p><strong>Data de Nascimento:</strong> <span id="user-birthdate">Carregando...</span></p>
+            <p><strong>Telefone:</strong> <span id="user-phone">Carregando...</span></p>
         </div>
         <div class="buttons">
-            <a href="editarUsuario.html" class="btn">Editar Dados</a>
+            <a href="editarUsuario" class="btn">Editar Dados</a>
         </div>
     </div>
+
+    <script src="/js/paginas/usuario.js" defer></script>
 </body>
 </html>

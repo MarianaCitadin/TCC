@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Por favor, preencha todos os campos obrigatórios.");
             return;
         }
+        if (estado.length > 2) {
+            return res.status(400).send('O campo "Estado" deve conter no máximo 2 caracteres.');
+        }        
 
         if (!validarEmail(email.value)) {
             alert("Por favor, insira um email válido.");

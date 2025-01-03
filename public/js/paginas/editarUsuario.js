@@ -43,3 +43,53 @@ function validateForm(event) {
 
 // Adicionar evento de envio ao formulário
 form.addEventListener('submit', validateForm);
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('edit-user-form');
+
+    // Carregar dados do usuário
+    function loadUserData() {
+        fetch('/usuario/dados')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar dados do usuário.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('nome').value = data.nomeUsuario || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('telefone').value = data.telefone || '';
+            })
+            .catch(error => console.error('Erro ao carregar dados do usuário:', error));
+    }
+
+    // Enviar formulário para atualizar os dados
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Evita o comportamento padrão do formulário
+
+        const formData = {
+            nome: document.getElementById('nome').value,
+            email: document.getElementById('email').value,
+            telefone: document.getElementById('telefone').value,
+        };
+
+        fetch('/usuario/editar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao atualizar os dados.');
+                }
+                alert('Dados atualizados com sucesso!');
+                window.location.href = '/usuario';
+            })
+            .catch(error => console.error('Erro ao atualizar dados do usuário:', error));
+    });
+
+    // Carregar os dados do usuário ao abrir a página
+    loadUserData();
+});
