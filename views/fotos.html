@@ -5,42 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/paginas/fotos.css">
     <title>Galeria de Fotos - Clicando na Terceira Idade</title>
-    <script src="/js/paginas/fotos.js" defer></script>
 </head>
 <body>
     <header>
         <div class="logo">Clicando na Terceira Idade</div>
         <nav>
             <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="eventos.html">Eventos</a></li>
-                <li><a href="turma.html">Turmas</a></li>
-                <li><a href="usuario.html">Usuários</a></li>
-                <li><a href="materiais.html">Materiais</a></li>
-                <li><a href="sobre.html">Sobre Nós</a></li>
-                <li><a href="login.html">Sair</a></li>
+                <li><a href="index">Início</a></li>
+                <li><a href="eventos">Eventos</a></li>
+                <li><a href="turma">Turmas</a></li>
+                <li><a href="usuario">Usuários</a></li>
+                <li><a href="materiais">Materiais</a></li>
+                <li><a href="sobre">Sobre Nós</a></li>
+                <li><a href="login">Sair</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <h1>Galeria de Fotos</h1>
-        <div class="gallery">
-            <!-- Exemplo de fotos cadastradas -->
-            <div class="photo">
-                <img src="/imagens/paginas/fotos/foto1.jpg" alt="Foto 1">
-                <p>Evento A - 10/2024</p>
-            </div>
-            <div class="photo">
-                <img src="/imagens/paginas/fotos/foto2.png" alt="Foto 2">
-                <p>Evento B - 11/2024</p>
-            </div>
-            <div class="photo">
-                <img src="/imagens/paginas/fotos/foto3.jpg" alt="Foto 3">
-                <p>Curso de Informática - 09/2024</p>
-            </div>
-            <!-- Outras fotos -->
+        <div id="gallery" class="gallery">
+            <!-- Fotos serão carregadas aqui dinamicamente -->
         </div>
     </main>
+
+    <script>
+        // Função para carregar as fotos do backend
+        function carregarFotos() {
+            fetch('/api/fotos')
+                .then(response => response.json())
+                .then(data => {
+                    const gallery = document.getElementById('gallery');
+                    gallery.innerHTML = ''; // Limpa o conteúdo existente
+
+                    if (data.fotos && data.fotos.length > 0) {
+                        data.fotos.forEach(foto => {
+                            // Cria os elementos HTML para cada foto
+                            const photoDiv = document.createElement('div');
+                            photoDiv.classList.add('photo');
+
+                            const img = document.createElement('img');
+                            img.src = foto.CaminhoFoto; // Caminho da foto no servidor
+                            img.alt = foto.Descricao || 'Foto';
+
+                            const caption = document.createElement('p');
+                            caption.textContent = foto.Descricao || 'Sem descrição';
+
+                            // Adiciona os elementos ao container
+                            photoDiv.appendChild(img);
+                            photoDiv.appendChild(caption);
+                            gallery.appendChild(photoDiv);
+                        });
+                    } else {
+                        gallery.innerHTML = '<p>Nenhuma foto encontrada.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar fotos:', error);
+                });
+        }
+
+        // Carrega as fotos ao carregar a página
+        window.onload = carregarFotos;
+    </script>
 </body>
 </html>

@@ -12,13 +12,13 @@
         <div class="logo">Clicando na Terceira Idade</div>
         <nav>
             <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="fotos.html">Fotos</a></li>
-                <li><a href="turma.html">Turmas</a></li>
-                <li><a href="usuario.html">Usuários</a></li>
-                <li><a href="materiais.html">materiais</a></li>
-                <li><a href="sobre.html">Sobre Nós</a></li>
-                <li><a href="login.html">Sair</a></li>
+                <li><a href="index">Início</a></li>
+                <li><a href="fotos">Fotos</a></li>
+                <li><a href="turma">Turmas</a></li>
+                <li><a href="usuario">Usuários</a></li>
+                <li><a href="materiais">Materiais</a></li>
+                <li><a href="sobre">Sobre Nós</a></li>
+                <li><a href="login">Sair</a></li>
             </ul>
         </nav>
     </header>
@@ -31,34 +31,58 @@
             <input type="date" id="searchDate" class="filter-input">
         </form>
 
-        <div class="event">
-            <div class="event-header">
-                <p class="event-date">01/01/2024</p>
-                <p class="event-title">Evento 1</p>
-            </div>
-            <p class="event-description">Descrição do evento 1.</p>
-        </div>
-        <div class="event">
-            <div class="event-header">
-                <p class="event-date">02/01/2024</p>
-                <p class="event-title">Evento 2</p>
-            </div>
-            <p class="event-description">Descrição do evento 2.</p>
-        </div>
-        <div class="event">
-            <div class="event-header">
-                <p class="event-date">03/01/2024</p>
-                <p class="event-title">Evento 3</p>
-            </div>
-            <p class="event-description">Descrição do evento 3.</p>
-        </div>
-        <div class="event">
-            <div class="event-header">
-                <p class="event-date">04/01/2024</p>
-                <p class="event-title">Evento 4</p>
-            </div>
-            <p class="event-description">Descrição do evento 4.</p>
-        </div>
+        <div id="eventosContainer"></div> <!-- Aqui os eventos serão carregados -->
     </div>
+
+    <script>
+        // Função para carregar eventos do backend
+        function carregarEventos() {
+            fetch('/api/eventos')  // Chama a rota que retorna os eventos
+                .then(response => response.json())
+                .then(data => {
+                    const eventosContainer = document.getElementById('eventosContainer');
+                    eventosContainer.innerHTML = '';  // Limpa qualquer conteúdo existente
+
+                    // Verifica se existem eventos
+                    if (data.eventos && data.eventos.length > 0) {
+                        data.eventos.forEach(evento => {
+                            // Cria o HTML para cada evento
+                            const eventoDiv = document.createElement('div');
+                            eventoDiv.classList.add('event');
+                            
+                            const eventHeader = document.createElement('div');
+                            eventHeader.classList.add('event-header');
+
+                            const eventDate = document.createElement('p');
+                            eventDate.classList.add('event-date');
+                            eventDate.textContent = new Date(evento.DataEvento).toLocaleDateString('pt-BR');  // Formata a data
+
+                            const eventTitle = document.createElement('p');
+                            eventTitle.classList.add('event-title');
+                            eventTitle.textContent = evento.NomeEvento;
+
+                            const eventDescription = document.createElement('p');
+                            eventDescription.classList.add('event-description');
+                            eventDescription.textContent = evento.Descricao || 'Sem descrição disponível';  // Descrição pode ser nula
+
+                            // Adiciona o conteúdo aos elementos
+                            eventHeader.appendChild(eventDate);
+                            eventHeader.appendChild(eventTitle);
+                            eventoDiv.appendChild(eventHeader);
+                            eventoDiv.appendChild(eventDescription);
+                            eventosContainer.appendChild(eventoDiv);
+                        });
+                    } else {
+                        eventosContainer.innerHTML = '<p>Nenhum evento encontrado.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar eventos:', error);
+                });
+        }
+
+        // Carrega os eventos ao carregar a página
+        window.onload = carregarEventos;
+    </script>
 </body>
 </html>

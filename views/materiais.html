@@ -5,20 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/paginas/materiais.css">
     <title>Atividades - Clicando na Terceira Idade</title>
-    <script src="/js/paginas/materiais.js" defer></script>
 </head>
 <body>
     <header>
         <div class="logo">Clicando na Terceira Idade</div>
         <nav>
             <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="fotos.html">Fotos</a></li>
-                <li><a href="turma.html">Turmas</a></li>
-                <li><a href="usuario.html">Usuários</a></li>
-                <li><a href="eventos.html">Eventos</a></li>
-                <li><a href="sobre.html">Sobre Nós</a></li>
-                <li><a href="login.html">Sair</a></li>
+                <li><a href="index">Início</a></li>
+                <li><a href="fotos">Fotos</a></li>
+                <li><a href="turma">Turmas</a></li>
+                <li><a href="usuario">Usuários</a></li>
+                <li><a href="eventos">Eventos</a></li>
+                <li><a href="sobre">Sobre Nós</a></li>
+                <li><a href="login">Sair</a></li>
             </ul>
         </nav>
     </header>
@@ -43,24 +42,72 @@
                         <th>Slides</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Aula de Informática Básica</td>
-                        <td>Introdução ao uso do computador e internet.</td>
-                        <td>10/11/2024</td>
-                        <td><a href="aula-informatica.pdf" download>Baixar PDF</a></td>
-                        <td><a href="aula-informatica.pptx" download>Baixar Slides</a></td>
-                    </tr>
-                    <tr>
-                        <td>Oficina de Redes Sociais</td>
-                        <td>Como utilizar redes sociais para se conectar com amigos e familiares.</td>
-                        <td>12/11/2024</td>
-                        <td><a href="oficina-redes.pdf" download>Baixar PDF</a></td>
-                        <td><a href="oficina-redes.pptx" download>Baixar Slides</a></td>
-                    </tr>
+                <tbody id="material-table-body">
+                    <!-- Materiais serão carregados aqui dinamicamente -->
                 </tbody>
             </table>
         </div>
     </main>
+
+    <script>
+        // Função para carregar materiais do backend
+        function carregarMateriais() {
+            fetch('/api/materiais')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('material-table-body');
+                    tbody.innerHTML = ''; // Limpa o conteúdo existente
+
+                    if (data.materiais && data.materiais.length > 0) {
+                        data.materiais.forEach(material => {
+                            // Cria a linha da tabela
+                            const row = document.createElement('tr');
+
+                            // Cria as células
+                            const tituloCell = document.createElement('td');
+                            tituloCell.textContent = material.Titulo;
+
+                            const descricaoCell = document.createElement('td');
+                            descricaoCell.textContent = material.Descricao;
+
+                            const dataCell = document.createElement('td');
+                            dataCell.textContent = new Date(material.DataDisponibilizacao).toLocaleDateString();
+
+                            const pdfCell = document.createElement('td');
+                            const pdfLink = document.createElement('a');
+                            pdfLink.href = material.CaminhoPDF;
+                            pdfLink.textContent = 'Baixar PDF';
+                            pdfLink.download = true;
+                            pdfCell.appendChild(pdfLink);
+
+                            const slidesCell = document.createElement('td');
+                            const slidesLink = document.createElement('a');
+                            slidesLink.href = material.CaminhoSlides;
+                            slidesLink.textContent = 'Baixar Slides';
+                            slidesLink.download = true;
+                            slidesCell.appendChild(slidesLink);
+
+                            // Adiciona as células à linha
+                            row.appendChild(tituloCell);
+                            row.appendChild(descricaoCell);
+                            row.appendChild(dataCell);
+                            row.appendChild(pdfCell);
+                            row.appendChild(slidesCell);
+
+                            // Adiciona a linha à tabela
+                            tbody.appendChild(row);
+                        });
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="5">Nenhum material encontrado.</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar materiais:', error);
+                });
+        }
+
+        // Carrega os materiais ao carregar a página
+        window.onload = carregarMateriais;
+    </script>
 </body>
 </html>

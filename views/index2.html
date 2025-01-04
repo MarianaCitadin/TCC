@@ -9,7 +9,6 @@
 </head>
 <script>
     // Atualiza o nome do usuário logado
-    
     document.addEventListener('DOMContentLoaded', () => {
         fetch('/usuario/dados')
             .then(response => {
@@ -20,8 +19,8 @@
             })
             .then(data => {
                 console.log('Dados recebidos:', data); // Para depuração no console do navegador
-                const userNameElement = document.getElementById('user-name');
-                userNameElement.textContent = data.nomeUsuario || 'Usuário';
+                const userNameElement = document.querySelector('.user-greeting');
+                userNameElement.textContent = `Olá, ${data.nomeUsuario || 'Usuário'}`; // Preenche o nome
             })
             .catch(error => console.error('Erro ao buscar nome do usuário:', error));
     });
@@ -43,13 +42,13 @@
         
         <!-- Lado Direito -->
         <div class="right-side">
-            <a href="adicionarEventos.html"><button class="menu-btn">Adicionar Eventos</button></a>
-            <a href="cadastrarFotos.html"><button class="menu-btn">Adicionar Fotos</button></a>
-            <a href="cadastrarTurmas.html"><button class="menu-btn">Cadastrar Turmas</button></a>
-            <a href="listagemUsuarios.html"><button class="menu-btn">Usuários</button></a>
-            <a href="turma.html"><button class="menu-btn">Turma</button></a>
+            <a href="adicionarEventos"><button class="menu-btn">Adicionar Eventos</button></a>
+            <a href="cadastrarFotos"><button class="menu-btn">Adicionar Fotos</button></a>
+            <a href="cadastrarTurmas"><button class="menu-btn">Cadastrar Turmas</button></a>
+            <a href="cadastroAtividades"><button class="menu-btn">Cadastrar Atividades</button>
+            <a href="listagemUsuarios"><button class="menu-btn">Usuários</button></a>
+            <a href="turma"><button class="menu-btn">Turma</button></a>
         </div>
     </div>
 </body>
 </html>
-

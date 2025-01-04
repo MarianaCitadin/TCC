@@ -4,13 +4,13 @@ const eventosController = require('../controllers/eventosController');
 
 
 // Definindo as rotas
-router.get('/', eventosController.getAllCadastro);
+router.get('/', eventosController.getAlleventos);
 router.get('/new', eventosController.renderCreateForm);
-router.post('/', eventosController.createCadastro);
-router.get('/:id', eventosController.getCadastroById);
+router.post('/', eventosController.createeventos);
+router.get('/:id', eventosController.geteventosById);
 router.get('/:id/edit', eventosController.renderEditForm);
-router.put('/:id', eventosController.updateCadastro);
-router.delete('/:id', eventosController.deleteCadastro);
+router.put('/:id', eventosController.updateeventos);
+router.delete('/:id', eventosController.deleteeventos);
 
 
 

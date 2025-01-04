@@ -134,10 +134,10 @@ app.post('/submit_form', (req, res) => {
     });
 });
 
-app.get('/editarUsuario.html', verificarAutenticacao, (req, res) => {
+app.get('/editarUsuario', verificarAutenticacao, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'editarUsuario.html'));
 });
-app.post('/usuario/editarUsuario.html', (req, res) => {
+app.post('/usuario/editarUsuario', (req, res) => {
     if (!req.session.usuario) {
         return res.status(401).json({ error: 'Usuário não autenticado.' });
     }
@@ -171,7 +171,7 @@ app.post('/usuario/editarUsuario.html', (req, res) => {
 
 
 
-app.get('/adicionarEventos.html', (req, res) => {
+app.get('/adicionarEventos', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/adicionarEventos.html'));
 });
 
@@ -221,25 +221,81 @@ app.delete('/excluirEvento/:id', (req, res) => {
     });
 });
 
-
-app.get('/cadastrarFotos.html', (req, res) => {
+//rota cadastrar Fotos 
+app.get('/cadastrarFotos', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'cadastrarFotos.html'));
 });
 
+//rota para cadastrar turma 
+app.get('/cadastrarTurmas', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'cadastrarTurmas.html'));
+});
 
 
+//rota para cadastrar atividades/audiovisual
+app.get('/cadastroAtividades', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'cadastroAtividades.html'));
+});
+
+//rota para participantes 
+app.get('/listagemUsuarios', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'listagemUsuarios.html'));
+});
+
+// Rota para obter usuários
+app.get('/usuarios', (req, res) => {
+    const query = 'SELECT * FROM tbusuario'; // Ajuste a tabela e os campos conforme seu banco de dados
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar dados:', err);
+            return res.status(500).send('Erro ao buscar dados');
+        }
+
+        // Agrupar usuários por CategoriaID
+        const usuariosPorCategoria = results.reduce((acc, usuario) => {
+            const categoria = usuario.CategoriaID;
+            if (!acc[categoria]) {
+                acc[categoria] = [];
+            }
+            acc[categoria].push(usuario);
+            return acc;
+        }, {});
+
+        // Retornar os dados agrupados por categoria
+        res.json(usuariosPorCategoria);
+    });
+});
+
+    
+// Servir os arquivos estáticos (HTML, CSS, JS)
+app.use(express.static('public'));
 
 
+//rota para projeto
+app.get('/turma', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'turma.html'));
+});
 
+//rota para eventos
+app.get('/eventos', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'eventos.html'));
+});
 
+//rota para sobre nos 
+app.get('/sobre', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'sobre.html'));
+});
 
+//rota para fotos 
+app.get('/fotos', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'fotos.html'));
+});
 
-
-
-
-
-
-
+//rota para materiais  
+app.get('/materiais', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'materiais.html'));
+});
 
 
 

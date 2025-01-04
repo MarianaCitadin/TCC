@@ -6,65 +6,81 @@
     <link rel="stylesheet" href="/css/paginas/listagemUsuarios.css">
     <title>Listagem de Usuários - Clicando na Terceira Idade</title>
     <script src="/js/paginas/listagemUsuarios.js" defer></script>
-
 </head>
 <body>
     <header>
         <div class="logo">Clicando na Terceira Idade</div>
         <nav>
             <ul>
-                <li><a href="index2.html">Início</a></li>
-                <li><a href="adicionarEventos.html">Eventos</a></li>
-                <li><a href="cadastroAtividades.html">Atividades</a></li>
-                <li><a href="cadastrarTurmas.html">Turmas</a></li>
-                <li><a href="cadastrarFotos.html">Fotos</a></li>
-                <li><a href="login.html">Sair</a></li>
+                <li><a href="index2">Início</a></li>
+                <li><a href="adicionarEventos">Eventos</a></li>
+                <li><a href="cadastroAtividades">Atividades</a></li>
+                <li><a href="cadastrarTurmas">Turmas</a></li>
+                <li><a href="cadastrarFotos">Fotos</a></li>
+                <li><a href="login">Sair</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <h1>Lista de Usuários:</h1>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Telefone</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>João Silva</td>
-                    <td>joao.silva@example.com</td>
-                    <td>(11) 1234-5678</td>
-                    <td>
-                        <button class="edit-btn">Editar</button>
-                        <button class="delete-btn">Excluir</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Maria Oliveira</td>
-                    <td>maria.oliveira@example.com</td>
-                    <td>(21) 8765-4321</td>
-                    <td>
-                        <button class="edit-btn">Editar</button>
-                        <button class="delete-btn">Excluir</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Carlos Santos</td>
-                    <td>carlos.santos@example.com</td>
-                    <td>(31) 5566-7788</td>
-                    <td>
-                        <button class="edit-btn">Editar</button>
-                        <button class="delete-btn">Excluir</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <h1>Lista de Usuários por Categoria:</h1>
+
+        <div id="usuarios-categorias">
+            <!-- As categorias e usuários serão injetados aqui via JavaScript -->
+        </div>
     </main>
+
+    <script>
+        // Função para buscar os dados dos usuários agrupados por categoria via AJAX
+        fetch('/usuarios')
+            .then(response => response.json())
+            .then(data => {
+                const categoriasContainer = document.querySelector('#usuarios-categorias');
+                
+                // Iterar sobre cada categoria (id da categoria)
+                Object.keys(data).forEach(categoriaId => {
+                    const categoria = data[categoriaId];
+                    
+                    // Criar a seção de categoria
+                    const categoriaSection = document.createElement('section');
+                    categoriaSection.classList.add('categoria');
+                    categoriaSection.innerHTML = `<h2>Categoria ${categoriaId}</h2>`;
+                    
+                    // Criar a tabela para essa categoria
+                    const table = document.createElement('table');
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    `;
+                    
+                    // Adicionar os usuários dessa categoria
+                    const tbody = table.querySelector('tbody');
+                    categoria.forEach(usuario => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${usuario.Nome}</td>
+                            <td>${usuario.Email}</td>
+                            <td>${usuario.Telefone}</td>
+                           
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    // Adicionar a tabela à seção da categoria
+                    categoriaSection.appendChild(table);
+                    categoriasContainer.appendChild(categoriaSection);
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao carregar os dados dos usuários:', error);
+            });
+    </script>
 </body>
 </html>

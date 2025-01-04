@@ -1,3 +1,4 @@
+/* Resetando margens e aplicando box-sizing */
 * {
   margin: 0;
   padding: 0;
@@ -15,12 +16,14 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* Wrapper para o layout da página de login */
 .login-wrapper {
   display: flex;
   width: 100%;
-  height: 100vh; /* Garante que ocupe toda a altura da tela */
+  height: 100vh; /* Ocupa toda a altura da tela */
 }
 
+/* Estilo para o lado esquerdo */
 .left-side {
   flex: 1;
   display: flex;
@@ -43,6 +46,7 @@ body {
   text-align: center;
 }
 
+/* Estilo para o lado direito */
 .login-container {
   flex: 1;
   display: flex;
@@ -53,9 +57,10 @@ body {
   color: #ffffff;
 }
 
+/* Conteúdo central da área de login */
 .login-content {
   width: 80%;
-  max-width: 450px; /* Maior largura para os campos */
+  max-width: 450px; /* Limita a largura máxima */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,33 +72,46 @@ body {
   font-size: 24px;
 }
 
-.login-content input[type="text"],
+/* Estilo dos campos de e-mail e senha */
+.login-content input[type="email"],
 .login-content input[type="password"] {
-  width: 100%; /* Campos maiores e mais largos */
+  width: 100%; /* Campos ocupam toda a largura */
   padding: 15px;
-  margin: 15px 0;
-  border: none;
+  margin: 10px 0; /* Espaçamento menor entre os campos */
+  border: 2px solid #ddd;
   border-radius: 10px;
   font-size: 16px;
   text-align: center;
 }
 
+/* Estilo dos botões */
+.login-content button,
 .login-content input[type="submit"] {
   background-color: #ffffff;
   color: #0d7c0d;
   border: none;
-  padding: 15px;
+  padding: 12px 20px;
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
-  width: 70%;
-  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Botão "Entrar" com espaçamento ajustado */
+.login-content input[type="submit"] {
+  width: 50%; /* Botão mais estreito */
+  font-size: 14px;
+  padding: 10px 20px;
+  margin: 30px auto 0; /* Separação maior do último campo */
+}
+
+.login-content button:hover,
 .login-content input[type="submit"]:hover {
   background-color: #e0e0e0;
+  transform: scale(1.05);
 }
 
+/* Texto para link de cadastro */
 .signup-text {
   margin-top: 20px;
   text-align: center;
@@ -108,3 +126,33 @@ body {
 .signup-text a:hover {
   text-decoration: underline;
 }
+
+/* Estilo do botão de "Recuperar Senha" */
+.recover-btn {
+  background-color: #ffffff;
+  color: #0d7c0d;
+  border: 2px solid #0d7c0d; /* Adicionando uma borda para um efeito mais moderno */
+  padding: 14px 25px; /* Aumentei o padding para tornar o botão mais visível */
+  border-radius: 12px; /* Bordas mais arredondadas */
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%; /* Largura total */
+  font-size: 16px; /* Tamanho da fonte igual ao do botão "Cadastrar" */
+  transition: all 0.3s ease; /* Transição mais suave */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para o botão */
+}
+
+/* Efeito ao passar o mouse sobre o botão de "Recuperar Senha" */
+.recover-btn:hover {
+  background-color: #e6f9e6; /* Cor de fundo mais suave no hover */
+  transform: translateY(-3px); /* Levanta o botão um pouco */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Aumenta a sombra para dar um efeito de destaque */
+}
+
+/* Foco no botão, caso o usuário clique ou use o teclado */
+.recover-btn:focus {
+  outline: none; /* Remove a borda padrão do foco */
+  border-color: #28a745; /* Muda a cor da borda para um verde mais forte quando em foco */
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* Adiciona uma sombra verde quando o botão está em foco */
+}
+

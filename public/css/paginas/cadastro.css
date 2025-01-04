@@ -1,10 +1,11 @@
 body {
     font-family: Arial, sans-serif;
     padding-top: 80px; /* Espaço para o cabeçalho fixo */
+    background-color: #0d7c0d; /* Fundo verde escuro */
 }
 
 .container {
-    background-color: #0d7c0d;
+    background-color: #ffffff; /* Fundo branco */
     padding: 40px;
     border-radius: 12px;
     max-width: 900px;
@@ -17,7 +18,7 @@ body {
 
 h2 {
     text-align: center;
-    color: white;
+    color: #0d7c0d; /* Verde escuro */
     margin-bottom: 20px;
     font-size: 24px;
     text-transform: uppercase;
@@ -37,7 +38,7 @@ h2 {
 
 label {
     margin-bottom: 5px;
-    color: white;
+    color: #0d7c0d; /* Verde escuro */
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
@@ -45,19 +46,20 @@ label {
 
 input, select {
     padding: 10px;
-    border: 1px solid #cccccc;
+    border: 1px solid #81c784; /* Borda verde claro */
     border-radius: 5px;
     width: 100%; /* Todos os campos com a mesma largura */
     font-size: 14px;
-    background-color: #ffffff;
+    background-color: #e8f5e9; /* Fundo verde claro */
+    color: #2e7d32; /* Texto verde escuro */
     margin-bottom: 15px;
     box-sizing: border-box; /* Inclui padding e bordas no tamanho total */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input:focus, select:focus {
-    border-color: #4caf50;
-    box-shadow: 0 0 6px rgba(76, 175, 80, 0.4);
+    border-color: #66bb6a; /* Borda mais clara ao focar */
+    box-shadow: 0 0 6px rgba(102, 187, 106, 0.4); /* Sombra suave em verde claro */
     outline: none;
 }
 
@@ -79,26 +81,26 @@ input:focus, select:focus {
 }
 
 .cadastrar {
-    background-color: white;
-    color: #0d7c0d;
-    border: 1px solid #0d7c0d;
+    background-color: #e8f5e9; /* Fundo verde claro */
+    color: #2e7d32; /* Texto verde escuro */
+    border: 1px solid #81c784; /* Borda verde claro */
 }
 
 .cadastrar:hover {
-    background-color: #e8f5e9;
-    color: #0d7c0d;
+    background-color: #c8e6c9; /* Fundo verde mais forte */
+    color: #2e7d32; /* Texto verde escuro */
     transform: scale(1.02);
 }
 
 .deletar {
-    background-color: white;
-    color: #dc3545;
-    border: 1px solid #dc3545;
+    background-color: #e8f5e9; /* Fundo verde claro */
+    color: #d32f2f; /* Texto vermelho escuro */
+    border: 1px solid #d32f2f; /* Borda vermelha */
 }
 
 .deletar:hover {
-    background-color: #fdecea;
-    color: #dc3545;
+    background-color: #f8d7da; /* Fundo vermelho claro */
+    color: #d32f2f; /* Texto vermelho escuro */
     transform: scale(1.02);
 }
 

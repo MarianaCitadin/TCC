@@ -17,6 +17,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 200);
     }
 
+    // Busca o nome do usuário no backend e exibe na página
+    function loadUserName() {
+        fetch('/usuario/dados')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar dados do usuário.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const userGreeting = document.querySelector(".user-greeting");
+                if (userGreeting) {
+                    userGreeting.textContent = `Olá, ${data.nome || 'Usuário'}!`;
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao carregar o nome do usuário:', error);
+            });
+    }
+
     // Chama a animação de fade-in assim que a página for carregada
     fadeIn();
 
@@ -34,4 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Carrega o nome do usuário dinamicamente
+    loadUserName();
 });
