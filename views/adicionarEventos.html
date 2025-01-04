@@ -41,19 +41,22 @@
         <button class="add-event" title="Adicionar novo evento">Adicionar Evento</button>
 
         <!-- Formulário de Adicionar Evento -->
-        <form id="eventForm">
+        <form id="eventForm" action="/adicionarEvento" method="POST">
             <label for="title">Título:</label>
-            <input type="text" id="title" required>
+            <input type="text" id="title" name="NomeEvento" required>
             
             <label for="date">Data/Hora:</label>
-            <input type="datetime-local" id="date" required>
+            <input type="datetime-local" id="date" name="DataEvento" required>
             
             <label for="location">Local:</label>
-            <input type="text" id="location" required>
+            <input type="text" id="location" name="LocalEvento" required>
+            
+            <input type="hidden" id="projectId" name="ProjetoID" value="">
             
             <button type="submit">Salvar</button>
             <button type="button" id="cancelForm">Cancelar</button>
         </form>
+        
     </main>
 </body>
 </html>

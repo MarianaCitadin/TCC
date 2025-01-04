@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'M@riC2804',
+    password: '',
     database: 'clicandonaterceiraidade'
 });
 
@@ -173,9 +173,10 @@ app.post('/usuario/editarUsuario', (req, res) => {
 app.get('/adicionarEventos', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/adicionarEventos.html'));
 });
-
+ 
 // Rota para adicionar um evento
 app.post('/adicionarEvento', (req, res) => {
+    console.log("aqui");
     const { NomeEvento, DataEvento, LocalEvento, ProjetoID } = req.body;
 
     // Verifica se todos os campos obrigatórios foram preenchidos
