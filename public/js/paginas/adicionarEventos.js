@@ -9,10 +9,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
             <td>${title}</td>
-            <td>${date}</td>
+            <td>${new Date(date).toLocaleString('pt-BR')}</td>
             <td>${location}</td>
         `;
         eventTable.appendChild(newRow);
+    }
+
+    // Função para carregar eventos do backend
+    function loadEvents() {
+        fetch('/ListaEventos')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar eventos.');
+                }
+                return response.json();
+            })
+            .then(events => {
+                events.forEach(event => {
+                    addEventToTable(event.NomeEvento, event.DataEvento, event.LocalEvento);
+                });
+            })
+            .catch(error => console.error('Erro ao carregar eventos:', error));
     }
 
     // Exibir o formulário e esconder a tabela
@@ -36,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = document.getElementById('date').value;
         const location = document.getElementById('location').value;
 
-        // Enviar os dados ao backend
         try {
             const response = await fetch('/adicionarEvento', {
                 method: 'POST',
@@ -72,4 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Ocorreu um erro ao salvar o evento. Tente novamente.');
         }
     });
+
+    // Carregar os eventos ao abrir a página
+    loadEvents();
 });

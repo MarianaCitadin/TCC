@@ -201,6 +201,21 @@ app.post('/adicionarEvento', (req, res) => {
     });
 });
 
+
+app.get('/ListaEventos', (req, res) => {
+    const query = `SELECT NomeEvento, DataEvento, LocalEvento FROM TbEventos`;
+
+    db.execute(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar eventos:', err);
+            return res.status(500).json({ error: 'Erro ao buscar eventos.' });
+        }
+
+        res.json(results); // Retorna os eventos em formato JSON
+    });
+});
+
+
 // Rota para excluir um evento
 app.delete('/excluirEvento/:id', (req, res) => {
     const { id } = req.params;
