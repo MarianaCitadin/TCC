@@ -1,32 +1,33 @@
-// Função para validar o formulário
-function validarFormulario(event) {
-    event.preventDefault(); // Impede o envio do formulário
+async function validarFormulario(event) {
+    event.preventDefault();
 
-    // Pegando os valores dos campos
     const nomeTurma = document.getElementById('nomeTurma').value.trim();
-    const professor = document.getElementById('professor').value.trim();
     const horario = document.getElementById('horario').value.trim();
     const dataInicio = document.getElementById('dataInicio').value;
     const dataFim = document.getElementById('dataFim').value;
 
-    // Verificando se todos os campos estão preenchidos
-    if (!nomeTurma || !professor || !horario || !dataInicio || !dataFim) {
-        alert('Por favor, preencha todos os campos do formulário.');
-        return;
-    }
+    try {
+        const response = await fetch('/cadastrarTurmas', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nomeTurma,
+                horario,
+                dataInicio,
+                dataFim,
+            }),
+        });
 
-    // Verificando se a data de início é anterior à data de término
-    if (new Date(dataInicio) > new Date(dataFim)) {
-        alert('A data de início não pode ser posterior à data de término.');
-        return;
-    }
+        if (!response.ok) {
+            throw new Error('Erro ao cadastrar a turma.');
+        }
 
-    // Se tudo estiver correto, mostra uma mensagem de sucesso
-    alert('Turma cadastrada com sucesso!');
-    
-    // Opcional: após a validação, você pode enviar o formulário (aqui é apenas uma simulação)
-    // document.querySelector('.turma-form').submit();
+        const result = await response.text();
+        alert(result);
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Ocorreu um erro ao cadastrar a turma.');
+    }
 }
-
-// Adicionando o evento de submit ao formulário
-document.querySelector('.turma-form').addEventListener('submit', validarFormulario);

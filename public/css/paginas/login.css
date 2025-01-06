@@ -23,7 +23,8 @@ body {
   height: 100vh; /* Ocupa toda a altura da tela */
 }
 
-/* Estilo para o lado esquerdo */
+
+/* Lado Esquerdo */
 .left-side {
   flex: 1;
   display: flex;
@@ -35,14 +36,14 @@ body {
 }
 
 .left-side img {
-  max-width: 60%;
+  max-width: 50%;
   height: auto;
   margin-bottom: 20px;
 }
 
 .left-side h1 {
   color: #0d7c0d;
-  font-size: 24px;
+  font-size: 28px;
   text-align: center;
 }
 

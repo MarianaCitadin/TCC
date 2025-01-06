@@ -1,38 +1,52 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Selecionando o formulário e os campos
     const form = document.querySelector(".activity-form");
-    const titleInput = document.getElementById("title");
-    const descriptionInput = document.getElementById("description");
-    const dateInput = document.getElementById("date");
-    const pdfInput = document.getElementById("pdf-upload");
-    const submitBtn = document.querySelector(".submit-btn");
+    const NomeArquivoInput = document.getElementById("nomeArquivo");
+    const TipoArquivoInput = document.getElementById("tipoArquivo");
+    const DataRegistroInput = document.getElementById("dataRegistro");
+    const DescricaoInput = document.getElementById("descricao");
+   
 
-    // Função para validar e enviar o formulário
     form.addEventListener("submit", function(event) {
         event.preventDefault(); // Previne o envio padrão do formulário
 
         // Coleta os dados dos campos do formulário
-        const title = titleInput.value.trim();
-        const description = descriptionInput.value.trim();
-        const date = dateInput.value;
-        const pdfFile = pdfInput.files[0];
+        const nomeArquivo = NomeArquivoInput.value.trim();
+        const tipoArquivo = TipoArquivoInput.value.trim();
+        const dataRegistro = DataRegistroInput.value;
+        const descricao = DescricaoInput.value;
+    
 
         // Valida se todos os campos foram preenchidos
-        if (!title || !description || !date || !pdfFile) {
+        if (!nomeArquivo || !tipoArquivo || !dataRegistro || !descricao) {
             alert("Por favor, preencha todos os campos e selecione um arquivo PDF.");
             return;
         }
 
-        // Valida se o arquivo selecionado é um PDF
-        if (pdfFile && pdfFile.type !== "application/pdf") {
-            alert("O arquivo selecionado não é um PDF. Por favor, selecione um arquivo PDF.");
-            return;
-        }
+        // Cria um FormData para enviar o arquivo junto com os outros dados
+        const formData = new FormData();
+        formData.append("nomeArquivo", nomeArquivo);
+        formData.append("tipoArquivo", tipoArquivo);
+        formData.append("dataRegistro", dataRegistro);
+        formData.append("descricao", descricao);
+      
 
-        // Simulação de envio bem-sucedido (pode ser substituída por um envio real para o servidor)
-        alert("Atividade cadastrada com sucesso!");
-
-        // Limpar os campos após o envio (opcional)
-        form.reset();
+        // Envia os dados para o servidor via AJAX
+        fetch('/cadastrar-atividade', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Atividade cadastrada com sucesso!");
+                form.reset(); // Limpar os campos após o envio
+            } else {
+                alert("Erro ao cadastrar a atividade. Tente novamente.");
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao enviar os dados:', error);
+            alert("Erro ao enviar os dados. Tente novamente.");
+        });
     });
 });

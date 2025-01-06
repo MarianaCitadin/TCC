@@ -52,6 +52,9 @@ CREATE TABLE TbTurma (
     TurmaID INT AUTO_INCREMENT PRIMARY KEY,
     NomeTurma VARCHAR(255) NOT NULL,
     ProjetoID INT,
+    horario VARCHAR(255);
+    dataInicio DATE,
+    dataFim DATE, 
     LimiteAlunos INT DEFAULT 20,
     FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
@@ -71,20 +74,23 @@ CREATE TABLE TbAudiovisuais (
     AudiovisualID INT AUTO_INCREMENT PRIMARY KEY,
     NomeArquivo VARCHAR(255) NOT NULL,
     TipoArquivo VARCHAR(50),
+    Descricao TEXT NOT NULL,
+    DataRegistro DATE,
     ProjetoID INT,
     FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
--- Tabela de Registros
+ -- Tabela Registros
 CREATE TABLE TbRegistros (
     RegistroID INT AUTO_INCREMENT PRIMARY KEY,
-    UsuarioID INT,
-    ProjetoID INT,
-    Descricao TEXT,
-    DataRegistro DATE NOT NULL,
-    FOREIGN KEY (UsuarioID) REFERENCES TbUsuario(UsuarioID),
-    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
+    Titulo VARCHAR(255) NOT NULL,
+    Descricao TEXT NOT NULL,
+    DataRegistro DATE,
+    Foto VARCHAR(255) NOT NULL;
+
 );
+
+
 
 insert into tbcategoria(CategoriaID, NomeCategoria) values (1, 'Aluno');
 

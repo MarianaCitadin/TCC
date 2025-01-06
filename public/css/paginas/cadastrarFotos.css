@@ -119,3 +119,19 @@ h1 {
 .submit-btn:hover {
     background-color: #388e3c; /* Verde mais escuro */
 }
+
+/* Campo de data */
+.foto-form input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: white; /* Garante que o fundo seja branco, igual aos outros campos */
+}
+
+/* Estilo para o campo de data ao focar */
+.foto-form input[type="date"]:focus {
+    border-color: #4caf50; /* Cor verde quando em foco */
+    outline: none; /* Remove o contorno padrão do navegador */
+}

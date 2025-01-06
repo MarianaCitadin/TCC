@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const tituloInput = document.getElementById("titulo");
     const descricaoInput = document.getElementById("descricao");
     const fotoInput = document.getElementById("foto");
+    const DataRegistroInput = document.getElementById("DataRegistro");
     const submitBtn = document.querySelector(".submit-btn");
 
     // Função para exibir a prévia da foto
@@ -46,22 +47,42 @@ document.addEventListener("DOMContentLoaded", function() {
         const titulo = tituloInput.value.trim();
         const descricao = descricaoInput.value.trim();
         const foto = fotoInput.files[0];
+        const DataRegistro = DataRegistroInput.value.trim();
 
-        if (!titulo || !descricao || !foto) {
+
+        if (!titulo || !descricao || !foto || !DataRegistro) {
             alert("Por favor, preencha todos os campos e selecione uma foto.");
             return;
         }
 
-        // Simulação de envio do formulário
-        alert("Foto adicionada com sucesso!");
-        
-        // Limpar os campos após envio (opcional)
-        form.reset();
+        // Criação de um FormData para enviar os dados via POST
+        const formData = new FormData();
+        formData.append("titulo", titulo);
+        formData.append("descricao", descricao);
+        formData.append("foto", foto);
+        formData.append("DataRegistro", DataRegistro);
 
-        // Limpar a prévia da imagem
-        const previewContainer = document.querySelector(".preview-container");
-        if (previewContainer) {
-            previewContainer.remove();
-        }
+        // Enviar os dados para o servidor usando fetch
+        fetch("/caminho/do/seu/servidor", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Foto adicionada com sucesso!");
+                form.reset();
+                const previewContainer = document.querySelector(".preview-container");
+                if (previewContainer) {
+                    previewContainer.remove();
+                }
+            } else {
+                alert("Erro ao adicionar foto. Tente novamente.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro de rede:", error);
+            alert("Erro ao enviar os dados. Tente novamente.");
+        });
     });
 });
