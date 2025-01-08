@@ -1,41 +1,34 @@
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector(".activity-form");
-    const NomeArquivoInput = document.getElementById("nomeArquivo");
-    const TipoArquivoInput = document.getElementById("tipoArquivo");
-    const DataRegistroInput = document.getElementById("dataRegistro");
-    const DescricaoInput = document.getElementById("descricao");
-   
 
     form.addEventListener("submit", function(event) {
         event.preventDefault(); // Previne o envio padrão do formulário
 
         // Coleta os dados dos campos do formulário
-        const nomeArquivo = NomeArquivoInput.value.trim();
-        const tipoArquivo = TipoArquivoInput.value.trim();
-        const dataRegistro = DataRegistroInput.value;
-        const descricao = DescricaoInput.value;
-    
+        const title = document.getElementById("title").value.trim();
+        const description = document.getElementById("description").value.trim();
+        const date = document.getElementById("date").value;
+        const pdfFile = document.getElementById("pdf-upload").files[0]; // Pega o arquivo PDF
 
         // Valida se todos os campos foram preenchidos
-        if (!nomeArquivo || !tipoArquivo || !dataRegistro || !descricao) {
+        if (!title || !description || !date || !pdfFile) {
             alert("Por favor, preencha todos os campos e selecione um arquivo PDF.");
             return;
         }
 
         // Cria um FormData para enviar o arquivo junto com os outros dados
         const formData = new FormData();
-        formData.append("nomeArquivo", nomeArquivo);
-        formData.append("tipoArquivo", tipoArquivo);
-        formData.append("dataRegistro", dataRegistro);
-        formData.append("descricao", descricao);
-      
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("date", date);
+        formData.append("pdf-upload", pdfFile); // Nome do campo deve ser 'pdf-upload'
 
         // Envia os dados para o servidor via AJAX
         fetch('/cadastrar-atividade', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(response => response.json()) // Resposta como JSON
         .then(data => {
             if (data.success) {
                 alert("Atividade cadastrada com sucesso!");

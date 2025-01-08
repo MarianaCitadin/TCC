@@ -27,7 +27,7 @@
     
         <!-- Filtro de pesquisa -->
         <div class="filter-container">
-            <input type="text" id="filter-input" placeholder="Pesquisar por título..." />
+            <input type="text" id="filter-input" name="filter" placeholder="Pesquisar por título..." />
         </div>
     
         <!-- Tabela de atividades -->
@@ -38,7 +38,7 @@
                         <th>Título</th>
                         <th>Descrição</th>
                         <th>Data</th>
-                        <th>PDF</th>
+                        <th>Materiais</th>
                         <th>Slides</th>
                     </tr>
                 </thead>
@@ -108,6 +108,23 @@
 
         // Carrega os materiais ao carregar a página
         window.onload = carregarMateriais;
+
+        // Filtro da tabela baseado no título
+        document.getElementById('filter-input').addEventListener('input', function() {
+            const filterText = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#material-table-body tr');
+
+            rows.forEach(row => {
+                const titleCell = row.querySelector('td:nth-child(1)');
+                const title = titleCell.textContent.toLowerCase();
+
+                if (title.includes(filterText)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
     </script>
 </body>
 </html>

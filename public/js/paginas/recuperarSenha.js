@@ -1,38 +1,41 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
-    // Variáveis para os campos de senha e ícones de exibição
-    const togglePassword1 = document.querySelectorAll('.toggle-password')[0];
-    const togglePassword2 = document.querySelectorAll('.toggle-password')[1];
-    const senhaField = document.getElementById('senha');
-    const confirmarSenhaField = document.getElementById('confirmar-senha');
-    const form = document.querySelector('form');
-    
-    // Função para alternar a visibilidade da senha
-    function togglePasswordVisibility(inputField, toggleIcon) {
-        toggleIcon.addEventListener('click', function () {
-            // Verifica o tipo do campo e altera entre "password" e "text"
-            const type = inputField.type === "password" ? "text" : "password";
-            inputField.type = type;
-            
-            // Altera a imagem do ícone de olho (ocultar/exibir)
-            toggleIcon.style.backgroundImage = type === "password" 
-                ? "url('eye-icon.png')" 
-                : "url('eye-slash-icon.png')";
-        });
-    }
+    const form = document.getElementById('password-reset-form');
 
-    // Chamando a função de alternância de visibilidade de senha para ambos os campos
-    togglePasswordVisibility(senhaField, togglePassword1);
-    togglePasswordVisibility(confirmarSenhaField, togglePassword2);
+    // Processar envio do formulário
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
 
-    // Função para validar o formulário antes de submeter
-    form.addEventListener('submit', function(event) {
-        // Impede o envio do formulário se as senhas não coincidirem
-        if (senhaField.value !== confirmarSenhaField.value) {
-            event.preventDefault();
-            alert("As senhas não coincidem. Tente novamente.");
-        } else {
-            alert("Senha alterada com sucesso!");
+        const email = document.getElementById('email').value.trim();
+        const senha = document.getElementById('senha').value;
+        const confirmarSenha = document.getElementById('confirmar-senha').value;
+
+        if (!email || !senha || !confirmarSenha) {
+            alert('Por favor, preencha todos os campos.');
+            return;
+        }
+
+        if (senha !== confirmarSenha) {
+            alert('As senhas não coincidem. Tente novamente.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/recuperar-senha', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, novaSenha: senha }),  // Garantir que a senha correta seja enviada
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert(data.message);
+                window.location.href = '/';
+            } else {
+                alert(data.message || 'Erro ao alterar senha.');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao conectar ao servidor.');
         }
     });
 });

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,7 +7,6 @@
     <title>Recuperar Senha</title>
     <link rel="stylesheet" href="/css/paginas/recuperarSenha.css">
     <script src="/js/paginas/recuperarSenha.js" defer></script>
-
 </head>
 <body>
 
@@ -19,24 +19,24 @@
 <!-- Formulário de Recuperação de Senha -->
 <div class="form-container">
     <h1>Recuperar senha</h1>
-    <form>
+    <form id="password-reset-form">
         <label for="email">EMAIL</label>
-        <input type="email" id="email">
+        <input type="email" id="email" required placeholder="Digite seu e-mail">
         
         <label for="senha">SENHA</label>
         <div class="password-field">
-            <input type="password" id="senha">
-            <span class="toggle-password"></span>
+            <input type="password" id="senha" required placeholder="Digite sua nova senha">
+            <span class="toggle-password" data-target="senha"></span>
         </div>
         
         <label for="confirmar-senha">CONFIRMAR SENHA</label>
         <div class="password-field">
-            <input type="password" id="confirmar-senha">
-            <span class="toggle-password"></span>
+            <input type="password" id="confirmar-senha" required placeholder="Confirme sua nova senha">
+            <span class="toggle-password" data-target="confirmar-senha"></span>
         </div>
         
-        <button type="submit">Cadastrar</button>
-        <button type="submit">Cancelar</button>
+        <button type="submit" class="submit-btn">Cadastrar</button>
+        <button type="button" class="cancel-btn" onclick="window.location.href='/'">Cancelar</button>
     </form>
 </div>
 

@@ -74,7 +74,7 @@ const registroController = {
 
     // Renderizar o formulário de criação
     renderCreateForm: (req, res) => {
-        res.sendFile(path.join(__dirname, '../views', 'cadastrarRegistro.html'));
+        res.sendFile(path.join(__dirname, '../views', 'cadastrarFotos.html'));
     },
 
     // Renderizar o formulário de edição

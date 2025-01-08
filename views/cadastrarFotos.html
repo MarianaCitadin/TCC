@@ -26,14 +26,11 @@
         <h1>Adicionar Nova Foto</h1>
         
         <form class="foto-form" action="#" method="post" enctype="multipart/form-data">
-            <label for="titulo">Título da Foto:</label>
-            <input type="text" id="titulo" name="titulo" placeholder="Digite o título da foto" required>
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao" placeholder="Adicione uma breve descrição" rows="4" required></textarea>
 
             <label for="DataRegistro">Data de Registro:</label>
             <input type="date" id="DataRegistro" name="DataRegistro" required><br>            
-
-            <label for="descricao">Descrição:</label>
-            <textarea id="descricao" name="descricao" placeholder="Adicione uma breve descrição" rows="4" required></textarea>
 
             <label for="foto">Selecionar Foto:</label>
             <input type="file" id="foto" name="foto" accept="image/*" required>

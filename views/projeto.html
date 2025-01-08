@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/paginas/cadastrarTurmas.css">
+    <script src="/public/js/paginas/projeto.js" defer></script>
+    <title>Cadastrar Turmas</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Clicando na Terceira Idade</div>
+        <nav>
+            <ul>
+                <li><a href="index2">Início</a></li>
+                <li><a href="adicionarEventos">Eventos</a></li>
+                <li><a href="cadastroAtividades">Atividades</a></li>
+                <li><a href="listagemUsuarios">Usuários</a></li>
+                <li><a href="cadastrarFotos">Fotos</a></li>
+                <li><a href="login">Sair</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Selecionar Ano da Edição</h1>
+
+        <!-- Primeiro formulário para cadastro do projeto -->
+        <form id="form-inicial" class="ano-local-form" action="#" method="post">
+            <label for="anoEdicao">Ano de Edição:</label>
+            <select id="anoEdicao" name="anoEdicao" required>
+                <option value="">Selecione o ano</option>
+                <option value="2025" selected>2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
+            </select>
+
+            <label for="nomeProjeto">Nome do Projeto:</label>
+            <input type="text" id="nomeProjeto" name="nomeProjeto" value="Clicando na Terceira Idade" placeholder="Digite o nome do projeto" required>
+
+            <label for="local">Local:</label>
+            <input type="text" id="local" name="local" value="IFC - Sombrio" placeholder="Digite o local do projeto" required>
+
+            <button type="button" id="continuar-btn" class="submit-btn">Continuar</button>
+        </form>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const continuarBtn = document.getElementById('continuar-btn');
+
+            // Adiciona o evento de clique ao botão
+            continuarBtn.addEventListener('click', () => {
+                // Redireciona para a página de cadastro de turmas
+                window.location.href = '/cadastrarTurmas';  // Alterar para a URL correta
+            });
+        });
+    </script>
+</body>
+</html>

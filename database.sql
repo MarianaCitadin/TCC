@@ -75,3 +75,12 @@ CREATE TABLE TbRegistros (
 -- Inserção de Categorias
 INSERT INTO TbCategoria (CategoriaID, NomeCategoria) VALUES (1, 'Aluno');
 INSERT INTO TbCategoria (CategoriaID, NomeCategoria) VALUES (2, 'Professor');
+
+
+--Inserção de Projeto
+CREATE TABLE TbProjeto (
+ProjetoID INT AUTO_INCREMENT PRIMARY KEY,
+NomeProjeto varchar(255), 
+AnoEdicao int,
+Local varchar(255)
+);

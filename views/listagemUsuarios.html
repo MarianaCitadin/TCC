@@ -30,57 +30,21 @@
         </div>
     </main>
 
-    <script>
-        // Função para buscar os dados dos usuários agrupados por categoria via AJAX
-        fetch('/usuarios')
-            .then(response => response.json())
-            .then(data => {
-                const categoriasContainer = document.querySelector('#usuarios-categorias');
-                
-                // Iterar sobre cada categoria (id da categoria)
-                Object.keys(data).forEach(categoriaId => {
-                    const categoria = data[categoriaId];
-                    
-                    // Criar a seção de categoria
-                    const categoriaSection = document.createElement('section');
-                    categoriaSection.classList.add('categoria');
-                    categoriaSection.innerHTML = `<h2>Categoria ${categoriaId}</h2>`;
-                    
-                    // Criar a tabela para essa categoria
-                    const table = document.createElement('table');
-                    table.innerHTML = `
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Telefone</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    `;
-                    
-                    // Adicionar os usuários dessa categoria
-                    const tbody = table.querySelector('tbody');
-                    categoria.forEach(usuario => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${usuario.Nome}</td>
-                            <td>${usuario.Email}</td>
-                            <td>${usuario.Telefone}</td>
-                           
-                        `;
-                        tbody.appendChild(row);
-                    });
+    <!-- Modal para exibir detalhes do usuário -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="modal-close" class="modal-close">&times;</span>
+            <h2>Detalhes do Usuário</h2>
+            <p><strong>Nome:</strong> <span id="modal-nome"></span></p>
+            <p><strong>Data de Nascimento:</strong> <span id="modal-nascimento"></span></p>
+            <p><strong>Documento:</strong> <span id="modal-documento"></span></p>
+            <p><strong>Gênero:</strong> <span id="modal-genero"></span></p>
+            <p><strong>Telefone:</strong> <span id="modal-telefone"></span></p>
+            <p><strong>Email:</strong> <span id="modal-email"></span></p>
+            <p><strong>Endereço:</strong> <span id="modal-endereco"></span></p>
 
-                    // Adicionar a tabela à seção da categoria
-                    categoriaSection.appendChild(table);
-                    categoriasContainer.appendChild(categoriaSection);
-                });
-            })
-            .catch(error => {
-                console.error('Erro ao carregar os dados dos usuários:', error);
-            });
-    </script>
+        </div>
+    </div>
+    
 </body>
 </html>

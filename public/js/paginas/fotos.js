@@ -40,3 +40,39 @@ document.addEventListener("DOMContentLoaded", function () {
     // Exemplo: adicionando uma nova foto ao carregar a página (opcional)
     addNewPhoto("/projeto/assets/imagens/paginas/fotos/foto4.jpg", "Evento C - 12/2024");
 });
+
+
+
+
+
+
+// Função para carregar as fotos do backend
+function carregarFotos() {
+    fetch('/fotos')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('photos-container');
+            container.innerHTML = ''; // Limpa o conteúdo existente
+
+            if (data.success && data.fotos.length > 0) {
+                data.fotos.forEach(foto => {
+                    // Cria o elemento de imagem
+                    const img = document.createElement('img');
+                    img.src = foto.url;
+                    img.alt = foto.nome;
+                    img.className = 'photo-item';
+
+                    // Adiciona a imagem ao container
+                    container.appendChild(img);
+                });
+            } else {
+                container.innerHTML = '<p>Nenhuma foto encontrada.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar fotos:', error);
+        });
+}
+
+// Carrega as fotos ao carregar a página
+window.onload = carregarFotos;

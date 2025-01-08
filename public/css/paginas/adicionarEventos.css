@@ -1,31 +1,25 @@
-
 /* Cabeçalho */
 header {
-    background-color: #2e7d32; /* Verde escuro */
+    background-color: #2e7d32;
     color: white;
     display: flex;
-    justify-content: center; /* Centraliza os itens dentro do cabeçalho */
-    padding: 15px 0; /* Ajusta a altura do cabeçalho */
-    width: 100%;
-    position: fixed; /* Fixa o cabeçalho no topo */
+    justify-content: space-between;
+    padding: 15px 20px;
+    position: fixed;
     top: 0;
     left: 0;
+    right: 0;
     z-index: 10;
 }
 
-/* Centraliza a logo */
 header .logo {
     font-size: 24px;
-    margin-right: auto;
-    padding-left: 20px;
 }
 
-/* Estiliza a barra de navegação */
 nav ul {
     list-style-type: none;
     padding: 0;
     display: flex;
-    justify-content: center; /* Centraliza os itens */
     gap: 15px;
     margin: 0;
 }
@@ -37,22 +31,19 @@ nav ul li {
 nav ul li a {
     color: white;
     text-decoration: none;
-    padding: 10px 20px; /* Espaçamento nos links */
+    padding: 10px 20px;
     font-size: 16px;
     border-radius: 4px;
 }
 
-/* Efeito ao passar o mouse */
 nav ul li a:hover {
-    background-color: #1b5e20; /* Tom mais escuro de verde */
+    background-color: #1b5e20;
 }
 
-/* Para garantir que o conteúdo principal não fique sobre o cabeçalho */
 body {
     font-family: Arial, sans-serif;
-    padding-top: 80px; /* Espaço para o cabeçalho fixo */
+    padding-top: 90px; /* Ajuste para evitar que o conteúdo fique atrás do cabeçalho fixo */
 }
-
 
 main {
     padding: 20px;
@@ -118,6 +109,7 @@ table th {
 .add-event:hover {
     background-color: #388e3c;
 }
+
 /* Estilos para o formulário de adicionar evento */
 form {
     background-color: white;
@@ -126,10 +118,9 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
     margin: 0 auto;
-    display: none; /* Inicialmente escondido */
+    display: none;
 }
 
-/* Estilo dos inputs do formulário */
 form input {
     width: 100%;
     padding: 10px;
@@ -139,7 +130,6 @@ form input {
     font-size: 14px;
 }
 
-/* Estilo dos botões no formulário */
 form button {
     padding: 10px 15px;
     border: none;
@@ -151,18 +141,17 @@ form button {
 form button[type="submit"] {
     background-color: #4caf50;
     color: white;
-    margin-right: 10px;
+}
+
+form button[type="button"] {
+    background-color: #f44336;
+    color: white;
 }
 
 form button[type="submit"]:hover {
     background-color: #388e3c;
 }
 
-form button.cancel {
-    background-color: #f44336;
-    color: white;
-}
-
-form button.cancel:hover {
+form button[type="button"]:hover {
     background-color: #d32f2f;
 }

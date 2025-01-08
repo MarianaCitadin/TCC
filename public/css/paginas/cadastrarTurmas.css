@@ -1,58 +1,62 @@
+
+
+
+/* Geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5; /* Cor de fundo clara */
+    padding-top: 80px; /* Espaço para o cabeçalho fixo */
+    color: #333; /* Cor do texto */
+}
+
 /* Cabeçalho */
 header {
     background-color: #2e7d32; /* Verde escuro */
     color: white;
     display: flex;
-    justify-content: center; /* Centraliza os itens dentro do cabeçalho */
-    padding: 15px 0; /* Ajusta a altura do cabeçalho */
+    align-items: center;
+    justify-content: space-between; /* Espaça logo e menu */
+    padding: 15px 20px;
     width: 100%;
-    position: fixed; /* Fixa o cabeçalho no topo */
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adiciona sombra */
 }
 
-/* Centraliza a logo */
 header .logo {
     font-size: 24px;
-    margin-right: auto;
-    padding-left: 20px;
+    font-weight: bold;
 }
 
-/* Estiliza a barra de navegação */
 nav ul {
-    list-style-type: none;
-    padding: 0;
+    list-style: none;
     display: flex;
-    justify-content: center; /* Centraliza os itens */
-    gap: 15px;
-    margin: 0;
-}
-
-nav ul li {
-    display: inline;
+    gap: 20px;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
-    padding: 10px 20px; /* Espaçamento nos links */
+    padding: 10px 15px;
     font-size: 16px;
-    border-radius: 4px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-/* Efeito ao passar o mouse */
 nav ul li a:hover {
     background-color: #1b5e20; /* Tom mais escuro de verde */
 }
 
-/* Para garantir que o conteúdo principal não fique sobre o cabeçalho */
-body {
-    font-family: Arial, sans-serif;
-    padding-top: 80px; /* Espaço para o cabeçalho fixo */
-}
-
-
+/* Principal */
 main {
     padding: 20px;
     display: flex;
@@ -64,44 +68,113 @@ main {
 h1 {
     color: #2e7d32;
     margin-bottom: 20px;
+    font-size: 28px;
+    text-align: center;
 }
 
-.turma-form {
+/* Formulários */
+form {
     display: flex;
     flex-direction: column;
-    max-width: 500px;
     background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra mais evidente */
+    max-width: 500px;
     width: 100%;
+    margin: 10px 0;
 }
 
 label {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
+    color: #555; /* Cor mais suave */
 }
 
 input[type="text"],
-input[type="date"] {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+input[type="date"],
+input[type="number"] {
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     font-size: 16px;
+    background-color: #f9f9f9; /* Fundo leve */
+    transition: border-color 0.3s;
+    width: 100%;
 }
 
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus {
+    border-color: #4caf50; /* Destaque no foco */
+    outline: none;
+    background-color: #fff; /* Fundo branco no foco */
+}
+
+/* Estilo para o botão */
 .submit-btn {
     background-color: #4caf50;
     color: white;
     border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 4px;
+    padding: 12px 20px;
     font-size: 16px;
-    transition: background-color 0.3s;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    display: block; /* Faz com que o botão seja exibido como um bloco */
+    margin: 0 auto; /* Centraliza o botão horizontalmente */
+    width: 100%;
+    max-width: 200px; /* Define o tamanho máximo do botão */
 }
 
 .submit-btn:hover {
     background-color: #45a049;
+    transform: scale(1.05); /* Leve aumento no hover */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"] {
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+    }
+}
+
+/* Estilo para o campo select */
+select {
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+    width: 100%;
+}
+
+select:focus {
+    border-color: #4caf50; /* Destaque no foco */
+    outline: none;
+    background-color: #fff; /* Fundo branco no foco */
 }

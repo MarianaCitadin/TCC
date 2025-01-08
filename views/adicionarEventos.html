@@ -31,67 +31,34 @@
                     <th>Título</th>
                     <th>Data/Hora</th>
                     <th>Local</th>
-                    <th>Ações</th> <!-- Coluna para os botões de ação -->
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Exemplo de linha com o botão de deletar -->
-                <tr>
-                    <td>Evento Exemplo</td>
-                    <td>01/01/2025 10:00</td>
-                    <td>Auditório</td>
-                    <td><button class="delete-btn" data-event-id="1">Deletar</button></td> <!-- Botão de deletar -->
-                </tr>
-                <!-- Linhas dinâmicas de eventos serão inseridas aqui -->
+                <!-- Os eventos serão preenchidos aqui dinamicamente -->
             </tbody>
         </table>
 
-        <button class="add-event" title="Adicionar novo evento">Adicionar Evento</button>
+        <button class="add-event" title="Adicionar novo evento" id="showFormBtn">Adicionar Evento</button>
 
         <!-- Formulário de Adicionar Evento -->
-        <form id="eventForm" action="/adicionarEvento" method="POST">
+        <form id="eventForm" style="display: none;">
             <label for="title">Título:</label>
-            <input type="text" id="title" name="NomeEvento" required>
+            <input type="text" id="title" name="NomeEvento" required autocomplete="off">
             
             <label for="date">Data/Hora:</label>
-            <input type="datetime-local" id="date" name="DataEvento" required>
+            <input type="datetime-local" id="date" name="DataEvento" required autocomplete="off">
             
             <label for="location">Local:</label>
-            <input type="text" id="location" name="LocalEvento" required>
+            <input type="text" id="location" name="LocalEvento" required autocomplete="off">
             
             <input type="hidden" id="projectId" name="ProjetoID" value="">
-            
+
             <button type="submit">Salvar</button>
             <button type="button" id="cancelForm">Cancelar</button>
         </form>
         
     </main>
 
-    <script>
-        // Adicionando evento para o botão de deletar
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const eventId = event.target.getAttribute('data-event-id');
-                
-                // Aqui você pode chamar uma função para excluir o evento, por exemplo, com AJAX ou fazer um redirecionamento para uma rota de exclusão
-                if (confirm(`Tem certeza que deseja excluir o evento com ID ${eventId}?`)) {
-                    // Exemplo de chamada para o backend para excluir o evento
-                    fetch(`/deletarEvento/${eventId}`, { method: 'DELETE' })
-                        .then(response => {
-                            if (response.ok) {
-                                alert('Evento deletado com sucesso!');
-                                location.reload(); // Atualiza a página para refletir a exclusão
-                            } else {
-                                alert('Erro ao deletar o evento!');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Erro ao deletar evento:', error);
-                            alert('Erro ao deletar o evento!');
-                        });
-                }
-            });
-        });
-    </script>
 </body>
 </html>

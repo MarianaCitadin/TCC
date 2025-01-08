@@ -33,3 +33,28 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+// Realizando a requisição para obter os materiais (dados)
+fetch('/materiais')
+    .then(response => {
+        if (!response.ok) {
+            // Se a resposta não for OK, lança um erro
+            throw new Error('Erro ao carregar os materiais');
+        }
+        return response.json(); // Converte a resposta em JSON
+    })
+    .then(data => {
+        console.log('Materiais:', data);
+        // Aqui você pode manipular os dados recebidos, por exemplo, exibindo-os na página
+        if (data.success) {
+            const materiaisList = document.getElementById('materiais-list');
+            data.data.forEach(materiais => {
+                const li = document.createElement('li');
+                li.textContent = `Nome do arquivo: ${materiais.NomeArquivo}, Tipo: ${materiais.TipoArquivo}`;
+                materiaisList.appendChild(li);
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Erro ao carregar materiais');
+    });

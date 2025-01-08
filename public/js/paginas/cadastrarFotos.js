@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Selecionando o formulário e os campos
     const form = document.querySelector(".foto-form");
-    const tituloInput = document.getElementById("titulo");
     const descricaoInput = document.getElementById("descricao");
     const fotoInput = document.getElementById("foto");
     const DataRegistroInput = document.getElementById("DataRegistro");
@@ -44,20 +43,17 @@ document.addEventListener("DOMContentLoaded", function() {
     form.addEventListener("submit", function(event) {
         event.preventDefault(); // Previne o envio do formulário para validação
 
-        const titulo = tituloInput.value.trim();
         const descricao = descricaoInput.value.trim();
         const foto = fotoInput.files[0];
         const DataRegistro = DataRegistroInput.value.trim();
 
-
-        if (!titulo || !descricao || !foto || !DataRegistro) {
+        if (!descricao || !foto || !DataRegistro) {
             alert("Por favor, preencha todos os campos e selecione uma foto.");
             return;
         }
 
         // Criação de um FormData para enviar os dados via POST
         const formData = new FormData();
-        formData.append("titulo", titulo);
         formData.append("descricao", descricao);
         formData.append("foto", foto);
         formData.append("DataRegistro", DataRegistro);

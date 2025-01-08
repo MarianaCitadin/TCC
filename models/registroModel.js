@@ -8,7 +8,7 @@ const Registro = {
             if (err) {
                 return callback(err);
             }
-            callback(null, results.insertId);
+            callback(null, results.insertId); // Retorna o ID do novo registro
         });
     },
 
