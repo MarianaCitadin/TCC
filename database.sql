@@ -28,22 +28,35 @@ CREATE TABLE TbUsuario (
     FOREIGN KEY (CategoriaID) REFERENCES TbCategoria(CategoriaID)
 );
 
+-- Tabela de Projetos
+CREATE TABLE TbProjeto (
+    ProjetoID INT AUTO_INCREMENT PRIMARY KEY,
+    NomeProjeto VARCHAR(255) NOT NULL,
+    DataInicio DATE NOT NULL,
+    DataFim DATE NOT NULL,
+    Descricao TEXT NOT NULL,
+    Local VARCHAR(255) NOT NULL
+);
+
 -- Tabela de Participantes
 CREATE TABLE TbParticipantes (
     ParticipanteID INT AUTO_INCREMENT PRIMARY KEY,
     UsuarioID INT,
     ProjetoID INT,
-    FOREIGN KEY (UsuarioID) REFERENCES TbUsuario(UsuarioID)
+    FOREIGN KEY (UsuarioID) REFERENCES TbUsuario(UsuarioID),
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
 -- Tabela de Turmas
 CREATE TABLE TbTurma (
     TurmaID INT AUTO_INCREMENT PRIMARY KEY,
     NomeTurma VARCHAR(255) NOT NULL,
+    ProjetoID INT,
     horario VARCHAR(255),
     dataInicio DATE,
     dataFim DATE, 
-    LimiteAlunos INT DEFAULT 20
+    LimiteAlunos INT DEFAULT 20,
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
 -- Tabela de Eventos
@@ -51,7 +64,9 @@ CREATE TABLE TbEventos (
     EventoID INT AUTO_INCREMENT PRIMARY KEY,
     NomeEvento VARCHAR(255) NOT NULL,
     DataEvento DATE NOT NULL,
-    LocalEvento VARCHAR(255)
+    LocalEvento VARCHAR(255),
+    ProjetoID INT,
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
 -- Tabela de Audiovisuais
@@ -60,27 +75,24 @@ CREATE TABLE TbAudiovisuais (
     NomeArquivo VARCHAR(255) NOT NULL,
     TipoArquivo VARCHAR(50),
     Descricao TEXT NOT NULL,
-    DataRegistro DATE
+    DataRegistro DATE,
+    ProjetoID INT,
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
 -- Tabela de Registros
 CREATE TABLE TbRegistros (
     RegistroID INT AUTO_INCREMENT PRIMARY KEY,
-    Titulo VARCHAR(255) NOT NULL,
-    Descricao TEXT NOT NULL,
-    DataRegistro DATE,
-    Foto VARCHAR(255) NOT NULL
+    UsuarioID INT,
+    ProjetoID INT,
+    Descricao TEXT,
+    DataRegistro DATE NOT NULL, 
+    Foto VARCHAR(255) NOT NULL,
+    FOREIGN KEY (UsuarioID) REFERENCES TbUsuario(UsuarioID),
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
--- Inserção de Categorias
-INSERT INTO TbCategoria (CategoriaID, NomeCategoria) VALUES (1, 'Aluno');
-INSERT INTO TbCategoria (CategoriaID, NomeCategoria) VALUES (2, 'Professor');
+-- Inserção de dados na tabela TbCategoria
+insert into tbcategoria(CategoriaID, NomeCategoria) values (1, 'Aluno');
 
-
---Inserção de Projeto
-CREATE TABLE TbProjeto (
-ProjetoID INT AUTO_INCREMENT PRIMARY KEY,
-NomeProjeto varchar(255), 
-AnoEdicao int,
-Local varchar(255)
-);
+insert into tbcategoria(CategoriaID, NomeCategoria) values (2, 'Professor');
