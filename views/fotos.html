@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/paginas/fotos.css">
+    <link rel="stylesheet" href="/public/css/paginas/fotos.css">
+    <script src="/public/js/paginas/fotos.js" defer></script>
     <title>Galeria de Fotos - Clicando na Terceira Idade</title>
 </head>
 <body>
@@ -17,7 +18,7 @@
                 <li><a href="usuario">Usuários</a></li>
                 <li><a href="materiais">Materiais</a></li>
                 <li><a href="sobre">Sobre Nós</a></li>
-                <li><a href="login">Sair</a></li>
+                <li><a href="/">Sair</a></li>
             </ul>
         </nav>
     </header>
@@ -29,44 +30,5 @@
         </div>
     </main>
 
-    <script>
-        // Função para carregar as fotos do backend
-        function carregarFotos() {
-            fetch('/api/fotos')
-                .then(response => response.json())
-                .then(data => {
-                    const gallery = document.getElementById('gallery');
-                    gallery.innerHTML = ''; // Limpa o conteúdo existente
-
-                    if (data.fotos && data.fotos.length > 0) {
-                        data.fotos.forEach(foto => {
-                            // Cria os elementos HTML para cada foto
-                            const photoDiv = document.createElement('div');
-                            photoDiv.classList.add('photo');
-
-                            const img = document.createElement('img');
-                            img.src = foto.CaminhoFoto; // Caminho da foto no servidor
-                            img.alt = foto.Descricao || 'Foto';
-
-                            const caption = document.createElement('p');
-                            caption.textContent = foto.Descricao || 'Sem descrição';
-
-                            // Adiciona os elementos ao container
-                            photoDiv.appendChild(img);
-                            photoDiv.appendChild(caption);
-                            gallery.appendChild(photoDiv);
-                        });
-                    } else {
-                        gallery.innerHTML = '<p>Nenhuma foto encontrada.</p>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar fotos:', error);
-                });
-        }
-
-        // Carrega as fotos ao carregar a página
-        window.onload = carregarFotos;
-    </script>
 </body>
 </html>

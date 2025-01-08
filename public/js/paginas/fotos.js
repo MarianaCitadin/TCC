@@ -1,76 +1,75 @@
-// Aguardar o carregamento da página
-document.addEventListener("DOMContentLoaded", function () {
-    const filterInput = document.getElementById("filterInput");
-    const gallery = document.querySelector(".gallery");
-    const photos = document.querySelectorAll(".photo");
+document.addEventListener("DOMContentLoaded", function() {
+    const fotoContainer = document.getElementById("foto-container");
 
-    // Filtro de fotos
-    filterInput.addEventListener("input", function (event) {
-        const searchTerm = event.target.value.toLowerCase();
-        
-        // Filtra as fotos com base no texto fornecido
-        photos.forEach(photo => {
-            const caption = photo.querySelector("p").textContent.toLowerCase();
-            if (caption.includes(searchTerm)) {
-                photo.style.display = "block"; // Exibe a foto
-            } else {
-                photo.style.display = "none"; // Oculta a foto
+    fetch("http://localhost:3000/listarFotos")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
             }
+            return response.json();
+        })
+        .then(data => {
+            fotoContainer.innerHTML = ""; // Limpa o texto "Carregando registros..."
+
+            if (data.length === 0) {
+                fotoContainer.innerHTML = "<p>Nenhum registro encontrado.</p>";
+                return;
+            }
+
+            data.forEach(registro => {
+                const registroItem = document.createElement("div");
+                registroItem.classList.add("foto-item");
+
+                registroItem.innerHTML = `
+                    <h2>Usuário ID: ${registro.UsuarioID} - Projeto ID: ${registro.ProjetoID}</h2>
+                    <img src="${registro.Foto}" alt="${registro.Descricao}">
+                    <p>${registro.Descricao}</p>
+                    <p><small>Data: ${registro.DataRegistro}</small></p>
+                `;
+
+                fotoContainer.appendChild(registroItem);
+            });
+        })
+        .catch(error => {
+            console.error("Erro ao carregar os registros:", error);
+            fotoContainer.innerHTML = "<p>Erro ao carregar os registros. Tente novamente mais tarde.</p>";
         });
-    });
-
-    // Função para adicionar nova foto (pode ser personalizada)
-    function addNewPhoto(imgSrc, captionText) {
-        const newPhoto = document.createElement("div");
-        newPhoto.classList.add("photo");
-
-        const img = document.createElement("img");
-        img.src = imgSrc;
-        img.alt = captionText;
-
-        const caption = document.createElement("p");
-        caption.textContent = captionText;
-
-        newPhoto.appendChild(img);
-        newPhoto.appendChild(caption);
-
-        gallery.appendChild(newPhoto);
-    }
-
-    // Exemplo: adicionando uma nova foto ao carregar a página (opcional)
-    addNewPhoto("/projeto/assets/imagens/paginas/fotos/foto4.jpg", "Evento C - 12/2024");
 });
-
-
-
-
-
 
 // Função para carregar as fotos do backend
 function carregarFotos() {
-    fetch('/fotos')
+    fetch('http://localhost:3000/api/fotos')// Verifique se esse é o endpoint correto para a sua API
         .then(response => response.json())
         .then(data => {
-            const container = document.getElementById('photos-container');
-            container.innerHTML = ''; // Limpa o conteúdo existente
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = ''; // Limpa o conteúdo existente
 
-            if (data.success && data.fotos.length > 0) {
-                data.fotos.forEach(foto => {
-                    // Cria o elemento de imagem
+            if (data && data.length > 0) {
+                data.forEach(foto => {
+                    // Cria os elementos HTML para cada foto
+                    const photoDiv = document.createElement('div');
+                    photoDiv.classList.add('photo');
+
                     const img = document.createElement('img');
-                    img.src = foto.url;
-                    img.alt = foto.nome;
-                    img.className = 'photo-item';
+                    img.src = foto.Foto; // Caminho da foto no servidor
+                    img.alt = foto.Descricao || 'Foto sem descrição';
 
-                    // Adiciona a imagem ao container
-                    container.appendChild(img);
+                    const caption = document.createElement('p');
+                    caption.textContent = foto.Descricao || 'Sem descrição';
+
+                    // Adiciona os elementos ao container
+                    photoDiv.appendChild(img);
+                    photoDiv.appendChild(caption);
+                    gallery.appendChild(photoDiv);
                 });
             } else {
-                container.innerHTML = '<p>Nenhuma foto encontrada.</p>';
+                gallery.innerHTML = '<p>Nenhuma foto encontrada.</p>';
             }
         })
         .catch(error => {
             console.error('Erro ao carregar fotos:', error);
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '<p>Erro ao carregar as fotos. Tente novamente mais tarde.</p>';
         });
 }
 

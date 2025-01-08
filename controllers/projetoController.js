@@ -18,8 +18,6 @@ const projetoApiController = {
             res.status(201).json({ message: 'Projeto criado com sucesso', projetoId });
         });
     },
-
-    
 };
 
 const projetoViewController = {

@@ -80,17 +80,7 @@ const turmaController = {
         });
     },
 
-    // Deletar uma turma
-    deleteTurma: (req, res) => {
-        const turmaId = req.params.id;
 
-        Turma.delete(turmaId, (err) => {
-            if (err) {
-                return res.status(500).json({ error: err });
-            }
-            res.json({ message: 'Turma deletada com sucesso' });
-        });
-    }
 };
 
 module.exports = turmaController;

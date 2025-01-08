@@ -20,11 +20,36 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Simular envio ou redirecionar para a próxima etapa
-        alert(`Projeto "${nomeProjeto}" no local "${local}" do ano "${anoEdicao}" cadastrado com sucesso!`);
+        // Criar um objeto com os dados para envio
+        const formData = new FormData();
+        formData.append('AnoEdicao', anoEdicao);
+        formData.append('NomeProjeto', nomeProjeto);
+        formData.append('Local', local);
 
-        // Simulação de redirecionamento
-        window.location.href = 'cadastrarTurmas'; // Substitua pela URL correta
+        // Enviar os dados para o backend usando fetch
+       
+        fetch('/projeto/criar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                AnoEdicao: anoEdicao,
+                NomeProjeto: nomeProjeto,
+                Local: local
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao cadastrar o projeto.');
+            }
+            alert(`Projeto "${nomeProjeto}" cadastrado com sucesso!`);
+            window.location.href = '/cadastrarTurmas';
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao cadastrar o projeto. Tente novamente.');
+        });
+        
     });
 });
-

@@ -6,34 +6,29 @@ document.addEventListener("DOMContentLoaded", function() {
     const DataRegistroInput = document.getElementById("DataRegistro");
     const submitBtn = document.querySelector(".submit-btn");
 
+    // Container para pré-visualização
+    let previewContainer = document.createElement("div");
+    previewContainer.classList.add("preview-container");
+    form.appendChild(previewContainer);
+
     // Função para exibir a prévia da foto
     fotoInput.addEventListener("change", function(event) {
         const file = event.target.files[0];
-        const preview = document.createElement("img");
-        const previewContainer = document.querySelector(".preview-container");
-        
-        // Limpar prévia anterior, se existir
-        if (previewContainer) {
-            previewContainer.innerHTML = '';
-        }
+
+        // Limpar prévia anterior
+        previewContainer.innerHTML = '';
 
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
+                const preview = document.createElement("img");
                 preview.src = e.target.result;
-                preview.style.maxWidth = "200px"; // Definindo o tamanho da prévia
+                preview.style.maxWidth = "200px"; // Tamanho da prévia
                 preview.style.marginTop = "20px";
                 preview.alt = "Prévia da foto";
-                
+
                 // Adicionar a prévia ao container
-                if (!previewContainer) {
-                    const newPreviewContainer = document.createElement("div");
-                    newPreviewContainer.classList.add("preview-container");
-                    newPreviewContainer.appendChild(preview);
-                    form.appendChild(newPreviewContainer);
-                } else {
-                    previewContainer.appendChild(preview);
-                }
+                previewContainer.appendChild(preview);
             };
             reader.readAsDataURL(file);
         }
@@ -41,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Função para validar o formulário
     form.addEventListener("submit", function(event) {
-        event.preventDefault(); // Previne o envio do formulário para validação
+        event.preventDefault(); // Previne o envio do formulário
 
         const descricao = descricaoInput.value.trim();
         const foto = fotoInput.files[0];
@@ -59,21 +54,23 @@ document.addEventListener("DOMContentLoaded", function() {
         formData.append("DataRegistro", DataRegistro);
 
         // Enviar os dados para o servidor usando fetch
-        fetch("/caminho/do/seu/servidor", {
+        fetch("http://localhost:3000/cadastrarFotos", {
             method: "POST",
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+            }
+            return response.json(); // Certifique-se de que o servidor retorna JSON
+        })
         .then(data => {
             if (data.success) {
-                alert("Foto adicionada com sucesso!");
+                alert(data.message || "Foto adicionada com sucesso!");
                 form.reset();
-                const previewContainer = document.querySelector(".preview-container");
-                if (previewContainer) {
-                    previewContainer.remove();
-                }
+                previewContainer.innerHTML = ''; // Limpar a prévia
             } else {
-                alert("Erro ao adicionar foto. Tente novamente.");
+                alert(data.message || "Erro ao adicionar foto. Tente novamente.");
             }
         })
         .catch(error => {

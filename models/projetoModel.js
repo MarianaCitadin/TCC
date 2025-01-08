@@ -12,7 +12,6 @@ const Projeto = {
             callback(null, results.insertId); // Retorna o ID do projeto inserido
         });
     },
-
 }
 
 module.exports = Projeto;

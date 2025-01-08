@@ -5,6 +5,7 @@ const session = require('express-session');
 const app = express();
 const multer = require('multer');
 const fs = require('fs');
+const Projeto = require('./models/projetoModel'); // Verifique se o caminho está correto
 
 
 
@@ -35,6 +36,7 @@ const upload = multer({ storage: storage });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 // Configuração do banco de dados
 const db = mysql.createConnection({
@@ -75,6 +77,10 @@ app.get('/index2', verificarAutenticacao, (req, res) => {
 
 app.get('/usuario', verificarAutenticacao, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'usuario.html'));
+});
+
+app.get('/usuario2', verificarAutenticacao, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'usuario2.html'));
 });
 
 app.get('/usuario/dados', verificarAutenticacao, (req, res) => {
@@ -330,27 +336,6 @@ app.get('/adicionarEventos', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'adicionarEventos.html'));
 });
 
-// Rota para obter eventos
-app.get('/eventos', (req, res) => {
-    const query = 'SELECT * FROM TbEventos';
-
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error('Erro ao buscar eventos:', err);
-            return res.status(500).json({ error: 'Erro ao buscar eventos' });
-        }
-
-        if (results.length === 0) {
-            return res.status(404).json({ message: 'Nenhum evento encontrado' });
-        }
-
-        res.json(results);
-    });
-});
-
-
-
-
 // Rota para adicionar um evento
 app.post('/adicionarEvento', (req, res) => {
     const { NomeEvento, DataEvento, LocalEvento, ProjetoID } = req.body;
@@ -393,22 +378,38 @@ app.delete('/excluirEvento/:id', (req, res) => {
         res.json({ message: 'Evento excluído com sucesso!' });
     });
 });
+// Rota para obter eventos
+app.get('/eventos', (req, res) => {
+    const query = 'SELECT * FROM TbEventos';
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar eventos:', err);
+            return res.status(500).json({ error: 'Erro ao buscar eventos' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Nenhum evento encontrado' });
+        }
+
+        res.json(results);
+    });
+});
+
+
+
+
+
 
 // Rota para exibir a página turmas
 app.get('/turma', verificarAutenticacao, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'turma.html'));
 });
 
-
-
-// Rota para exibir a página turmas
+// Rota para exibir listagem da turma 
 app.get('/listagemturma', verificarAutenticacao, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'listagemturma.html'));
 });
-
-
-
-
 // Rota para buscar os dados do usuário pelo ID
 app.get('/usuario/:id', (req, res) => {
   const usuarioId = req.params.id;
@@ -429,25 +430,96 @@ app.get('/usuario/:id', (req, res) => {
   });
 });
 
-// Servir o frontend
-app.use(express.static('public'));
 
 
-
-// Rota para exibir a página turmas
+// Rota para exibir cadastrar fotos
 app.get('/cadastrarFotos', verificarAutenticacao, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'cadastrarFotos.html'));
 });
+app.post('/cadastrarFotos', (req, res) => {
+    console.log('Rota chamada:', req.body);
+    res.json({ success: true, message: 'Foto cadastrada com sucesso!' });
+});
+app.get('/fotos', (req, res) => {
+    const query = 'SELECT RegistroID, UsuarioID, ProjetoID, Descricao, Foto, DataRegistro FROM TbRegistros';
 
-// Rota para exibir a página turmas
-app.get('/projeto', verificarAutenticacao, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'projeto.html'));
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao executar a consulta SQL:', err);
+            res.status(500).json({ success: false, message: 'Erro ao buscar registros.' });
+        } else {
+            res.json(results); // Retorna os registros no formato JSON
+        }
+    });
 });
 
-// Rota para exibir a página turmas
-app.get('/cadastrarTurmas', verificarAutenticacao, (req, res) => {
+
+// Rota para exibir sobre
+app.get('/sobre', verificarAutenticacao, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'sobre.html'));
+});
+
+
+// Rota para renderizar o formulário de projeto
+app.get('/projeto', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views/projeto.html'));
+});
+
+app.post('/projeto/criar', (req, res) => {
+    console.log('Dados recebidos:', req.body); // Adicionando um log para inspecionar os dados
+
+    const { NomeProjeto, AnoEdicao, Local } = req.body;
+
+    if (!NomeProjeto || !AnoEdicao || !Local) {
+        return res.status(400).send('Por favor, preencha todos os campos.');
+    }
+
+    const newProjeto = {
+        NomeProjeto,
+        AnoEdicao,
+        Local
+    };
+
+    Projeto.create(newProjeto, (err, projetoId) => {
+        if (err) {
+            console.error('Erro ao criar o projeto:', err);
+            return res.status(500).send('Erro ao criar o projeto, tente novamente.');
+        }
+
+        // Se o cadastro for bem-sucedido, redireciona para a página de cadastrar turmas
+        res.redirect('/cadastrarTurmas');
+    });
+});
+
+
+
+app.get('/cadastrarTurmas', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'cadastrarTurmas.html'));
 });
+
+app.post('/cadastrarTurmas', (req, res) => {
+    const { nomeTurma, horario, dataInicio, dataFim } = req.body;
+
+    if (!nomeTurma || !horario || !dataInicio || !dataFim) {
+        return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
+    }
+
+    // Criação da turma (use a lógica de banco de dados ou outro processo aqui)
+    const newTurma = { nomeTurma, horario, dataInicio, dataFim };
+
+    // Supondo que você tenha um método para criar uma turma no banco de dados, use-o aqui
+    Turma.create(newTurma, (err, turmaId) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erro ao cadastrar a turma.' });
+        }
+        res.status(201).json({ message: 'Turma cadastrada com sucesso', turmaId });
+    });
+});
+
+
+
+
+
 
 
 

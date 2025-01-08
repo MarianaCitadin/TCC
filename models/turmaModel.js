@@ -45,16 +45,7 @@ const Turma = {
         });
     },
 
-    // Método para excluir uma turma
-    delete: (id, callback) => {
-        const query = 'DELETE FROM TbTurma WHERE TurmaID = ?';
-        db.query(query, [id], (err, results) => {
-            if (err) {
-                return callback(err);
-            }
-            callback(null, results); // Retorna o resultado da operação
-        });
-    }
-};
+    
+    };
 
 module.exports = Turma;
