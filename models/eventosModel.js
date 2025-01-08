@@ -1,58 +1,49 @@
-const db = require('../config/db'); // Supondo que você já tenha a conexão configurada
+const db = require('../db');
 
 const Eventos = {
-    // Método para criar um novo evento
     create: (evento, callback) => {
-        const query = 'INSERT INTO TbEventos (NomeEvento, DataEvento, LocalEvento, ProjetoID) VALUES (?, ?, ?, ?)';
-        db.query(query, [evento.NomeEvento, evento.DataEvento, evento.LocalEvento, evento.ProjetoID], (err, results) => {
-            if (err) {
-                return callback(err);
-            }
-            callback(null, results.insertId); // Retorna o ID do novo evento
+        const query = `
+            INSERT INTO TbEventos (NomeEvento, DataEvento, LocalEvento, ProjetoID)
+            VALUES (?, ?, ?, ?)
+        `;
+        const values = [evento.NomeEvento, evento.DataEvento, evento.LocalEvento, evento.ProjetoID || null];
+
+        db.query(query, values, (err, result) => {
+            callback(err, result.insertId);
         });
     },
 
-    // Método para encontrar um evento por ID
-    findById: (id, callback) => {
-        const query = 'SELECT * FROM TbEventos WHERE EventoID = ?';
-        db.query(query, [id], (err, results) => {
-            if (err) {
-                return callback(err);
-            }
-            callback(null, results[0]); // Retorna o evento encontrado
-        });
-    },
-
-    // Método para obter todos os eventos
     getAll: (callback) => {
         const query = 'SELECT * FROM TbEventos';
         db.query(query, (err, results) => {
-            if (err) {
-                return callback(err);
-            }
-            callback(null, results); // Retorna todos os eventos
+            callback(err, results);
         });
     },
 
-    // Método para atualizar um evento
+    findById: (id, callback) => {
+        const query = 'SELECT * FROM TbEventos WHERE EventoID = ?';
+        db.query(query, [id], (err, results) => {
+            callback(err, results[0]);
+        });
+    },
+
     update: (id, evento, callback) => {
-        const query = 'UPDATE TbEventos SET NomeEvento = ?, DataEvento = ?, LocalEvento = ?, ProjetoID = ? WHERE EventoID = ?';
-        db.query(query, [evento.NomeEvento, evento.DataEvento, evento.LocalEvento, evento.ProjetoID, id], (err, results) => {
-            if (err) {
-                return callback(err);
-            }
-            callback(null, results); // Retorna o resultado da operação
+        const query = `
+            UPDATE TbEventos
+            SET NomeEvento = ?, DataEvento = ?, LocalEvento = ?, ProjetoID = ?
+            WHERE EventoID = ?
+        `;
+        const values = [evento.NomeEvento, evento.DataEvento, evento.LocalEvento, evento.ProjetoID || null, id];
+
+        db.query(query, values, (err, results) => {
+            callback(err, results);
         });
     },
 
-    // Método para excluir um evento
     delete: (id, callback) => {
         const query = 'DELETE FROM TbEventos WHERE EventoID = ?';
         db.query(query, [id], (err, results) => {
-            if (err) {
-                return callback(err);
-            }
-            callback(null, results); // Retorna o resultado da operação
+            callback(err, results);
         });
     }
 };

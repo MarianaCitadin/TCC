@@ -147,10 +147,12 @@ app.post('/submit_form', (req, res) => {
     });
 });
 
+// Rota GET para carregar o formulário de edição de perfil
 app.get('/editarUsuario', verificarAutenticacao, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'editarUsuario.html'));
 });
 
+// Rota POST para atualizar os dados do usuário
 app.post('/usuario/editarUsuario', (req, res) => {
     if (!req.session.usuario) {
         return res.status(401).json({ error: 'Usuário não autenticado.' });
@@ -159,13 +161,25 @@ app.post('/usuario/editarUsuario', (req, res) => {
     const { id } = req.session.usuario;
     const { nome, email, telefone } = req.body;
 
+    // Validação dos dados
     if (!nome || !email || !telefone) {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
     }
 
+    const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
+    const isValidPhone = (phone) => /^\(\d{2}\) \d{4,5}-\d{4}$/.test(phone);
+
+    if (!isValidEmail(email)) {
+        return res.status(400).json({ error: 'E-mail inválido.' });
+    }
+
+    if (!isValidPhone(telefone)) {
+        return res.status(400).json({ error: 'Telefone inválido. Use o formato (XX) XXXX-XXXX ou (XX) XXXXX-XXXX.' });
+    }
+
     const query = `
         UPDATE tbusuario
-        SET Nome = ?, Email = ?, DataNascimento = ?, Telefone = ?
+        SET Nome = ?, Email = ?, Telefone = ?
         WHERE UsuarioID = ?
     `;
     const values = [nome, email, telefone, id];
@@ -180,7 +194,6 @@ app.post('/usuario/editarUsuario', (req, res) => {
         res.json({ message: 'Dados atualizados com sucesso!' });
     });
 });
-
 // Rota para participantes
 app.get('/listagemUsuarios', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'listagemUsuarios.html'));
@@ -208,6 +221,36 @@ app.get('/usuarios', (req, res) => {
 
         // Retornar os dados agrupados por categoria
         res.json(usuariosPorCategoria);
+    });
+});
+
+// Rota para exibir a página turmas
+app.get('/recuperarsenha', verificarAutenticacao, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'recuperarsenha.html'));
+});
+
+app.post('/api/recuperar-senha', async (req, res) => {
+    const { email, novaSenha } = req.body;
+
+    // Verifica se email ou senha estão ausentes
+    if (!email || !novaSenha) {
+        return res.status(400).json({ message: 'E-mail e nova senha são obrigatórios.' });
+    }
+
+    // Atualiza a senha no banco de dados sem hash
+    const sql = 'UPDATE tbusuario SET senha = ? WHERE email = ?';
+    db.query(sql, [novaSenha, email], (err, result) => {
+        if (err) {
+            console.error('Erro ao atualizar senha:', err);
+            return res.status(500).json({ message: 'Erro ao atualizar a senha.' });
+        }
+
+        // Verifica se o e-mail foi encontrado e a senha foi alterada
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'E-mail não encontrado.' });
+        }
+
+        res.status(200).json({ message: 'Senha alterada com sucesso!' });
     });
 });
 
@@ -262,21 +305,25 @@ app.get('/materiais', (req, res) => {
 
 // Rota para obter os materiais (dados da tabela tbaudiovisuais)
 app.get('/materiais', (req, res) => {
-    const query = 'SELECT * FROM tbaudiovisuais';
-
+    const query = 'SELECT * FROM tbaudiovisuais';  // Consulta SQL
+  
     db.query(query, (err, results) => {
-        if (err) {
-            console.error('Erro ao buscar dados:', err);
-            return res.status(500).json({ success: false, message: 'Erro ao buscar dados' });
-        }
-
-        if (results.length === 0) {
-            return res.status(404).json({ success: false, message: 'Nenhum dado encontrado' });
-        }
-
-        res.status(200).json({ success: true, data: results });
+      if (err) {
+        console.error('Erro ao buscar dados:', err);
+        return res.status(500).json({ success: false, message: 'Erro ao buscar dados' });
+      }
+  
+      if (results.length === 0) {
+        return res.status(404).json({ success: false, message: 'Nenhum dado encontrado' });
+      }
+  
+      res.status(200).json({ success: true, data: results });
     });
-});
+  });
+
+
+
+
 
 // Rota para exibir a página de adicionar eventos
 app.get('/adicionarEventos', (req, res) => {
@@ -300,6 +347,9 @@ app.get('/eventos', (req, res) => {
         res.json(results);
     });
 });
+
+
+
 
 // Rota para adicionar um evento
 app.post('/adicionarEvento', (req, res) => {
@@ -399,35 +449,7 @@ app.get('/cadastrarTurmas', verificarAutenticacao, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'cadastrarTurmas.html'));
 });
 
-// Rota para exibir a página turmas
-app.get('/recuperarsenha', verificarAutenticacao, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'recuperarsenha.html'));
-});
 
-app.post('/api/recuperar-senha', async (req, res) => {
-    const { email, novaSenha } = req.body;
-
-    // Verifica se email ou senha estão ausentes
-    if (!email || !novaSenha) {
-        return res.status(400).json({ message: 'E-mail e nova senha são obrigatórios.' });
-    }
-
-    // Atualiza a senha no banco de dados sem hash
-    const sql = 'UPDATE tbusuario SET senha = ? WHERE email = ?';
-    db.query(sql, [novaSenha, email], (err, result) => {
-        if (err) {
-            console.error('Erro ao atualizar senha:', err);
-            return res.status(500).json({ message: 'Erro ao atualizar a senha.' });
-        }
-
-        // Verifica se o e-mail foi encontrado e a senha foi alterada
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'E-mail não encontrado.' });
-        }
-
-        res.status(200).json({ message: 'Senha alterada com sucesso!' });
-    });
-});
 
 
 

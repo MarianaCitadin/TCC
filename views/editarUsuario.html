@@ -6,25 +6,24 @@
     <title>Editar Perfil</title>
     <link rel="stylesheet" href="/css/paginas/editarUsuario.css">
     <script src="/js/paginas/editarUsuario.js" defer></script>
-
 </head>
 <body>
 
 <div class="edit-profile-container">
     <h2>Editar Perfil</h2>
-    <form action="usuario/editar" method="post">
+    <form action="/usuario/editarUsuario" method="post">
         <label for="username">Nome de Usuário</label>
-        <input type="text" id="username" name="username" placeholder="Seu nome" required>
+        <input type="text" id="username" name="nome" placeholder="Seu nome" required>
 
         <label for="email">E-mail</label>
         <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
 
         <label for="phone">Telefone</label>
-        <input type="tel" id="phone" name="phone" placeholder="(XX) XXXXX-XXXX" required>
+        <input type="tel" id="phone" name="telefone" placeholder="(XX) XXXXX-XXXX" required>
 
         <input type="submit" value="Salvar Alterações">
     </form>
-    <a href="usuario" class="cancel-link">Cancelar</a>
+    <a href="/usuario" class="cancel-link">Cancelar</a>
 </div>
 
 </body>

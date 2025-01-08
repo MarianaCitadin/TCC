@@ -29,7 +29,7 @@
             <thead>
                 <tr>
                     <th>Título</th>
-                    <th>Data/Hora</th>
+                    <th>Data</th>
                     <th>Local</th>
                     <th>Ações</th>
                 </tr>
@@ -42,21 +42,14 @@
         <button class="add-event" title="Adicionar novo evento" id="showFormBtn">Adicionar Evento</button>
 
         <!-- Formulário de Adicionar Evento -->
-        <form id="eventForm" style="display: none;">
-            <label for="title">Título:</label>
-            <input type="text" id="title" name="NomeEvento" required autocomplete="off">
-            
-            <label for="date">Data/Hora:</label>
-            <input type="datetime-local" id="date" name="DataEvento" required autocomplete="off">
-            
-            <label for="location">Local:</label>
-            <input type="text" id="location" name="LocalEvento" required autocomplete="off">
-            
-            <input type="hidden" id="projectId" name="ProjetoID" value="">
-
-            <button type="submit">Salvar</button>
+        <form id="eventForm">
+            <input type="text" id="title" placeholder="Título do Evento" required />
+            <input type="date" id="date" required /> <!-- Alterado para 'date' para evitar hora -->
+            <input type="text" id="location" placeholder="Local do Evento" required />
+            <button type="submit">Adicionar Evento</button>
             <button type="button" id="cancelForm">Cancelar</button>
         </form>
+        
         
     </main>
 

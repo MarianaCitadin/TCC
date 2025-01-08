@@ -4,15 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const eventTable = document.querySelector('table tbody');
     const cancelFormButton = document.getElementById('cancelForm');
 
-    // Função para formatar a data de ISO para dd/mm/yyyy hh:mm
+    // Função para formatar a data de ISO para dd/mm/yyyy
     function formatDate(isoDate) {
         const date = new Date(isoDate);
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${day}/${month}/${year} ${hours}:${minutes}`;
+        return `${day}/${month}/${year}`; // Apenas data (sem hora)
     }
 
     // Função para adicionar um evento à tabela
@@ -20,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
             <td>${title}</td>
-            <td>${formatDate(date)}</td> <!-- Formatar a data aqui -->
+            <td>${formatDate(date)}</td> <!-- Exibe a data formatada sem a hora -->
             <td>${location}</td>
             <td><button class="delete-btn" data-event-id="${eventId}">Deletar</button></td>
         `;
@@ -62,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
 
         const title = document.getElementById('title').value;
-        const date = document.getElementById('date').value;
+        const date = document.getElementById('date').value; // Data sem hora
         const location = document.getElementById('location').value;
 
         try {
@@ -73,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify({
                     NomeEvento: title,
-                    DataEvento: date,
+                    DataEvento: date, // Envia apenas a data (sem hora)
                     LocalEvento: location,
                 }),
             });
@@ -132,15 +130,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // Carregar os eventos ao abrir a página
     loadEvents();
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-    const showFormBtn = document.getElementById('showFormBtn');
-    const eventForm = document.getElementById('eventForm');
-    const cancelFormBtn = document.getElementById('cancelForm');
-
-    // Mostrar o formulário quando clicar no botão "Adicionar Evento"
-    showFormBtn.addEventListener('click', () => {
-        eventForm.style.display = 'block';
-        showFormBtn.style.display = 'none';
-});
-})
