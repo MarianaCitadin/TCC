@@ -35,40 +35,48 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Função para carregar eventos do backend
             function carregarEventos(filtro = {}) {
-                fetch('/api/eventos')  // Chama a rota que retorna os eventos
-                    .then(response => response.json())
-                    .then(data => {
+                fetch('/listar-eventos') // Chama a rota que retorna os eventos
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro ao buscar eventos.');
+                        }
+                        return response.json();
+                    })
+                    .then(eventos => {
                         const eventosContainer = document.getElementById('eventosContainer');
-                        eventosContainer.innerHTML = '';  // Limpa qualquer conteúdo existente
+                        eventosContainer.innerHTML = ''; // Limpa qualquer conteúdo existente
 
-                        // Filtra os eventos conforme os critérios fornecidos
-                        const eventosFiltrados = data.eventos.filter(evento => {
+                        // Aplica o filtro, se fornecido
+                        const eventosFiltrados = eventos.filter(evento => {
                             const titulo = evento.NomeEvento.toLowerCase();
-                            const dataEvento = new Date(evento.DataEvento).toLocaleDateString('pt-BR');
+                            const dataEvento = new Date(evento.DataEvento).toISOString().split('T')[0]; // Formata para "YYYY-MM-DD"
 
-                            // Verifica se o título contém o termo de pesquisa
-                            const matchesTitle = titulo.includes(filtro.title?.toLowerCase() || '');
-                            const matchesDate = filtro.date ? dataEvento.includes(filtro.date) : true;
+                            const matchesTitle = filtro.title
+                                ? titulo.includes(filtro.title.toLowerCase())
+                                : true;
+
+                            const matchesDate = filtro.date
+                                ? dataEvento === filtro.date
+                                : true;
 
                             return matchesTitle && matchesDate;
                         });
 
-                        // Verifica se existem eventos após o filtro
+                        // Verifica se há eventos
                         if (eventosFiltrados.length > 0) {
                             eventosFiltrados.forEach(evento => {
-                                // Cria o HTML para cada evento
                                 const eventoDiv = document.createElement('div');
                                 eventoDiv.classList.add('event');
-                                
+
                                 const eventHeader = document.createElement('div');
                                 eventHeader.classList.add('event-header');
 
                                 const eventDate = document.createElement('p');
                                 eventDate.classList.add('event-date');
-                                eventDate.textContent = new Date(evento.DataEvento).toLocaleDateString('pt-BR');  // Formata a data
+                                eventDate.textContent = new Date(evento.DataEvento).toLocaleDateString('pt-BR');
 
                                 const eventTitle = document.createElement('p');
                                 eventTitle.classList.add('event-title');
@@ -76,9 +84,9 @@
 
                                 const eventDescription = document.createElement('p');
                                 eventDescription.classList.add('event-description');
-                                eventDescription.textContent = evento.Descricao || 'Sem descrição disponível';  // Descrição pode ser nula
+                                eventDescription.textContent = evento.Descricao || 'Sem descrição disponível';
 
-                                // Adiciona o conteúdo aos elementos
+                                // Adiciona conteúdo ao evento
                                 eventHeader.appendChild(eventDate);
                                 eventHeader.appendChild(eventTitle);
                                 eventoDiv.appendChild(eventHeader);
@@ -94,7 +102,7 @@
                     });
             }
 
-            // Função de filtro
+            // Função para aplicar o filtro
             function aplicarFiltro() {
                 const searchTerm = document.getElementById('searchTerm').value;
                 const searchDate = document.getElementById('searchDate').value;
@@ -102,10 +110,10 @@
                 carregarEventos({ title: searchTerm, date: searchDate });
             }
 
-            // Carrega os eventos ao carregar a página
+            // Carregar eventos ao carregar a página
             carregarEventos();
 
-            // Adiciona evento de input para o filtro
+            // Adiciona eventos de filtro
             document.getElementById('filterForm').addEventListener('input', aplicarFiltro);
         });
     </script>

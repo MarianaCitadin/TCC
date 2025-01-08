@@ -42,7 +42,7 @@ app.use(express.static('public'));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'M@riC2804',
+    password: '',
     database: 'clicandonaterceiraidade'
 });
 
@@ -379,7 +379,7 @@ app.delete('/excluirEvento/:id', (req, res) => {
     });
 });
 // Rota para obter eventos
-app.get('/eventos', (req, res) => {
+app.get('/listar-eventos', (req, res) => {
     const query = 'SELECT * FROM TbEventos';
 
     db.query(query, (err, results) => {
@@ -396,6 +396,9 @@ app.get('/eventos', (req, res) => {
     });
 });
 
+app.get('/Eventos', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'eventos.html'));
+});
 
 
 
@@ -468,15 +471,15 @@ app.get('/projeto', (req, res) => {
 app.post('/projeto/criar', (req, res) => {
     console.log('Dados recebidos:', req.body); // Adicionando um log para inspecionar os dados
 
-    const { NomeProjeto, AnoEdicao, Local } = req.body;
+    const { NomeProjeto, anoEdicao, Local } = req.body;
 
-    if (!NomeProjeto || !AnoEdicao || !Local) {
+    if (!NomeProjeto || !anoEdicao || !Local) {
         return res.status(400).send('Por favor, preencha todos os campos.');
     }
 
     const newProjeto = {
         NomeProjeto,
-        AnoEdicao,
+        anoEdicao,
         Local
     };
 
