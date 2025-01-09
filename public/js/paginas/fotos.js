@@ -1,77 +1,94 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const fotoContainer = document.getElementById("foto-container");
-
-    fetch("http://localhost:3000/listarFotos")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            fotoContainer.innerHTML = ""; // Limpa o texto "Carregando registros..."
-
-            if (data.length === 0) {
-                fotoContainer.innerHTML = "<p>Nenhum registro encontrado.</p>";
-                return;
-            }
-
-            data.forEach(registro => {
-                const registroItem = document.createElement("div");
-                registroItem.classList.add("foto-item");
-
-                registroItem.innerHTML = `
-                    <h2>Usuário ID: ${registro.UsuarioID} - Projeto ID: ${registro.ProjetoID}</h2>
-                    <img src="${registro.Foto}" alt="${registro.Descricao}">
-                    <p>${registro.Descricao}</p>
-                    <p><small>Data: ${registro.DataRegistro}</small></p>
-                `;
-
-                fotoContainer.appendChild(registroItem);
-            });
-        })
-        .catch(error => {
-            console.error("Erro ao carregar os registros:", error);
-            fotoContainer.innerHTML = "<p>Erro ao carregar os registros. Tente novamente mais tarde.</p>";
-        });
-});
-
-// Função para carregar as fotos do backend
-function carregarFotos() {
-    fetch('http://localhost:3000/api/fotos')// Verifique se esse é o endpoint correto para a sua API
+window.onload = function() {
+    // Função para buscar e exibir as fotos
+    function carregarFotos() {
+        fetch('/api/fotos')
         .then(response => response.json())
         .then(data => {
-            const gallery = document.getElementById('gallery');
-            gallery.innerHTML = ''; // Limpa o conteúdo existente
-
-            if (data && data.length > 0) {
+            const fotosContainer = document.getElementById('fotosContainer');
+            if (fotosContainer) {
                 data.forEach(foto => {
-                    // Cria os elementos HTML para cada foto
-                    const photoDiv = document.createElement('div');
-                    photoDiv.classList.add('photo');
+                    // Criação do contêiner para cada foto
+                    const fotoDiv = document.createElement('div');
+                    fotoDiv.classList.add('foto-item');
 
+                    // Criação da imagem
                     const img = document.createElement('img');
-                    img.src = foto.Foto; // Caminho da foto no servidor
-                    img.alt = foto.Descricao || 'Foto sem descrição';
+                    img.src = '/uploads/' + foto.Foto;
+                    img.alt = foto.Descricao;
+                    fotoDiv.appendChild(img);
 
-                    const caption = document.createElement('p');
-                    caption.textContent = foto.Descricao || 'Sem descrição';
+                    // Criação da descrição
+                    const descricao = document.createElement('p');
+                    descricao.textContent = foto.Descricao;
+                    fotoDiv.appendChild(descricao);
 
-                    // Adiciona os elementos ao container
-                    photoDiv.appendChild(img);
-                    photoDiv.appendChild(caption);
-                    gallery.appendChild(photoDiv);
+                    // Adiciona o item ao contêiner principal
+                    fotosContainer.appendChild(fotoDiv);
+
+                    // Função para abrir o modal com a foto ampliada e dados
+                    fotoDiv.onclick = function() {
+                        abrirModal(foto);
+                    };
                 });
             } else {
-                gallery.innerHTML = '<p>Nenhuma foto encontrada.</p>';
+                console.error('Elemento fotosContainer não encontrado');
             }
         })
         .catch(error => {
             console.error('Erro ao carregar fotos:', error);
-            const gallery = document.getElementById('gallery');
-            gallery.innerHTML = '<p>Erro ao carregar as fotos. Tente novamente mais tarde.</p>';
         });
-}
+    }
 
-// Carrega as fotos ao carregar a página
-window.onload = carregarFotos;
+    // Função para formatar a data no formato dd/mm/yyyy
+    function formatarData(dataStr) {
+        const data = new Date(dataStr);
+        const dia = ("0" + data.getDate()).slice(-2);
+        const mes = ("0" + (data.getMonth() + 1)).slice(-2);
+        const ano = data.getFullYear();
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    // Função para abrir o modal com a foto e seus dados
+    function abrirModal(foto) {
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalDescricao = document.getElementById('modal-descricao');
+        const modalDate = document.getElementById('modal-date');
+
+        modal.style.display = "flex";
+        modal.classList.add("show");
+
+        modalImg.src = '/uploads/' + foto.Foto;
+        modalDescricao.textContent = foto.Descricao;
+        modalDate.textContent = "Data: " + formatarData(foto.DataRegistro);
+
+        // Zoom na imagem ao clicar
+        modalImg.onclick = function() {
+            modalImg.style.transform = modalImg.style.transform === "scale(1.5)" ? "scale(1)" : "scale(1.5)";
+            modalImg.style.transition = "transform 0.3s ease"; // Transição suave ao dar zoom
+        };
+    }
+
+    // Função para fechar o modal
+    function fecharModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = "none";
+        modal.classList.remove("show");
+    }
+
+    // Fechar o modal ao clicar fora da imagem
+    window.onclick = function(event) {
+        const modal = document.getElementById('modal');
+        if (event.target === modal) {
+            fecharModal();
+        }
+    };
+
+    // Fechar o modal ao clicar no botão de fechar
+    document.getElementById('close').onclick = function() {
+        fecharModal();
+    };
+
+    // Chamar a função para carregar as fotos
+    carregarFotos();
+};

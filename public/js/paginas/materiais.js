@@ -1,60 +1,53 @@
-document.addEventListener("DOMContentLoaded", function() {
-    
-    // Exemplo de função para simular o download
-    const downloadLinks = document.querySelectorAll('a[download]');
+// Função para carregar materiais do backend
+function loadMaterials() {
+    fetch('/api/materiais') // Corrigido nome da rota
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar materiais');
+            }
+            return response.json();
+        })
+        .then(materials => {
+            console.log(materials); // Exibe os materiais carregados no console
 
-    // Adiciona evento para cada link de download
-    downloadLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            const fileName = event.target.textContent; // Obtém o nome do arquivo clicado
-            alert(`Iniciando o download de: ${fileName}`);
+            const tableBody = document.getElementById('materials-table-body');
+            tableBody.innerHTML = ''; // Limpa a tabela antes de adicionar novos materiais
+
+            if (materials.length > 0) {
+                materials.forEach(material => {
+                    addMaterialToTable(
+                        material.NomeArquivo,
+                        material.Descricao,
+                        material.DataRegistro,
+                        material.AudiovisualID
+                    );
+                });
+            } else {
+                console.log('Nenhum material encontrado');
+                document.getElementById('message').textContent = 'Nenhum material encontrado.';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar materiais:', error);
         });
-    });
+}
 
-    // Função para aplicar um filtro por título
-    const filterInput = document.querySelector("#filter-input");
+// Função para adicionar cada material à tabela
+function addMaterialToTable(nomeArquivo, descricao, dataRegistro, id) {
+    const tableBody = document.getElementById('materials-table-body'); // Certifique-se de que este ID existe no HTML
+    const row = document.createElement('tr');
 
-    if (filterInput) {
-        filterInput.addEventListener("input", function() {
-            const filterValue = filterInput.value.toLowerCase();
-            const rows = document.querySelectorAll("table tbody tr");
+    row.innerHTML = `
+        <td>${nomeArquivo}</td>
+        <td>${descricao}</td>
+        <td>${new Date(dataRegistro).toLocaleDateString()}</td>
+        <td><a href="/uploads/${nomeArquivo}" target="_blank">Baixar</a></td>
+    `;
 
-            rows.forEach(row => {
-                const titleCell = row.cells[0]; // Título da atividade
-                const titleText = titleCell.textContent || titleCell.innerText;
+    tableBody.appendChild(row);
+}
 
-                // Se o título não corresponder ao filtro, esconde a linha
-                if (titleText.toLowerCase().includes(filterValue)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        });
-    }
+// Carregar materiais ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+    loadMaterials();
 });
-// Realizando a requisição para obter os materiais (dados)
-fetch('/materiais')
-    .then(response => {
-        if (!response.ok) {
-            // Se a resposta não for OK, lança um erro
-            throw new Error('Erro ao carregar os materiais');
-        }
-        return response.json(); // Converte a resposta em JSON
-    })
-    .then(data => {
-        console.log('Materiais:', data);
-        // Aqui você pode manipular os dados recebidos, por exemplo, exibindo-os na página
-        if (data.success) {
-            const materiaisList = document.getElementById('materiais-list');
-            data.data.forEach(materiais => {
-                const li = document.createElement('li');
-                li.textContent = `Nome do arquivo: ${materiais.NomeArquivo}, Tipo: ${materiais.TipoArquivo}`;
-                materiaisList.appendChild(li);
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        alert('Erro ao carregar materiais');
-    });

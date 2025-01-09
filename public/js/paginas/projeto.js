@@ -22,19 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Criar um objeto com os dados para envio
         const formData = new FormData();
-        formData.append('AnoEdicao', anoEdicao);
+        formData.append('AnoEdicao', anoEdicao); // Altere para AnoEdicao
         formData.append('NomeProjeto', nomeProjeto);
         formData.append('Local', local);
 
         // Enviar os dados para o backend usando fetch
-       
         fetch('/projeto/criar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                AnoEdicao: anoEdicao,
+                AnoEdicao: anoEdicao, // Altere para AnoEdicao
                 NomeProjeto: nomeProjeto,
                 Local: local
             })

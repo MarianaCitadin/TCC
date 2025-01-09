@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/paginas/fotos.css">
-    <script src="/public/js/paginas/fotos.js" defer></script>
+    <link rel="stylesheet" href="/css/paginas/fotos.css">
+    <script src="/js/paginas/fotos.js" defer></script>
     <title>Galeria de Fotos - Clicando na Terceira Idade</title>
 </head>
 <body>
@@ -25,10 +25,19 @@
 
     <main>
         <h1>Galeria de Fotos</h1>
-        <div id="gallery" class="gallery">
+        <div id="fotosContainer">
             <!-- Fotos serão carregadas aqui dinamicamente -->
         </div>
     </main>
-
+    
+    <!-- Modal de Exibição da Imagem -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="close" class="close">&times;</span>
+            <img id="modal-img" src="" alt="Imagem Ampliada">
+            <div id="modal-descricao" class="modal-description"></div>
+            <div id="modal-date" class="modal-date"></div>
+        </div>
+    </div>
 </body>
 </html>

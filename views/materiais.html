@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/paginas/materiais.css">
+    <script src="/js/paginas/materiais.js" defer></script>
+
     <title>Atividades - Clicando na Terceira Idade</title>
 </head>
 <body>
@@ -42,89 +44,11 @@
             
                     </tr>
                 </thead>
-                <tbody id="material-table-body">
+                <tbody id="materials-table-body">
                     <!-- Materiais serão carregados aqui dinamicamente -->
                 </tbody>
             </table>
         </div>
     </main>
-
-    <script>
-        // Função para carregar materiais do backend
-        function carregarMateriais() {
-            fetch('/api/materiais')
-                .then(response => response.json())
-                .then(data => {
-                    const tbody = document.getElementById('material-table-body');
-                    tbody.innerHTML = ''; // Limpa o conteúdo existente
-
-                    if (data.materiais && data.materiais.length > 0) {
-                        data.materiais.forEach(material => {
-                            // Cria a linha da tabela
-                            const row = document.createElement('tr');
-
-                            // Cria as células
-                            const tituloCell = document.createElement('td');
-                            tituloCell.textContent = material.Titulo;
-
-                            const descricaoCell = document.createElement('td');
-                            descricaoCell.textContent = material.Descricao;
-
-                            const dataCell = document.createElement('td');
-                            dataCell.textContent = new Date(material.DataDisponibilizacao).toLocaleDateString();
-
-                            const pdfCell = document.createElement('td');
-                            const pdfLink = document.createElement('a');
-                            pdfLink.href = material.CaminhoPDF;
-                            pdfLink.textContent = 'Baixar PDF';
-                            pdfLink.download = true;
-                            pdfCell.appendChild(pdfLink);
-
-                            const slidesCell = document.createElement('td');
-                            const slidesLink = document.createElement('a');
-                            slidesLink.href = material.CaminhoSlides;
-                            slidesLink.textContent = 'Baixar Slides';
-                            slidesLink.download = true;
-                            slidesCell.appendChild(slidesLink);
-
-                            // Adiciona as células à linha
-                            row.appendChild(tituloCell);
-                            row.appendChild(descricaoCell);
-                            row.appendChild(dataCell);
-                            row.appendChild(pdfCell);
-                            row.appendChild(slidesCell);
-
-                            // Adiciona a linha à tabela
-                            tbody.appendChild(row);
-                        });
-                    } else {
-                        tbody.innerHTML = '<tr><td colspan="5">Nenhum material encontrado.</td></tr>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar materiais:', error);
-                });
-        }
-
-        // Carrega os materiais ao carregar a página
-        window.onload = carregarMateriais;
-
-        // Filtro da tabela baseado no título
-        document.getElementById('filter-input').addEventListener('input', function() {
-            const filterText = this.value.toLowerCase();
-            const rows = document.querySelectorAll('#material-table-body tr');
-
-            rows.forEach(row => {
-                const titleCell = row.querySelector('td:nth-child(1)');
-                const title = titleCell.textContent.toLowerCase();
-
-                if (title.includes(filterText)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        });
-    </script>
 </body>
 </html>

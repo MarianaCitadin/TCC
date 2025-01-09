@@ -32,9 +32,7 @@ CREATE TABLE TbUsuario (
 CREATE TABLE TbProjeto (
     ProjetoID INT AUTO_INCREMENT PRIMARY KEY,
     NomeProjeto VARCHAR(255) NOT NULL,
-    DataInicio DATE NOT NULL,
-    DataFim DATE NOT NULL,
-    Descricao TEXT NOT NULL,
+    AnoEdicao INT,
     Local VARCHAR(255) NOT NULL
 );
 
