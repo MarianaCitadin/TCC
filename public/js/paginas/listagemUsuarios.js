@@ -70,10 +70,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 Object.keys(data).forEach(categoriaId => {
                     const categoria = data[categoriaId];
                     
-                    // Criar a seção de categoria
-                    const categoriaSection = document.createElement('section');
-                    categoriaSection.classList.add('categoria');
-                    categoriaSection.innerHTML = `<h2>Categoria ${categoriaId}</h2>`;
+                      // Criar a seção de categoria
+            const categoriaSection = document.createElement('section');
+            categoriaSection.classList.add('categoria');
+            
+            // Alterar título de acordo com o id da categoria
+            const categoriaTitle = categoriaId === '1' ? 'Alunos' : categoriaId === '2' ? 'Professores' : `Categoria ${categoriaId}`;
+            
+            categoriaSection.innerHTML = `<h2>${categoriaTitle}</h2>`; // Definir o título
                     
                     // Criar a tabela para essa categoria
                     const table = document.createElement('table');

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para carregar eventos do backend
     function loadEvents() {
-        fetch('/eventos')
+        fetch('/listar-eventos')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Erro ao carregar eventos.');
@@ -100,33 +100,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Função para deletar um evento
-    function deleteEvent(eventId) {
-        fetch(`/excluirEvento/${eventId}`, {
-            method: 'DELETE',
+function deleteEvent(eventId) {
+    fetch(`/excluirEvento/${eventId}`, {
+        method: 'DELETE',
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                // Remover o evento da tabela
+                const row = document.querySelector(`button[data-event-id="${eventId}"]`).closest('tr');
+                row.remove();
+            }
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    alert(data.message);
-                    // Remover o evento da tabela
-                    const row = document.querySelector(`button[data-event-id="${eventId}"]`).closest('tr');
-                    row.remove();
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao excluir evento:', error);
-                alert('Erro ao excluir o evento. Tente novamente.');
-            });
-    }
+        .catch(error => {
+            console.error('Erro ao excluir evento:', error);
+            alert('Erro ao excluir o evento. Tente novamente.');
+        });
+}
 
-    // Delegate event listener for delete buttons
-    eventTable.addEventListener('click', (e) => {
-        if (e.target && e.target.classList.contains('delete-btn')) {
-            const eventId = e.target.getAttribute('data-event-id');
-            deleteEvent(eventId);
+// Delegate event listener for delete buttons
+eventTable.addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('delete-btn')) {
+        const eventId = e.target.getAttribute('data-event-id');
+        if (eventId) {
+            deleteEvent(eventId); // Verifique se o eventId não é undefined
+        } else {
+            console.error('ID do evento não encontrado!');
         }
-    });
+    }
+});
 
+    
     // Carregar os eventos ao abrir a página
     loadEvents();
 });

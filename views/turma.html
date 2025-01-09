@@ -30,14 +30,14 @@
             <p><strong>Horário:</strong> <span id="horario-turma"></span></p>
             <p><strong>Local:</strong> <span id="local-turma"></span></p>
         </div>
-
+        
         <div class="turma-participantes">
             <h2>Participantes</h2>
-            <ul id="participantes-lista">
+            <ul id="listar-usuarios">
                 <!-- Participantes serão carregados aqui -->
             </ul>
         </div>
-    </div>
+        
     <script>
         // Função para carregar as informações da turma
         function carregarTurma(turma) {
@@ -46,7 +46,7 @@
           document.getElementById("local-turma").textContent = turma.local;
     
           // Carregar participantes dinamicamente
-          const listaParticipantes = document.getElementById("participantes-lista");
+          const listaParticipantes = document.getElementById("listar-usuarios");
           turma.participantes.forEach(participante => {
             const li = document.createElement("li");
             li.textContent = participante;

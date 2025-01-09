@@ -6,11 +6,16 @@
     <title>Tela de Cadastro</title>
     <link rel="stylesheet" href="/css/paginas/cadastro.css">
     <script src="/js/paginas/cadastro.js" defer></script>
+    <script>
+        // Função para redirecionar para a página de login ao clicar em "Deletar"
+        function redirectToLogin() {
+            window.location.href = '/'; // Redireciona para a página de login
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h2>Cadastro:</h2>
-        <!-- Formulário com método POST para enviar os dados para /submit_form -->
         <form action="/submit_form" method="POST">
             <div class="form-grid">
                 <!-- Coluna Esquerda -->
@@ -73,7 +78,7 @@
 
             <div class="buttons">
                 <button type="submit" class="btn cadastrar">Cadastrar</button>
-                <button type="reset" class="btn deletar">Deletar</button>
+                <button type="reset" class="btn deletar" onclick="redirectToLogin()">Deletar</button>
             </div>
         </form>
     </div>

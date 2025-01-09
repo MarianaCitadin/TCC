@@ -85,11 +85,24 @@ document.addEventListener("DOMContentLoaded", function () {
             event.target.value = value;
         });
 
-        document.getElementById('fone').addEventListener('input', function(event) {
-            let value = event.target.value.replace(/\D/g, '');
-            if (value.length <= 10) {
-                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-            }
-            event.target.value = value;
-        });
+      
     
+        document.addEventListener("DOMContentLoaded", function () {
+            // Máscara para o campo de telefone
+            document.getElementById('fone').addEventListener('input', function(event) {
+                let value = event.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        
+                // Aplica a máscara de telefone
+                if (value.length <= 10) {
+                    value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
+                } else {
+                    value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Para números com DDD e 9 dígitos
+                }
+        
+                // Atualiza o valor do campo com a máscara
+                event.target.value = value;
+            });
+        });
+        
+
+      

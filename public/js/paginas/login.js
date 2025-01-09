@@ -45,36 +45,3 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  let attempts = 0; // Contador de tentativas
-  const maxAttempts = 3; // Número máximo de tentativas permitidas
-
-  const loginButton = document.getElementById("login-button");
-  const recoverButton = document.getElementById("recover-button");
-
-  loginButton.addEventListener("click", () => {
-    const password = document.getElementById("password").value;
-
-    // Simulação de validação de senha (substitua conforme a lógica do seu sistema)
-    const correctPassword = "12345"; // Exemplo de senha correta
-
-    if (password === correctPassword) {
-      alert("Login bem-sucedido!");
-      attempts = 0; // Reinicia o contador de tentativas
-    } else {
-      attempts++;
-      alert(`Senha incorreta! Você tem ${maxAttempts - attempts} tentativa(s) restante(s).`);
-
-      if (attempts >= maxAttempts) {
-        recoverButton.style.display = "block"; // Mostra o botão de "Recuperar Senha"
-        loginButton.disabled = true; // Opcional: desabilita o botão "Entrar"
-        alert("Você excedeu o número de tentativas. Clique em 'Recuperar Senha'.");
-      }
-    }
-  });
-
-  recoverButton.addEventListener("click", () => {
-    alert("Inicie o processo de recuperação de senha.");
-    // Aqui você pode redirecionar o usuário para uma página de recuperação de senha
-  });
-});
