@@ -1,54 +1,64 @@
 document.addEventListener('DOMContentLoaded', () => {
     const formInicial = document.getElementById('form-inicial');
-    
+
     formInicial.addEventListener('submit', (event) => {
-        event.preventDefault(); // Impede o envio padrão do formulário
+        event.preventDefault();
 
         // Obter valores dos campos do formulário
-        const anoEdicao = document.getElementById('anoEdicao').value;
-        const nomeProjeto = document.getElementById('nomeProjeto').value;
-        const local = document.getElementById('local').value;
+        const anoEdicao = document.getElementById('anoEdicao').value.trim();
+        const nomeProjeto = document.getElementById('nomeProjeto').value.trim();
+        const local = document.getElementById('local').value.trim();
 
-        // Validação básica com expressões regulares
+        // Adicionar log para verificar os dados antes de enviar
+        console.log({
+            NomeProjeto: nomeProjeto,
+            AnoEdicao: anoEdicao,
+            Local: local
+        });
+
+        // Validação
         if (!/^\d{4}$/.test(anoEdicao)) {
             alert('Por favor, insira um ano válido (ex: 2025).');
             return;
         }
 
-        if (nomeProjeto.length < 3 || local.length < 3) {
-            alert('Por favor, insira um nome e local válidos com pelo menos 3 caracteres.');
+        if (nomeProjeto.length < 3) {
+            alert('O nome do projeto deve ter pelo menos 3 caracteres.');
             return;
         }
 
-        // Criar um objeto com os dados para envio
-        const formData = new FormData();
-        formData.append('AnoEdicao', anoEdicao); // Altere para AnoEdicao
-        formData.append('NomeProjeto', nomeProjeto);
-        formData.append('Local', local);
+        if (local.length < 3) {
+            alert('O local deve ter pelo menos 3 caracteres.');
+            return;
+        }
 
-        // Enviar os dados para o backend usando fetch
+        // Dados para envio
+        const payload = {
+            NomeProjeto: nomeProjeto,
+            AnoEdicao: anoEdicao,
+            Local: local
+        };
+
+        // Enviar requisição
         fetch('/projeto/criar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                AnoEdicao: anoEdicao, // Altere para AnoEdicao
-                NomeProjeto: nomeProjeto,
-                Local: local
-            })
+            body: JSON.stringify(payload),
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Erro ao cadastrar o projeto.');
+                return response.text().then(errMsg => {
+                    throw new Error(errMsg || 'Erro ao cadastrar o projeto.');
+                });
             }
             alert(`Projeto "${nomeProjeto}" cadastrado com sucesso!`);
             window.location.href = '/cadastrarTurmas';
         })
         .catch(error => {
-            console.error('Erro:', error);
+            console.error('Erro ao cadastrar o projeto:', error.message);
             alert('Ocorreu um erro ao cadastrar o projeto. Tente novamente.');
         });
-        
     });
 });

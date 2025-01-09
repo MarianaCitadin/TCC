@@ -438,21 +438,23 @@ app.get('/sobre', verificarAutenticacao, (req, res) => {
 
 // Rota para renderizar o formulário de projeto
 app.get('/projeto', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/projeto.html'));
+    res.sendFile(path.join(__dirname, 'views', 'projeto.html'));
 });
 
 app.post('/projeto/criar', (req, res) => {
-    console.log('Dados recebidos:', req.body); // Adicionando um log para inspecionar os dados
+    console.log('Dados recebidos no backend:', req.body);
 
-    const { NomeProjeto, anoEdicao, Local } = req.body;
+    const { NomeProjeto, AnoEdicao, Local } = req.body;
 
-    if (!NomeProjeto || !anoEdicao || !Local) {
+    // Validação de campos obrigatórios
+    if (!NomeProjeto || !AnoEdicao || !Local) {
         return res.status(400).send('Por favor, preencha todos os campos.');
     }
 
+    // Criação do novo projeto
     const newProjeto = {
         NomeProjeto,
-        anoEdicao,
+        AnoEdicao,
         Local
     };
 
@@ -462,33 +464,47 @@ app.post('/projeto/criar', (req, res) => {
             return res.status(500).send('Erro ao criar o projeto, tente novamente.');
         }
 
-        // Se o cadastro for bem-sucedido, redireciona para a página de cadastrar turmas
         res.redirect('/cadastrarTurmas');
     });
 });
+
+
 
 app.get('/cadastrarTurmas', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'cadastrarTurmas.html'));
 });
 
 app.post('/cadastrarTurmas', (req, res) => {
-    const { nomeTurma, horario, dataInicio, dataFim } = req.body;
+    const { nomeTurma, projetoId, horario, dataInicio, dataFim, limiteAlunos } = req.body;
 
-    if (!nomeTurma || !horario || !dataInicio || !dataFim) {
-        return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
+    // Validação dos campos obrigatórios
+    if (!nomeTurma || !dataInicio || !dataFim) {
+        return res.status(400).json({ message: 'Os campos NomeTurma, DataInicio e DataFim são obrigatórios.' });
     }
 
-    // Criação da turma (use a lógica de banco de dados ou outro processo aqui)
-    const newTurma = { nomeTurma, horario, dataInicio, dataFim };
+    // Define o limite padrão de alunos caso não seja enviado
+    const limiteAlunosFinal = limiteAlunos ? parseInt(limiteAlunos) : 20;
 
-    // Supondo que você tenha um método para criar uma turma no banco de dados, use-o aqui
-    Turma.create(newTurma, (err, turmaId) => {
+    // Criação da turma no banco de dados
+    const query = `
+        INSERT INTO TbTurma (NomeTurma, ProjetoID, horario, dataInicio, dataFim, LimiteAlunos)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+    const values = [nomeTurma, projetoId || null, horario, dataInicio, dataFim, limiteAlunosFinal];
+
+    db.query(query, values, (err, results) => {
         if (err) {
+            console.error('Erro ao cadastrar a turma:', err);
             return res.status(500).json({ error: 'Erro ao cadastrar a turma.' });
         }
-        res.status(201).json({ message: 'Turma cadastrada com sucesso', turmaId });
+
+        res.status(201).json({
+            message: 'Turma cadastrada com sucesso',
+            turmaId: results.insertId,
+        });
     });
 });
+
 
 
 
