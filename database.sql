@@ -49,10 +49,12 @@ CREATE TABLE TbParticipantes (
 CREATE TABLE TbTurma (
     TurmaID INT AUTO_INCREMENT PRIMARY KEY,
     NomeTurma VARCHAR(255) NOT NULL,
+    ProjetoID INT,
     horario VARCHAR(255),
     dataInicio DATE,
     dataFim DATE, 
     LimiteAlunos INT DEFAULT 20,
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 
 -- Tabela de Eventos
