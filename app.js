@@ -205,9 +205,8 @@ app.get('/listagemUsuarios', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'listagemUsuarios.html'));
 });
 
-// Rota para obter usuários
 app.get('/usuarios', (req, res) => {
-    const query = 'SELECT * FROM tbusuario'; // Ajuste a tabela e os campos conforme seu banco de dados
+    const query = 'SELECT * FROM tbusuario';
 
     db.query(query, (err, results) => {
         if (err) {
@@ -215,7 +214,8 @@ app.get('/usuarios', (req, res) => {
             return res.status(500).send('Erro ao buscar dados');
         }
 
-        // Agrupar usuários por CategoriaID
+        console.log(results); // Verifique o que está sendo retornado
+
         const usuariosPorCategoria = results.reduce((acc, usuario) => {
             const categoria = usuario.CategoriaID;
             if (!acc[categoria]) {
@@ -225,10 +225,11 @@ app.get('/usuarios', (req, res) => {
             return acc;
         }, {});
 
-        // Retornar os dados agrupados por categoria
         res.json(usuariosPorCategoria);
     });
 });
+
+
 
 // Rota para exibir a página turmas
 app.get('/recuperarsenha', verificarAutenticacao, (req, res) => {
@@ -410,7 +411,65 @@ app.get('/materiais', (req, res) => {
 
 
 
+// Rota para exibir cadastrar fotos
+app.get('/cadastraralunos', verificarAutenticacao, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'cadastraralunos.html'));
+});
 
+app.post('/associar-aluno-turma', (req, res) => {
+    const { usuarioIDs, turmaID } = req.body; // Recebe o array de alunos e o ID da turma
+
+    if (!usuarioIDs || !turmaID || usuarioIDs.length === 0) {
+        return res.status(400).json({ error: 'IDs dos alunos e ID da turma são obrigatórios.' });
+    }
+
+    // Verifica se algum aluno da categoria 1 já está associado à turma
+    const queryVerificar = `
+        SELECT * FROM TbParticipantes 
+        WHERE UsuarioID IN (?) AND TurmaID = ? 
+        AND UsuarioID IN (SELECT UsuarioID FROM TbUsuarios WHERE CategoriaID = 1)
+    `;
+    
+    db.query(queryVerificar, [usuarioIDs, turmaID], (err, results) => {
+        if (err) {
+            console.error('Erro ao verificar associação:', err);
+            return res.status(500).json({ error: 'Erro ao verificar associação.' });
+        }
+
+        const alunosJaAssociados = results.map(result => result.UsuarioID);
+        const alunosNaoAssociados = usuarioIDs.filter(id => !alunosJaAssociados.includes(id));
+
+        if (alunosNaoAssociados.length === 0) {
+            return res.status(400).json({ error: 'Todos os alunos já estão associados a esta turma ou não pertencem à categoria 1.' });
+        }
+
+        // Associa os alunos não associados à turma
+        const queryInserir = `
+            INSERT INTO TbParticipantes (UsuarioID, ProjetoID, TurmaID)
+            VALUES (?, (SELECT ProjetoID FROM TbTurma WHERE TurmaID = ?), ?)
+        `;
+
+        const queries = alunosNaoAssociados.map(usuarioID => {
+            return new Promise((resolve, reject) => {
+                db.query(queryInserir, [usuarioID, turmaID, turmaID], (err, result) => {
+                    if (err) {
+                        reject('Erro ao associar aluno à turma: ' + err);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+        });
+
+        Promise.all(queries)
+            .then(() => {
+                res.json({ success: true, message: 'Alunos associados à turma com sucesso!' });
+            })
+            .catch(err => {
+                res.status(500).json({ error: err });
+            });
+    });
+});
 
 
 
@@ -587,7 +646,6 @@ app.get('/listar-turmas', (req, res) => {
 });
 
   
-
 
 
 

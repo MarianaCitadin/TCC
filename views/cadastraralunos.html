@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Alunos nas Turmas</title>
+    <link rel="stylesheet" href="/css/paginas/cadastraralunos.css">
+    <script src="/js/paginas/cadastraralunos.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Clicando na Terceira Idade</div>
+        <nav>
+            <ul>
+                <li><a href="index2">Início</a></li>
+                <li><a href="adicionarEventos">Eventos</a></li>
+                <li><a href="cadastrarTurmas">Turmas</a></li>
+                <li><a href="cadastrarAtividades">Atividades</a></li>
+                <li><a href="listagemUsuarios">Usuários</a></li>
+                <li><a href="/">Sair</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Cadastrar Alunos</h1>
+        <form id="form-associar-aluno">
+            <label for="usuario">Selecione os Alunos:</label>
+            <div id="usuarios-lista">
+                <!-- Aqui serão adicionados os checkboxes dinamicamente -->
+                <p>Carregando alunos...</p>
+            </div>
+
+            <label for="turma">Selecione a Turma:</label>
+            <select id="turma" name="turma">
+                <option value="">Carregando turmas...</option>
+            </select>
+
+            <button type="submit">Associar Alunos à Turma</button>
+        </form>
+        <div class="message" id="message"></div>
+    </div>
+</body>
+</html>

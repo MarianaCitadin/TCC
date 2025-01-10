@@ -41,8 +41,10 @@ CREATE TABLE TbParticipantes (
     ParticipanteID INT AUTO_INCREMENT PRIMARY KEY,
     UsuarioID INT,
     ProjetoID INT,
+    TurmaID INT,
     FOREIGN KEY (UsuarioID) REFERENCES TbUsuario(UsuarioID),
-    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID),
+    FOREIGN KEY (TurmaID) REFERENCES TbTurma(TurmaID)  
 );
 
 -- Tabela de Turmas

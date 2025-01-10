@@ -1,0 +1,58 @@
+
+/* Adicionando um estilo básico para a página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.turma-container {
+    margin: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.turma-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+
+.turma-header:hover {
+    background-color: #45a049;
+}
+
+.alunos-list {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #e9f7e9;
+    border-radius: 5px;
+}
+
+.alunos-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.alunos-list th, .alunos-list td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.alunos-list th {
+    background-color: #f2f2f2;
+}

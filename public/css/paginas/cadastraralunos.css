@@ -1,0 +1,175 @@
+/* Estilos gerais do corpo */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fb;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Usando Flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: flex-start; /* Centraliza verticalmente (ajustável) */
+    min-height: 100vh; /* Garante que a página ocupe a altura total da tela */
+    padding-top: 80px; /* Garante que o conteúdo não fique atrás do cabeçalho fixo */
+}
+
+/* Cabeçalho */
+header {
+    background-color: #2e7d32; /* Verde escuro */
+    color: white;
+    display: flex;
+    justify-content: center; /* Centraliza os itens dentro do cabeçalho */
+    padding: 15px 0; /* Ajusta a altura do cabeçalho */
+    width: 100%;
+    position: fixed; /* Fixa o cabeçalho no topo */
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+/* Centraliza a logo */
+header .logo {
+    font-size: 24px;
+    margin-right: auto;
+    padding-left: 20px;
+}
+
+/* Estiliza a barra de navegação */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centraliza os itens */
+    gap: 15px;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px; /* Espaçamento nos links */
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+/* Efeito ao passar o mouse */
+nav ul li a:hover {
+    background-color: #1b5e20; /* Tom mais escuro de verde */
+}
+
+/* Container principal */
+.container {
+    width: 100%;
+    max-width: 800px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal */
+h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilo dos formulários */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Estilo do rótulo dos campos */
+label {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Estilo para a lista de usuários */
+#usuarios-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.aluno-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+    background-color: #f0f9f4;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.aluno-item:hover {
+    background-color: #d9f7e8;
+}
+
+.aluno-item label {
+    font-size: 16px;
+    color: #333;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 10px;
+}
+
+/* Estilo do campo de seleção de turma */
+select {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+select:focus {
+    border-color: #007b5e;
+    background-color: #eaf6f1;
+}
+
+/* Estilo do botão */
+button {
+    padding: 12px;
+    font-size: 18px;
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Estilo da mensagem de sucesso e erro */
+.message {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
