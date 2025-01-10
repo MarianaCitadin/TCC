@@ -794,6 +794,29 @@ app.get('/turma', verificarAutenticacao, (req, res) => {
 app.get('/listagemturma', verificarAutenticacao, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'listagemturma.html'));
 });
+app.get('/getTurmas', (req, res) => {
+    
+    
+  
+    // Consulta para buscar as turmas associadas ao usuário logado
+    const queryTurmasUsuario = `
+        SELECT * from tbturma
+    `;
+
+    db.query(queryTurmasUsuario, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar turmas:', err);
+            return res.status(500).json({ error: 'Erro ao buscar turmas.' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Nenhuma turma encontrada para o usuário.' });
+        }
+
+        res.json(results);
+    });
+});
+
 
 app.get('/listarTurmas', (req, res) => {
     const usuarioId = req.session?.usuario?.id; // Supondo que o ID do usuário logado está armazenado na sessão

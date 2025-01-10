@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função para carregar as turmas do backend
     async function loadTurmas() {
         try {
-            const response = await fetch('/listarTurmas');
+            const response = await fetch('/getTurmas');
             if (!response.ok) {
                 throw new Error('Erro ao carregar turmas.');
             }
