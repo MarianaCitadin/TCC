@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/paginas/turma.css">
     <title>Minha Turma - Clicando na Terceira Idade</title>
-    <script src="/js/paginas/turma.js" defer></script> <!-- Link para o arquivo JS -->
+    <script src="/js/paginas/listagemTurma.js" defer></script> <!-- Link para o arquivo JS -->
 </head>
 <body>
     <header>
@@ -15,9 +15,8 @@
                 <li><a href="index">Início</a></li>
                 <li><a href="fotos">Fotos</a></li>
                 <li><a href="eventos">Eventos</a></li>
-                <li><a href="usuario">Usuários</a></li>
+                <li><a href="usuarios">Usuários</a></li>
                 <li><a href="materiais">materiais</a></li>
-                <li><a href="sobre">Sobre Nós</a></li>
                 <li><a href="/">Sair</a></li>
             </ul>
         </nav>
@@ -30,37 +29,13 @@
             <p><strong>Horário:</strong> <span id="horario-turma"></span></p>
             <p><strong>Local:</strong> <span id="local-turma"></span></p>
         </div>
-        
+
         <div class="turma-participantes">
             <h2>Participantes</h2>
-            <ul id="listar-usuarios">
+            <ul id="participantes-lista">
                 <!-- Participantes serão carregados aqui -->
             </ul>
         </div>
-        
-    <script>
-        // Função para carregar as informações da turma
-        function carregarTurma(turma) {
-          document.getElementById("nome-turma").textContent = turma.nome;
-          document.getElementById("horario-turma").textContent = turma.horario;
-          document.getElementById("local-turma").textContent = turma.local;
-    
-          // Carregar participantes dinamicamente
-          const listaParticipantes = document.getElementById("listar-usuarios");
-          turma.participantes.forEach(participante => {
-            const li = document.createElement("li");
-            li.textContent = participante;
-            li.addEventListener("click", () => alert(`Você clicou em ${participante}`)); // Exemplo de ação
-            listaParticipantes.appendChild(li);
-          });
-        }
-    
-        // Chama a API para obter os dados da turma
-        fetch('/dados-turma')
-          .then(response => response.json())
-          .then(turma => carregarTurma(turma))
-          .catch(error => console.error("Erro ao carregar a turma:", error));
-      </script>
-    
+    </div>    
 </body>
 </html>
