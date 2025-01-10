@@ -1,28 +1,13 @@
-// Função para carregar as informações da turma dinamicamente
-function carregarTurma(turma) {
-    document.getElementById("nome-turma").textContent = turma.nome;
-    document.getElementById("horario-turma").textContent = turma.horario;
-    document.getElementById("local-turma").textContent = turma.local;
 
-    // Carregar participantes dinamicamente
-    const listaParticipantes = document.getElementById("listar-usuarios");
-    turma.participantes.forEach(participante => {
-        const li = document.createElement("li");
-        li.textContent = participante;
-        li.addEventListener("click", () => alert(`Você clicou em ${participante}`)); // Exemplo de ação
-        listaParticipantes.appendChild(li);
-    });
-}
-
-// Função para buscar e exibir os dados dos usuários
+// Função para buscar e exibir os dados dos usuários da categoria 1
 async function listarUsuarios() {
     try {
-        // Fazendo a requisição para a API
+        // Fazendo a requisição para a API que agora filtra pela categoria 1
         const response = await fetch('/listar-usuarios');
         const usuarios = await response.json();
 
         if (usuarios.length === 0) {
-            alert('Nenhum usuário encontrado.');
+            alert('Nenhum usuário encontrado na categoria 1.');
             return;
         }
 
@@ -41,8 +26,32 @@ async function listarUsuarios() {
     }
 }
 
+// Função para carregar os dados da turma
+async function carregarTurma() {
+    try {
+        const response = await fetch('/listar-turmas');
+        const turmas = await response.json();
+        
+        if (Array.isArray(turmas) && turmas.length > 0) {
+            // Supondo que você tenha uma única turma, pegue os dados da primeira
+            const turma = turmas[0];
+
+            // Preenche os dados da turma no HTML
+            document.getElementById('nome-turma').textContent = turma.NomeTurma || 'Nome não disponível';
+            document.getElementById('horario-turma').textContent = turma.Horario || 'Horário não disponível';
+            document.getElementById('local-turma').textContent = turma.Local || 'Local não disponível';
+        } else {
+            console.error('Nenhuma turma encontrada.');
+        }
+    } catch (error) {
+        console.error('Erro ao carregar turma:', error);
+    }
+}
+
+
 // Chama a função para listar os usuários quando a página carregar
 document.addEventListener('DOMContentLoaded', listarUsuarios);
-
-// Chama a função para carregar as informações assim que a página carregar
-window.onload = carregarTurma;
+// Garantir que o DOM esteja carregado antes de manipular
+document.addEventListener('DOMContentLoaded', () => {
+    carregarTurma();
+});

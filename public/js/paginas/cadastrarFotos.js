@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 alert(data.message || "Foto adicionada com sucesso!");
                 form.reset();
                 previewContainer.innerHTML = ''; // Limpar a prévia
+                carregarFotos(); // Atualizar a lista de fotos cadastradas
             } else {
                 alert(data.message || "Erro ao adicionar foto. Tente novamente.");
             }
@@ -78,4 +79,6 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("Erro ao enviar os dados. Tente novamente.");
         });
     });
+
+   
 });

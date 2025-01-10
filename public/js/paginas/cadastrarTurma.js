@@ -1,3 +1,12 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('turmaForm');
+    if (form) {
+        form.addEventListener('submit', validarFormulario);
+    } else {
+        console.error('Formulário não encontrado!');
+    }
+});
+
 async function validarFormulario(event) {
     event.preventDefault();  // Evita que o formulário seja enviado automaticamente
 
@@ -6,18 +15,20 @@ async function validarFormulario(event) {
     const horario = document.getElementById('horario').value.trim();
     const dataInicio = document.getElementById('dataInicio').value;
     const dataFim = document.getElementById('dataFim').value;
-    const limiteAlunos = parseInt(document.getElementById('limiteAlunos').value.trim(), 10);  // Converte para número
-
-    // Depuração: Mostra os valores no console
-    console.log("Nome Turma:", nomeTurma);
-    console.log("Horário:", horario);
-    console.log("Data Início:", dataInicio);
-    console.log("Data Fim:", dataFim);
-    console.log("Limite Alunos:", limiteAlunos);
+    let limiteAlunos = document.getElementById('limiteAlunos').value.trim();
+    
+    // Converte para número e define 20 como valor padrão se estiver vazio
+    limiteAlunos = limiteAlunos ? parseInt(limiteAlunos, 10) : 20;
 
     // Verificar se os campos estão preenchidos
-    if (!nomeTurma || !horario || !dataInicio || !dataFim || isNaN(limiteAlunos)) {
+    if (!nomeTurma || !horario || !dataInicio || !dataFim) {
         alert("Todos os campos são obrigatórios.");
+        return;
+    }
+
+    // Verificar se limiteAlunos é um número válido
+    if (isNaN(limiteAlunos) || limiteAlunos <= 0) {
+        alert("O limite de alunos deve ser um número válido e maior que zero.");
         return;
     }
 
@@ -39,9 +50,10 @@ async function validarFormulario(event) {
 
         // Verifique se a resposta é bem-sucedida
         if (!response.ok) {
-            const errorResponse = await response.json();  // Pega a resposta de erro em formato JSON
+            const errorResponse = await response.text();  // Pega a resposta de erro como texto
             console.error('Erro na requisição:', errorResponse);
-            throw new Error(`Erro ao cadastrar a turma: ${errorResponse.message}`);
+            alert(`Erro ao cadastrar a turma: ${errorResponse}`);
+            throw new Error(`Erro ao cadastrar a turma: ${errorResponse}`);
         }
 
         const result = await response.json();
@@ -54,6 +66,3 @@ async function validarFormulario(event) {
         alert('Ocorreu um erro ao cadastrar a turma.');
     }
 }
-
-// Evite o envio automático do formulário
-document.querySelector('form').addEventListener('submit', validarFormulario);

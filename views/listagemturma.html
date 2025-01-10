@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/paginas/turma.css">
     <title>Minha Turma - Clicando na Terceira Idade</title>
-    <script src="/js/paginas/turma.js" defer></script> <!-- Link para o arquivo JS -->
+    <script src="/js/paginas/listagemTurma.js" defer></script> <!-- Link para o arquivo JS -->
 </head>
 <body>
     <header>
@@ -36,34 +36,6 @@
                 <!-- Participantes serão carregados aqui -->
             </ul>
         </div>
-    </div>
-    <script>
-        // Função para carregar as informações da turma
-        function carregarTurma(turma) {
-          document.getElementById("nome-turma").textContent = turma.nome;
-          document.getElementById("horario-turma").textContent = turma.horario;
-          document.getElementById("local-turma").textContent = turma.local;
-    
-          // Carregar participantes dinamicamente
-          const listaParticipantes = document.getElementById("participantes-lista");
-          turma.participantes.forEach(participante => {
-            const li = document.createElement("li");
-            li.textContent = participante;
-            li.addEventListener("click", () => alert(`Você clicou em ${participante}`)); // Exemplo de ação
-            listaParticipantes.appendChild(li);
-          });
-        }
-    
-        // Chama a API para obter os dados da turma
-        fetch('/dados-turma')
-          .then(response => response.json())
-          .then(turma => carregarTurma(turma))
-          .catch(error => console.error("Erro ao carregar a turma:", error));
-
-
-
-          
-      </script>
-    
+    </div>    
 </body>
 </html>

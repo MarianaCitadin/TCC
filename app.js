@@ -415,34 +415,7 @@ app.get('/materiais', (req, res) => {
 
 
 
-// Rota para exibir a página turmas
-app.get('/turma', verificarAutenticacao, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'turma.html'));
-});
 
-// Rota para exibir listagem da turma 
-app.get('/listagemturma', verificarAutenticacao, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'listagemturma.html'));
-});
-// Rota para buscar os dados do usuário pelo ID
-app.get('/usuario/:id', (req, res) => {
-  const usuarioId = req.params.id;
-
-  const query = `
-    SELECT * FROM TbUsuario WHERE UsuarioID = ?
-  `;
-  
-  db.query(query, [usuarioId], (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: 'Erro ao buscar dados do usuário' });
-    }
-    if (results.length > 0) {
-      res.json(results[0]); // Envia os dados do usuário
-    } else {
-      res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-  });
-});
 
 
 
@@ -543,58 +516,98 @@ app.post('/projeto/criar', (req, res) => {
 app.get('/cadastrarTurmas', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'cadastrarTurmas.html'));
 });
+// Rota para cadastrar a turma
 app.post('/cadastrarTurmas', (req, res) => {
-    let { NomeTurma, horario, dataInicio, dataFim, LimiteAlunos } = req.body;
-
-    // Verificando se os campos existem antes de chamar trim()
-    if (NomeTurma) NomeTurma = NomeTurma.trim();
-    if (horario) horario = horario.trim();
-    if (dataInicio) dataInicio = dataInicio.trim();
-    if (dataFim) dataFim = dataFim.trim();
-    if (LimiteAlunos) LimiteAlunos = LimiteAlunos.trim();
-
-    // Converte LimiteAlunos para número
-    const limiteAlunos = parseInt(LimiteAlunos, 10);
-
-    // Depuração: Exibe os dados recebidos
-    console.log("Dados recebidos:", req.body);
-
-    // Verificação básica dos campos
-    if (!NomeTurma || !horario || !dataInicio || !dataFim || isNaN(limiteAlunos)) {
-        return res.status(400).send('Todos os campos são obrigatórios.');
+    const { nomeTurma, horario, dataInicio, dataFim, limiteAlunos } = req.body;
+  
+    // Verificar se os dados estão corretos
+    if (!nomeTurma || !horario || !dataInicio || !dataFim || !limiteAlunos) {
+      return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
     }
+  
+    // Inserir os dados no banco de dados
+    const sql = 'INSERT INTO TbTurma (NomeTurma, Horario, DataInicio, DataFim, LimiteAlunos) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [nomeTurma, horario, dataInicio, dataFim, limiteAlunos], (err, results) => {
+      if (err) {
+        console.error('Erro ao salvar no banco de dados:', err);
+        return res.status(500).json({ message: 'Erro ao cadastrar a turma no banco de dados.' });
+      }
+      return res.status(200).json({ message: 'Turma cadastrada com sucesso!' });
+    });
+  });
+  
 
-    // Verificar se a data de início não é posterior à data de término
-    const inicio = new Date(dataInicio);
-    const fim = new Date(dataFim);
 
-    if (inicio >= fim) {
-        return res.status(400).send('A data de início não pode ser posterior à data de término.');
-    }
 
-    // Verificar se LimiteAlunos é um número válido
-    if (limiteAlunos <= 0) {
-        return res.status(400).send('Limite de alunos deve ser um número maior que zero.');
-    }
 
-    const query = `
-        INSERT INTO TbTurma (NomeTurma, horario, dataInicio, dataFim, LimiteAlunos)
-        VALUES (?, ?, ?, ?, ?)
-    `;
 
-    connection.query(
-        query,
-        [NomeTurma, horario, dataInicio, dataFim, limiteAlunos], // Aqui são 5 valores
-        (err, results) => {
-            if (err) {
-                console.error('Erro ao cadastrar turma:', err);
-                return res.status(500).send('Erro ao cadastrar turma.');
-            }
-
-            res.status(201).json({ message: 'Turma cadastrada com sucesso!' });
-        }
-    );
+// Rota para exibir a página turmas
+app.get('/turma', verificarAutenticacao, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'turma.html'));
 });
+
+app.get('/listagemturma', verificarAutenticacao, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'listagemturma.html'));
+});
+
+ // Rota para obter os usuários
+app.get('/listar-usuarios', (req, res) => {
+    const query = 'SELECT * FROM TbUsuario'; // Consulta para obter todos os usuários
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar usuários:', err);
+            return res.status(500).json({ error: 'Erro ao buscar usuários' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Nenhum usuário encontrado' });
+        }
+
+        res.json(results); // Retorna os usuários encontrados
+    });
+});
+  
+// Rota para obter as turmas
+app.get('/listar-turmas', (req, res) => {
+    const query = 'SELECT * FROM TbTurma'; // Consulta para obter todas as turmas
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar turmas:', err);
+            return res.status(500).json({ error: 'Erro ao buscar turmas' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Nenhuma turma encontrada' });
+        }
+
+        res.json(results); // Retorna as turmas encontradas
+    });
+});
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
