@@ -21,7 +21,13 @@ document.addEventListener("DOMContentLoaded", function() {
         formData.append("title", title);
         formData.append("description", description);
         formData.append("date", date);
-        formData.append("pdf-upload", pdfFile); // Nome do campo deve ser 'pdf-upload'
+
+        // Renomeia o arquivo para o título inserido pelo usuário
+        const newFileName = title + ".pdf"; // Definindo o novo nome com a extensão .pdf
+        const renamedFile = new File([pdfFile], newFileName, { type: pdfFile.type });
+
+        // Adiciona o arquivo renomeado ao FormData
+        formData.append("pdf-upload", renamedFile);
 
         // Envia os dados para o servidor via AJAX
         fetch('/cadastrar-atividade', {

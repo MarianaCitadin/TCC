@@ -1,3 +1,4 @@
+
 // Função para carregar materiais do backend
 function loadMaterials() {
     fetch('/api/materiais') // Corrigido nome da rota
@@ -47,7 +48,27 @@ function addMaterialToTable(nomeArquivo, descricao, dataRegistro, id) {
     tableBody.appendChild(row);
 }
 
+// Função para filtrar materiais
+function filterMaterials(event) {
+    const query = event.target.value.toLowerCase(); // Obtém o valor do input e transforma em minúsculas
+    const rows = document.querySelectorAll('#materials-table-body tr'); // Todas as linhas da tabela
+
+    rows.forEach(row => {
+        const titleCell = row.querySelector('td:first-child'); // A primeira célula da linha (Título)
+        const title = titleCell ? titleCell.textContent.toLowerCase() : ''; // Obtém o título e converte para minúsculas
+
+        // Verifica se o título contém a consulta
+        if (title.includes(query)) {
+            row.style.display = ''; // Exibe a linha
+        } else {
+            row.style.display = 'none'; // Esconde a linha
+        }
+    });
+}
+
 // Carregar materiais ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {
     loadMaterials();
+    // Adiciona o evento de filtro ao campo de pesquisa
+    document.getElementById('filter-input').addEventListener('input', filterMaterials);
 });
