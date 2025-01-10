@@ -66,6 +66,7 @@ CREATE TABLE TbEventos (
     DataEvento DATE NOT NULL,
     LocalEvento VARCHAR(255),
     ProjetoID INT,
+    TurmaID INT,
     FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
 );
 

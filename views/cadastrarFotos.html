@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>Adicionar Fotos - Clicando na Terceira Idade</title>
     <script src="/js/paginas/cadastrarFotos.js" defer></script>
 </head>
+
 <body>
     <header>
         <div class="logo">Clicando na Terceira Idade</div>
@@ -24,13 +26,17 @@
 
     <main>
         <h1>Adicionar Nova Foto</h1>
-        
+
         <form class="foto-form" action="#" method="post" enctype="multipart/form-data">
             <label for="descricao">Descrição:</label>
-            <textarea id="descricao" name="descricao" placeholder="Adicione uma breve descrição" rows="4" required></textarea>
-
+            <textarea id="descricao" name="descricao" placeholder="Adicione uma breve descrição" rows="4"
+                required></textarea>
+            <label for="projeto">Selecionar Projeto:</label>
+            <select id="projeto" name="projetoId" required>
+                <option value="" disabled selected>Selecione um projeto</option>
+            </select>
             <label for="DataRegistro">Data de Registro:</label>
-            <input type="date" id="DataRegistro" name="DataRegistro" required><br>            
+            <input type="date" id="DataRegistro" name="DataRegistro" required><br>
 
             <label for="foto">Selecionar Foto:</label>
             <input type="file" id="foto" name="foto" accept="image/*" required>
@@ -42,4 +48,5 @@
     </main>
 
 </body>
+
 </html>

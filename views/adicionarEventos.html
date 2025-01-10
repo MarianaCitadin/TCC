@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>Eventos - Clicando na Terceira Idade</title>
     <script src="/js/paginas/adicionarEventos.js" defer></script>
 </head>
+
 <body>
     <header>
         <div class="logo">Clicando na Terceira Idade</div>
@@ -46,12 +48,18 @@
             <input type="text" id="title" placeholder="Título do Evento" required />
             <input type="date" id="date" required /> <!-- Alterado para 'date' para evitar hora -->
             <input type="text" id="location" placeholder="Local do Evento" required />
+            <label for="turma">Selecionar Turma:</label>
+            <select id="turma" required>
+                <option value="" disabled selected>Selecione uma turma</option>
+                <!-- As opções serão preenchidas dinamicamente -->
+            </select>
             <button type="submit">Adicionar Evento</button>
             <button type="button" id="cancelForm">Cancelar</button>
         </form>
-        
-        
+
+
     </main>
 
 </body>
+
 </html>
