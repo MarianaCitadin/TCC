@@ -42,7 +42,7 @@ app.use(express.static('public'));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'M@riC2804',
     database: 'clicandonaterceiraidade'
 });
 
@@ -148,10 +148,14 @@ app.post('/submit_form', (req, res) => {
             console.error('Erro ao salvar no banco de dados:', err);
             return res.status(500).send('Erro ao salvar no banco de dados.');
         }
+
         console.log('Usuário cadastrado:', results);
-        res.send('Cadastro realizado com sucesso!');
+        
+        // Redireciona somente após a conclusão do cadastro
+        res.redirect('/');  // Certifique-se de que '/login' é a URL da sua página de login
     });
 });
+
 
 // Rota GET para carregar o formulário de edição de perfil
 app.get('/editarUsuario', verificarAutenticacao, (req, res) => {
@@ -229,6 +233,23 @@ app.get('/usuarios', (req, res) => {
     });
 });
 
+app.get('/usuario/:id', (req, res) => {
+    const usuarioId = req.params.id;
+    const query = 'SELECT * FROM tbusuario WHERE UsuarioID = ?';
+
+    db.query(query, [usuarioId], (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar usuário:', err);
+            return res.status(500).send('Erro interno do servidor');
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send('Usuário não encontrado');
+        }
+
+        res.json(results[0]);
+    });
+});
 
 
 // Rota para exibir a página turmas

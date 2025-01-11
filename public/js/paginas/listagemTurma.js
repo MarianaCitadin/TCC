@@ -12,6 +12,7 @@ async function carregarTurma() {
             document.getElementById('nome-turma').textContent = turma.NomeTurma || 'Nome não disponível';
             document.getElementById('horario-turma').textContent = turma.Horario || 'Horário não disponível';
             document.getElementById('local-turma').textContent = turma.Local || 'Local não disponível';
+            
         } else {
             console.error('Nenhuma turma encontrada.');
         }

@@ -24,7 +24,6 @@ CREATE TABLE TbUsuario (
     Bairro VARCHAR(255),
     Cidade VARCHAR(255),
     Estado VARCHAR(2),
-    CEP VARCHAR(15),
     FOREIGN KEY (CategoriaID) REFERENCES TbCategoria(CategoriaID)
 );
 
@@ -34,17 +33,6 @@ CREATE TABLE TbProjeto (
     NomeProjeto VARCHAR(255) NOT NULL,
     AnoEdicao INT,
     Local VARCHAR(255) NOT NULL
-);
-
--- Tabela de Participantes
-CREATE TABLE TbParticipantes (
-    ParticipanteID INT AUTO_INCREMENT PRIMARY KEY,
-    UsuarioID INT,
-    ProjetoID INT,
-    TurmaID INT,
-    FOREIGN KEY (UsuarioID) REFERENCES TbUsuario(UsuarioID),
-    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID),
-    FOREIGN KEY (TurmaID) REFERENCES TbTurma(TurmaID)  
 );
 
 -- Tabela de Turmas
@@ -57,6 +45,17 @@ CREATE TABLE TbTurma (
     dataFim DATE, 
     LimiteAlunos INT DEFAULT 20,
     FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID)
+);
+
+-- Tabela de Participantes
+CREATE TABLE TbParticipantes (
+    ParticipanteID INT AUTO_INCREMENT PRIMARY KEY,
+    UsuarioID INT,
+    ProjetoID INT,
+    TurmaID INT,
+    FOREIGN KEY (UsuarioID) REFERENCES TbUsuario(UsuarioID),
+    FOREIGN KEY (ProjetoID) REFERENCES TbProjeto(ProjetoID),
+    FOREIGN KEY (TurmaID) REFERENCES TbTurma(TurmaID)  
 );
 
 -- Tabela de Eventos

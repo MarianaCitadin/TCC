@@ -135,3 +135,36 @@ h1 {
     border-color: #4caf50; /* Cor verde quando em foco */
     outline: none; /* Remove o contorno padrão do navegador */
 }
+
+/* Estilo para o select */
+form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #fff;
+    appearance: none; /* Remove o estilo padrão do navegador */
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23999' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form select:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
+
+form select option {
+    padding: 10px;
+}
+
+/* Ajusta o cursor para o select */
+form select:hover {
+    cursor: pointer;
+}
