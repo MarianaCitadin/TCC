@@ -130,10 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     alert(data.message || "Erro ao adicionar foto. Tente novamente.");
                 }
             })
-            .catch(error => {
-                console.error("Erro de rede:", error);
-                alert("Erro ao enviar os dados. Tente novamente.");
-            });
+        
     });
 
     // Chamar a função para carregar os projetos ao carregar a página

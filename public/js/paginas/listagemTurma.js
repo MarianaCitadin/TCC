@@ -10,7 +10,7 @@ async function carregarTurma() {
 
             // Preenche os dados da turma no HTML
             document.getElementById('nome-turma').textContent = turma.NomeTurma || 'Nome não disponível';
-            document.getElementById('horario-turma').textContent = turma.Horario || 'Horário não disponível';
+            document.getElementById('horario-turma').textContent = turma.horario || 'Horário não disponível';
             document.getElementById('local-turma').textContent = turma.Local || 'Local não disponível';
             
         } else {
